@@ -1,8 +1,8 @@
-PyPI version
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/ItsPrompt)
 ![GitHub issues](https://img.shields.io/github/issues/TheItsProjects/ItsPrompt)
 ![GitHub Repo stars](https://img.shields.io/github/stars/TheItsProjects/ItsPrompt)
 ![GitHub](https://img.shields.io/github/license/TheitsProjects/ItsPrompt)
+![Discord](https://img.shields.io/discord/1082381448624996514)
 
 # ItsPrompt
 
