@@ -4,13 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ItsPrompt"
-version = "0.1.0"
+version = "1.0"
 authors = [
     {name = "ItsNameless"}
 ]
 description = "Prompting - the fancy way"
 readme = "README.md"
 requires-python = ">=3.8"
+dependencies = [
+    "prompt-toolkit>=3.0.37,<4.0"
+]
 classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
