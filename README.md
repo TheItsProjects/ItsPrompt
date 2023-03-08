@@ -329,6 +329,17 @@ In the background your completions will be mapped to a `Completer`, provided by 
 
 If you need more customization, you can use a `Completer` given by `prompt-toolkit` or create your own completer. For more information on this process, read here: [Completions in prompt-toolkit](https://python-prompt-toolkit.readthedocs.io/en/stable/pages/asking_for_input.html#autocompletion).
 
+There are a number of completers available, for example:
+
+- `PathCompleter`
+    - automatically complete file system paths
+- `ExecutableCompleter`
+    - automatically complete executables in file system
+- `WordCompleter`
+    - As simple as it can get. Just completes the letters of the word, that are actually present (the `FuzzyCompleter` which `completions` uses in background completes based on a probability, and may show matches which are not exact).
+- ...
+
+
 To add your own completer to an input field, you can use the `completer` argument:
 
 ```py
