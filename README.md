@@ -360,7 +360,7 @@ If you need some easy examples, refer to [example.py](example.py)!
 
 If you want to contribute, check out the projects repository: [ItsPrompt](https://github.com/TheItsProjects/ItsPrompt)!
 
-If you got any other questions, or want to give an idea on how to improve **ItsPrompt**, join our discord: [TheItsProjects](https://discord.gg/rP9Qke2jDs)!
+If you got any other questions, or want to give an idea on how to improve **ItsPrompt**, head over to [Discussions](https://github.com/TheItsProjects/ItsPrompt/discussions) or join our discord: [TheItsProjects](https://discord.gg/rP9Qke2jDs)!
 
 ---
 
