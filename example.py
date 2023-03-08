@@ -33,21 +33,39 @@ ans = Prompt.expand(
 print(ans)
 
 
-# input
+# standard input with validation
 def input_not_empty(input: str) -> str | None:
     if len(input) == 0:
-        return 'Address can not be empty!'
+        return 'Input field can not be empty!'
 
 
 ans = Prompt.input(
-    'Please type your address',
+    'Please type your name',
     validate=input_not_empty,
 )
+
+print(ans)
+
+# standard input with validation and completion
+ans = Prompt.input(
+    'Please type your address',
+    validate=input_not_empty,
+    completions=['Mainstreet 4', 'Fifth way'],
+    completion_show_multicolumn=True,
+)
+print(ans)
+
+# standard input with password (show_symbol)
+ans = Prompt.input(
+    'Please type your password',
+    show_symbol='*',
+)
+
 print(ans)
 
 # confirm
 ans = Prompt.confirm(
-    'Is the address correct?',
+    'Is the information correct?',
     default=True,
 )
 print(ans)

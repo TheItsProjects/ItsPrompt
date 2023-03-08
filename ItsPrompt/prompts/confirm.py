@@ -1,6 +1,6 @@
 from prompt_toolkit import HTML, Application
-from prompt_toolkit.layout.controls import FormattedTextControl
 from prompt_toolkit.layout.containers import Window
+from prompt_toolkit.layout.controls import FormattedTextControl
 
 
 class ConfirmPrompt(Application):

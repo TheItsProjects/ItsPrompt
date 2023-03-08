@@ -1,7 +1,7 @@
-from dataclasses import dataclass, asdict
-from prompt_toolkit.styles import Style
-
 import copy
+from dataclasses import asdict, dataclass
+
+from prompt_toolkit.styles import Style
 
 
 @dataclass
