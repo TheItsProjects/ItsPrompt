@@ -1,13 +1,15 @@
-from typing import Callable
-from prompt_toolkit import HTML, Application
-from prompt_toolkit.layout.controls import FormattedTextControl
-from prompt_toolkit.layout.containers import Window
-from prompt_toolkit.buffer import Buffer
-from prompt_toolkit.completion import Completer, FuzzyWordCompleter, NestedCompleter, FuzzyCompleter
-from prompt_toolkit.layout.processors import PasswordProcessor
-from ..data.type import CompletionDict
-
 import string
+from typing import Callable
+
+from prompt_toolkit import HTML, Application
+from prompt_toolkit.buffer import Buffer
+from prompt_toolkit.completion import (Completer, FuzzyCompleter,
+                                       FuzzyWordCompleter, NestedCompleter)
+from prompt_toolkit.layout.containers import Window
+from prompt_toolkit.layout.controls import FormattedTextControl
+from prompt_toolkit.layout.processors import PasswordProcessor
+
+from ..data.type import CompletionDict
 
 
 class InputPrompt(Application):

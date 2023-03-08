@@ -7,25 +7,27 @@ created by ItsNameless
 :license: MIT, see LICENSE for more details.
 '''
 
-from prompt_toolkit import HTML
-from prompt_toolkit.layout.containers import HSplit, Window, VSplit, FloatContainer, Float
-from prompt_toolkit.layout.layout import Layout
-from prompt_toolkit.layout.controls import FormattedTextControl, BufferControl
-from prompt_toolkit.buffer import Buffer
-from prompt_toolkit.layout.menus import CompletionsMenu, MultiColumnCompletionsMenu
-from prompt_toolkit.completion import Completer
+from typing import Callable
 
-from .prompts.input import InputPrompt
-from .prompts.confirm import ConfirmPrompt
-from .prompts.checkbox import CheckboxPrompt
-from .prompts.expand import ExpandPrompt
-from .prompts.raw_select import RawSelectPrompt
-from .prompts.select import SelectPrompt
-from .keyboard_handler import kb
+from prompt_toolkit import HTML
+from prompt_toolkit.buffer import Buffer
+from prompt_toolkit.completion import Completer
+from prompt_toolkit.layout.containers import (Float, FloatContainer, HSplit,
+                                              VSplit, Window)
+from prompt_toolkit.layout.controls import BufferControl, FormattedTextControl
+from prompt_toolkit.layout.layout import Layout
+from prompt_toolkit.layout.menus import (CompletionsMenu,
+                                         MultiColumnCompletionsMenu)
+
 from .data.style import PromptStyle, convert_style, default_style
 from .data.type import CompletionDict
-
-from typing import Callable
+from .keyboard_handler import kb
+from .prompts.checkbox import CheckboxPrompt
+from .prompts.confirm import ConfirmPrompt
+from .prompts.expand import ExpandPrompt
+from .prompts.input import InputPrompt
+from .prompts.raw_select import RawSelectPrompt
+from .prompts.select import SelectPrompt
 
 
 class Prompt:

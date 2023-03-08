@@ -1,5 +1,6 @@
 from prompt_toolkit import HTML, Application
 from prompt_toolkit.layout.controls import FormattedTextControl
+
 from ..data.expand import process_data
 
 
