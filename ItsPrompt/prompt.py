@@ -61,7 +61,7 @@ class Prompt:
         :type options: tuple[str  |  tuple[str, str], ...]
         :param default: The id of the default option to select (empty or None if the first should be default), defaults to None
         :type default: str | None, optional
-        :param style: A seperate style to style the prompt (empty or None for default style), defaults to None
+        :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The id of the selected option
@@ -114,7 +114,7 @@ class Prompt:
         :type default: str | None, optional
         :param allow_keyboard: Whether the user should be able to select the answer with up and down, defaults to False
         :type allow_keyboard: bool, optional
-        :param style: A seperate style to style the prompt (empty or None for default style), defaults to None
+        :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The id of the selected option
@@ -172,7 +172,7 @@ class Prompt:
         :type default: str | None, optional
         :param allow_keyboard: Whether the user should be able to select the answer with up and down, defaults to False
         :type allow_keyboard: bool, optional
-        :param style: A seperate style to style the prompt (empty or None for default style), defaults to None
+        :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The id of the selected option
@@ -232,7 +232,7 @@ class Prompt:
         :type default_checked: tuple[str, ...] | None, optional
         :param min_selections: A minimum amount of options that need to be checked before submitting (prohibits the user of submitting, if not enough are checked; 0 if None)
         :type min_selections: int, optional
-        :param style: A seperate style to style the prompt (empty or None for default style), defaults to None
+        :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The ids of the selected options
@@ -287,7 +287,7 @@ class Prompt:
         :type question: str
         :param default: The default answer to select when pressing enter, defaults to None
         :type default: bool | None, optional
-        :param style: A seperate style to style the prompt (empty or None for default style), defaults to None
+        :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: Whether the user selected "y" or "n"
@@ -364,7 +364,7 @@ class Prompt:
         :type completer: Completer | None, optional
         :param completion_show_multicolumn: Whether to show the completions as a scrollable list or as multiple columns, defaults to False
         :type completion_show_multicolumn: bool, optional
-        :param style: A seperate style to style the prompt (empty or None for default style), defaults to None
+        :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The input of the user

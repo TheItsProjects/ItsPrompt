@@ -13,7 +13,7 @@ Using `input()` is easy, but is it great?
 
 Do you want to give the user a selection list, a yes-or-no question, or maybe a multiline input field?
 
-And do you think all of this should be done easily, without carring to much how it all works?
+And do you think all of this should be done easily, without caring to much how it all works?
 
 Then you are right here! **ItsPrompt** gives you the ability to ask the user for input, the *fancy* way.
 
@@ -21,7 +21,7 @@ Then you are right here! **ItsPrompt** gives you the ability to ask the user for
 
 ---
 
-### A small, thankfull note
+### A small, thankful note
 
 This project is not the first to accomplish the above mentioned tasks. There is another package, `PyInquirer`, which inspired me to build **ItsPrompt**.
 
