@@ -170,8 +170,11 @@ Prompt.input(
     question='question',
     default='something',
     multiline=False,
-    show_symbol='*',
+    show_symbol='*', # not compatible with complete, completer
     validate=validation_function,
+    complete=['completion1', 'completion2'], # either use complete
+    completer=my_completer,                  # or completer
+    completion_show_multicolumn=True,
     style=my_style,
 )
 ```
@@ -199,6 +202,8 @@ If an option is given as a `tuple`, the first value will be the options name, th
 ### Styling
 
 **ItsPrompt** uses `prompt-toolkit` for its prompts. This module not only provides an easy way to interact with the command line, but also a full set of styling features.
+
+You can learn more about the available styling features in the documentation of `prompt-toolkit`: [Styling](https://python-prompt-toolkit.readthedocs.io/en/master/pages/printing_text.html#formatted-text).
 
 To create your own style, there are two ways:
 
@@ -264,6 +269,75 @@ The `str` argument will be the current user input, which can then be checked, bu
 If you want to show that the validation succeeded, return `None` (or nothing). This will not trigger any errors.
 
 If you want to show an error, return a `str` with the errors text. Your text will be shown in the toolbar. As long as the validation returns a `str`, the user may not submit the input.
+
+---
+
+### Prompt Completion
+
+The `input` prompt type supports auto completion as well. 
+
+> If you use a completer, you are unable to use `show_symbol`!
+
+To give auto completion options, there are three ways:
+
+***Creating a simple list of possible completions***
+
+`Input` takes a `list[str]` to use as simple word completions. Each `str` in the list is a possible value to complete.
+
+```py
+prompt.input(
+    ...
+    completions=['Mainstreet 4', 'Fifth way'],
+    ...
+)
+```
+
+***Creating a nested dictionary of possible completions***
+
+You can use a dictionary for nested completions. Each "layer" will be a completion, after the first was accepted. For example:
+
+```py
+completions = {
+    '1' : {
+        '1.1' : None,
+        '1.2' : {
+            '1.2.1', '1.2.2'
+        }
+    },
+    '2' : {
+        '2.1' : { '2.1.1' }
+    }
+}
+
+prompt.input(
+    ...
+    completions=completions,
+    ...
+)
+```
+
+The key of each entry is the completion that will be shown. The key is either None if there are no further completions or a new dict, where the key is the completion and the value is the next "layer", and so on...
+
+> For more information, the type signature of `CompletionDict` is:  
+> `dict[str, "CompletionDict | None"]`
+
+***Using a given Completer by `prompt-toolkit` or creating your own***
+
+In the background your completions will be mapped to a `Completer`, provided by `prompt-toolkit`.
+
+If you need more customization, you can use a `Completer` given by `prompt-toolkit` or create your own completer. For more information on this process, read here: [Completions in prompt-toolkit](https://python-prompt-toolkit.readthedocs.io/en/stable/pages/asking_for_input.html#autocompletion).
+
+To add your own completer to an input field, you can use the `completer` argument:
+
+```py
+prompt.input(
+    ...
+    completer=my_completer,
+    ...
+)
+```
+
+> `completions` and `completer` are **mutually exclusive**! You may not use both!
 
 ---
 

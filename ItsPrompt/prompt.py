@@ -8,10 +8,12 @@ created by ItsNameless
 '''
 
 from prompt_toolkit import HTML
-from prompt_toolkit.layout.containers import HSplit, Window, VSplit
+from prompt_toolkit.layout.containers import HSplit, Window, VSplit, FloatContainer, Float
 from prompt_toolkit.layout.layout import Layout
 from prompt_toolkit.layout.controls import FormattedTextControl, BufferControl
 from prompt_toolkit.buffer import Buffer
+from prompt_toolkit.layout.menus import CompletionsMenu, MultiColumnCompletionsMenu
+from prompt_toolkit.completion import Completer
 
 from .prompts.input import InputPrompt
 from .prompts.confirm import ConfirmPrompt
@@ -21,6 +23,7 @@ from .prompts.raw_select import RawSelectPrompt
 from .prompts.select import SelectPrompt
 from .keyboard_handler import kb
 from .data.style import PromptStyle, convert_style, default_style
+from .data.type import CompletionDict
 
 from typing import Callable
 
@@ -323,6 +326,9 @@ class Prompt:
         multiline: bool = False,
         show_symbol: str | None = None,
         validate: Callable[[str], str | None] | None = None,
+        completions: list[str] | CompletionDict | None = None,
+        completer: Completer | None = None,
+        completion_show_multicolumn: bool = False,
         style: PromptStyle | None = None,
     ) -> str:
         '''
@@ -336,6 +342,12 @@ class Prompt:
 
         Validate takes a function which receives a `str` (the current input of the user) and may return None or a `str`. If the function returns None, the prompt may assume that the input is valid. If it returns a `str`, this will be the error shown to the user. The user will not be able to submit the input, if validate returns an error.
 
+        Completions may be a list of possible completion strings or a nested dictionary where the key is a completion string and the value is a new dict in the same style (more in the README.md).
+
+        You can use your own Completer as well (more in the README.md).
+
+        THESE VALUES ARE MUTUALLY EXCLUSIVE. You may not use both. If you use a completer, you can not use show_symbol!
+
         :param question: The question to display
         :type question: str
         :param default: The default value to fill in, defaults to None
@@ -346,38 +358,59 @@ class Prompt:
         :type show_symbol: str | None, optional
         :param validate: A function to check the users input in real-time, defaults to None
         :type validate: Callable[[str], str | None] | None, optional
+        :param completions: The completions to use, defaults to None
+        :type completions: list[str] | CompletionDict | None, optional
+        :param completer: A completer to use, defaults to None
+        :type completer: Completer | None, optional
+        :param completion_show_multicolumn: Whether to show the completions as a scrollable list or as multiple columns, defaults to False
+        :type completion_show_multicolumn: bool, optional
         :param style: A seperate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The input of the user
         :rtype: str
         '''
+
+        # extracting the body, so we can display a floating auto completion field
+        body = HSplit([
+            VSplit([
+                Window(
+                    FormattedTextControl(),
+                    always_hide_cursor=True,
+                    dont_extend_width=True,
+                ),
+                Window(
+                    BufferControl(
+                        Buffer(complete_while_typing=True))), # the completer will be passed in the Application class
+            ]),
+            Window(
+                FormattedTextControl(
+                    HTML(
+                        f'Type your answer, {"ALT+ENTER" if multiline else "ENTER"} to submit'
+                    )),
+                char=' ',
+                style='class:tooltip',
+                height=1,
+            )
+        ])
+
         app = InputPrompt(
             question,
             default,
             multiline,
             show_symbol,
             validate,
+            completions,
+            completer,
             layout=Layout(
-                HSplit([
-                    VSplit([
-                        Window(
-                            FormattedTextControl(),
-                            always_hide_cursor=True,
-                            dont_extend_width=True,
-                        ),
-                        Window(BufferControl(Buffer())),
-                    ]),
-                    Window(
-                        FormattedTextControl(
-                            HTML(
-                                f'Type your answer, {"ALT+ENTER" if multiline else "ENTER"} to submit'
-                            )),
-                        char=' ',
-                        style='class:tooltip',
-                        height=1,
-                    )
-                ])),
+                FloatContainer(content=body,
+                               floats=[
+                                   Float(
+                                       MultiColumnCompletionsMenu(show_meta=False) if completion_show_multicolumn else CompletionsMenu(),
+                                       xcursor=True,
+                                       ycursor=True,
+                                   )
+                               ])),
             key_bindings=kb,
             erase_when_done=True,
             style=convert_style(style)
