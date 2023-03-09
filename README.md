@@ -207,6 +207,43 @@ If an option is given as a `tuple`, the first value will be the options name, th
 
 You can learn more about the available styling features in the documentation of `prompt-toolkit`: [Styling](https://python-prompt-toolkit.readthedocs.io/en/master/pages/printing_text.html#formatted-text).
 
+**ItsPrompt** makes it a bit easier for you to style each component of a prompt. For every component, we give a separate attribute in the `PromptStyle` class, which you can style with valid `prompt-toolkit` styling:
+
+```py
+# examples for the different styling class components
+Prompt.raw_select(
+    question='question',
+    options=(
+        'option',
+        'selected_option',
+    )
+)
+
+Prompt.input(
+    question='question',
+    default='grayout',
+    validate=lambda x: 'error',
+)
+```
+
+![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling_raw_select_annotated.png)
+
+![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling_input_annotated.png)
+
+| ID  |    styling tag    |             default style             |
+| --- | ----------------- | ------------------------------------- |
+| 1   | `question_mark`   | `fg:ansigreen`                        |
+| 2   | `question`        | *                                     |
+| 3   | `option`          | *                                     |
+| 4   | `selected_option` | `fg:ansicyan`                         |
+| 5   | `tooltip`         | `fg:ansibrightblue bg:ansiwhite bold` |
+| 6   | `text`            | *                                     |
+| 7   | `grayout`          | `fg:ansibrightblack`                  |
+| 8   | `error`           | `fg:ansiwhite bg:ansired bold`        |
+
+*\*These values are not changed from the default `prompt-toolkit` values.*
+
+
 To create your own style, there are two ways:
 
 ***Changing the default style***
@@ -234,7 +271,7 @@ my_style = PromptStyle(
 )
 ```
 
-All styles which are not given, **will not** be the same as the default style. If you want this to be the case, then copy the `default_style` and change your values, instead of directly creating your own style:
+All styles which are not given, **will not** be the same as the default style. Instead they will use the styling given by `prompt-toolkit`. If you want to change our default styles, then copy the `default_style` and change your values, instead of directly creating your own style:
 
 ```py
 from ItsPrompt.data.style import create_from_default
@@ -360,7 +397,7 @@ If you need some easy examples, refer to [example.py](example.py)!
 
 If you want to contribute, check out the projects repository: [ItsPrompt](https://github.com/TheItsProjects/ItsPrompt)!
 
-If you got any other questions, or want to give an idea on how to improve **ItsPrompt**, head over to [Discussions](https://github.com/TheItsProjects/ItsPrompt/discussions) or join our discord: [TheItsProjects](https://discord.gg/rP9Qke2jDs)!
+If you got any other questions, or want to give an idea on how to improve **ItsPrompt**, join our discord: [TheItsProjects](https://discord.gg/rP9Qke2jDs)!
 
 ---
 

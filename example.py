@@ -70,6 +70,20 @@ ans = Prompt.confirm(
 )
 print(ans)
 
+# styling
+
+# examples for the different styling class components
+Prompt.raw_select(question='question', options=(
+    'option',
+    'selected_option',
+))
+
+Prompt.input(
+    question='question',
+    default='grayout',
+    validate=lambda x: 'error',
+)
+
 # change default style
 from ItsPrompt.data.style import default_style
 
