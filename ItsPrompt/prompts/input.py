@@ -143,65 +143,6 @@ class InputPrompt(Application):
 
         return out
 
-    def on_up(self):
-        '''if multiline, this manually moves the buffer cursor up'''
-        if self.multiline:
-            self.buffer.cursor_up()
-
-        # run completion
-        if self.is_running:
-            self.buffer.complete_previous()
-
-        self.update()
-
-    def on_down(self):
-        '''if multiline, this manually moves the buffer cursor down'''
-        if self.multiline:
-            self.buffer.cursor_down()
-
-        # run completion
-        if self.is_running:
-            self.buffer.complete_next()
-
-        self.update()
-
-    def on_space(self):
-        '''manually append a space to input'''
-        self.buffer.text += ' '
-        self.buffer.cursor_right()
-
-        self.update()
-
-    def on_key(self, key_sequence: list[str]):
-        '''append key to input'''
-        key = key_sequence[0]
-
-        # only append if key is printable, otherwise the key is not important
-        if key.isprintable():
-            self.buffer.text += key
-            self.buffer.cursor_right()
-
-        self.update()
-
-    def on_backspace(self):
-        '''remove last letter from input'''
-        self.buffer.text = self.buffer.text[:-1:]
-
-        self.update()
-
-    def on_ctrl_backspace(self):
-        '''remove last word from input'''
-        for i in range(len(self.buffer.text) - 2, -1, -1):
-            if self.buffer.text[i] in string.punctuation + string.whitespace:
-                self.buffer.text = self.buffer.text[:i + 1:]
-                break
-        else:
-            # break was not called, so there is only one word in input
-            # this word will be removed
-            self.buffer.text = ''
-
-        self.update()
-
     def _submit(self):
         '''method for submitting result, as this is done by two functions'''
         # if an error is currently shown, prevent submit
