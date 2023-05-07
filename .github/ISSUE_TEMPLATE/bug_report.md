@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: "[BUG]"
-labels: ''
+labels: 'bug'
 assignees: ''
 
 ---
@@ -25,7 +25,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Device (please complete the following information):**
  - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
+ - Python [e.g. version, installed packages]
  - Version [e.g. 22]
 
 **Additional context**

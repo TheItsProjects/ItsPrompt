@@ -2,7 +2,7 @@
 name: Fix request
 about: Point out a fix that needs to be addressed
 title: "[FIX]"
-labels: ''
+labels: 'fix'
 assignees: ''
 
 ---
