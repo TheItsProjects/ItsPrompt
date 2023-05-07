@@ -1,5 +1,5 @@
-from prompt_toolkit.key_binding import KeyBindings, KeyPressEvent
 from prompt_toolkit import Application
+from prompt_toolkit.key_binding import KeyBindings, KeyPressEvent
 
 
 def generate_key_bindings(app: type[Application]) -> KeyBindings:
