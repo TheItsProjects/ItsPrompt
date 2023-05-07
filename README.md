@@ -21,6 +21,30 @@ Then you are right here! **ItsPrompt** gives you the ability to ask the user for
 
 **ItsPrompt** tries to be an easy-to-use module for managing prompts for the user. You task is to create a great program, not how to ask the user for input. That is why **ItsPrompt** is there to take care of this problem, so you can focus on the important things!
 
+# TOC
+
+- [ItsPrompt](#itsprompt)
+- [TOC](#toc)
+    - [A small, thankful note](#a-small-thankful-note)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Prompt types](#prompt-types)
+    - [`select`](#select)
+    - [`raw_select`](#raw_select)
+    - [`expand`](#expand)
+    - [`checkbox`](#checkbox)
+    - [`confirm`](#confirm)
+    - [`input`](#input)
+    - [`table`](#table)
+  - [Additional Features and Tips](#additional-features-and-tips)
+    - [Options](#options)
+    - [Data](#data)
+    - [Styling](#styling)
+    - [Prompt Validation](#prompt-validation)
+    - [Prompt Completion](#prompt-completion)
+    - [Further Information](#further-information)
+
 ---
 
 ### A small, thankful note
@@ -424,7 +448,9 @@ If you need some easy examples, refer to [example.py](example.py)!
 
 If you want to contribute, check out the projects repository: [ItsPrompt](https://github.com/TheItsProjects/ItsPrompt)!
 
-If you got any other questions, or want to give an idea on how to improve **ItsPrompt**, join our discord: [TheItsProjects](https://discord.gg/rP9Qke2jDs)!
+If you got any other questions, or want to give an idea on how to improve **ItsPrompt**:
+- visit our discussions: [ItsPrompt Discussions](https://github.com/TheItsProjects/ItsPrompt/discussions)!
+- join our discord: [TheItsProjects](https://discord.gg/rP9Qke2jDs)!
 
 ---
 
