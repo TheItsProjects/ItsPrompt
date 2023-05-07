@@ -29,7 +29,7 @@ This project is not the first to accomplish the above mentioned tasks. There is 
 
 On my way to create a small program I came to a point were I needed a simple GUI, and I tried `PyInquirer`. Unfortunately, at the current time it is not actively maintained and a bit outdated. I thought of updating it, but then I thought "*Isn't it easier to just create my own version?*" - And so I did!
 
-**ItsPrompt** is not a copy or a fork of `PyInquirer`. I built this module from the ground up, without every looking deep into the source code of `PyInquirer`.
+**ItsPrompt** is not a copy or a fork of `PyInquirer`. I built this module from the ground up, without ever looking deep into the source code of `PyInquirer`.
 
 On my way to build this package, I learned a lot about `prompt-toolkit`, and all of this just because of `PyInquirer`! Thanks!
 
@@ -44,6 +44,7 @@ On my way to build this package, I learned a lot about `prompt-toolkit`, and all
     - checkbox
     - confirm
     - input
+    - table
 - big feature set
 - simple, pythonic syntax
 - a helpful toolbar with error messages
@@ -183,6 +184,20 @@ Prompt.input(
 
 *additional information on the function arguments can be found in the docstring*
 
+### `table`
+
+![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/table.png)
+
+```py
+Prompt.table(
+    question='something',
+    data=DataFrame(['something']),
+    style=my_style,
+)
+```
+
+*additional information on the function arguments can be found in the docstring*
+
 ---
 
 ## Additional Features and Tips
@@ -198,6 +213,18 @@ If an option is given as a `str`, this will be used as the options display name 
 If an option is given as a `tuple`, the first value will be the options name, the second value the options id to return.
 
 *In case of `expand`, the first value will be the key, the second value the name and the third value the id.*
+
+---
+
+### Data
+
+The `table` prompt takes a mandatory `data` argument, which needs to be a `pandas.DataFrame`.
+
+This `DataFrame` is used as the content of the table. The user may change the fields of the table. The output of the `table` prompt is a `pandas.DataFrame` with the user given values.
+
+Currently, the output will convert all input values to a `str`, so `int`, `bool`, ... will be converted to strings. This is a current limitation of the way the table is displayed, but may later be updated.
+
+Another limitation of the `table` prompt is the use of styling in the `DataFrame` fields. All styling tags will be displayed as-is, so a `<u>...</u>` will not be underlined, but rather displayed as its shown.
 
 ---
 

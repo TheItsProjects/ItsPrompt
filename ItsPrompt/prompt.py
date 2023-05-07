@@ -9,6 +9,7 @@ created by ItsNameless
 
 from typing import Callable
 
+from pandas import DataFrame
 from prompt_toolkit import HTML
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.completion import Completer
@@ -21,13 +22,14 @@ from prompt_toolkit.layout.menus import (CompletionsMenu,
 
 from .data.style import PromptStyle, convert_style, default_style
 from .data.type import CompletionDict
-from .keyboard_handler import kb
+from .keyboard_handler import generate_key_bindings
 from .prompts.checkbox import CheckboxPrompt
 from .prompts.confirm import ConfirmPrompt
 from .prompts.expand import ExpandPrompt
 from .prompts.input import InputPrompt
 from .prompts.raw_select import RawSelectPrompt
 from .prompts.select import SelectPrompt
+from .prompts.table import TablePrompt
 
 
 class Prompt:
@@ -82,7 +84,7 @@ class Prompt:
                            style='class:tooltip',
                            height=1)
                 ])),
-            key_bindings=kb,
+            key_bindings=generate_key_bindings(SelectPrompt),
             erase_when_done=True,
             style=convert_style(style)
             if style else convert_style(default_style),
@@ -138,7 +140,7 @@ class Prompt:
                            style='class:tooltip',
                            height=1)
                 ])),
-            key_bindings=kb,
+            key_bindings=generate_key_bindings(RawSelectPrompt),
             erase_when_done=True,
             style=convert_style(style)
             if style else convert_style(default_style),
@@ -196,7 +198,7 @@ class Prompt:
                            style='class:tooltip',
                            height=1)
                 ])),
-            key_bindings=kb,
+            key_bindings=generate_key_bindings(ExpandPrompt),
             erase_when_done=True,
             style=convert_style(style)
             if style else convert_style(default_style),
@@ -257,7 +259,7 @@ class Prompt:
                            style='class:tooltip',
                            height=1)
                 ])),
-            key_bindings=kb,
+            key_bindings=generate_key_bindings(CheckboxPrompt),
             erase_when_done=True,
             style=convert_style(style)
             if style else convert_style(default_style),
@@ -309,7 +311,7 @@ class Prompt:
                            style='class:tooltip',
                            height=1)
                 ])),
-            key_bindings=kb,
+            key_bindings=generate_key_bindings(ConfirmPrompt),
             erase_when_done=True,
             style=convert_style(style)
             if style else convert_style(default_style),
@@ -382,8 +384,8 @@ class Prompt:
                     dont_extend_width=True,
                 ),
                 Window(
-                    BufferControl(
-                        Buffer(complete_while_typing=True))), # the completer will be passed in the Application class
+                    BufferControl(Buffer(complete_while_typing=True))
+                ),  # the completer will be passed in the Application class
             ]),
             Window(
                 FormattedTextControl(
@@ -405,15 +407,17 @@ class Prompt:
             completions,
             completer,
             layout=Layout(
-                FloatContainer(content=body,
-                               floats=[
-                                   Float(
-                                       MultiColumnCompletionsMenu(show_meta=False) if completion_show_multicolumn else CompletionsMenu(),
-                                       xcursor=True,
-                                       ycursor=True,
-                                   )
-                               ])),
-            key_bindings=kb,
+                FloatContainer(
+                    content=body,
+                    floats=[
+                        Float(
+                            MultiColumnCompletionsMenu(show_meta=False) if
+                            completion_show_multicolumn else CompletionsMenu(),
+                            xcursor=True,
+                            ycursor=True,
+                        )
+                    ])),
+            key_bindings=generate_key_bindings(InputPrompt),
             erase_when_done=True,
             style=convert_style(style)
             if style else convert_style(default_style),
@@ -421,5 +425,54 @@ class Prompt:
 
         ans = app.prompt()
         if ans == None:
+            raise KeyboardInterrupt()
+        return ans
+
+    @classmethod
+    def table(
+        cls,
+        question: str,
+        data: DataFrame,
+        style: PromptStyle | None = None,
+    ) -> DataFrame:
+        '''
+        Ask the user for filling out the displayed table.
+
+        This method shows the question alongside a table, which the user may navigate with the arrow keys. The user has the ability to use the up, down and enter keys to navigate between the options and change the text in each cell.
+
+        The `data` is a pandas DataFrame, where the values will be input in the cells by default.
+
+        # TODO
+        :param question: The question to display
+        :type question: str
+        :param options: A list of possible options
+        :type options: tuple[str  |  tuple[str, str], ...]
+        :param default: The id of the default option to select (empty or None if the first should be default), defaults to None
+        :type default: str | None, optional
+        :param style: A separate style to style the prompt (empty or None for default style), defaults to None
+        :type style: PromptStyle | None, optional
+        :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
+        :return: The id of the selected option
+        :rtype: str
+        '''
+        app = TablePrompt(
+            question,
+            data,
+            layout=Layout(
+                HSplit([
+                    Window(FormattedTextControl()),
+                    Window(FormattedTextControl(
+                        HTML('Use UP, DOWN, LEFT, RIGHT to select a cell, TYPE to add char, BACKSPACE to delete char, ENTER to submit')),
+                           char=' ',
+                           style='class:tooltip',
+                           height=1)
+                ])),
+            key_bindings=generate_key_bindings(TablePrompt),
+            erase_when_done=True,
+            style=convert_style(style)
+            if style else convert_style(default_style),
+        )
+        ans = app.prompt()
+        if type(ans) != DataFrame and ans == None:
             raise KeyboardInterrupt()
         return ans
