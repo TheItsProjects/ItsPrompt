@@ -46,6 +46,9 @@ class InputPrompt(Application):
         # save standard toolbar content
         self.toolbar_content_default_text = self.toolbar_content.text  # type: ignore
 
+        # add updating function to buffer change event
+        self.buffer.on_text_changed.add_handler(lambda _: self.update())
+
         # save whether error is currently shown
         self.is_error = False
 
