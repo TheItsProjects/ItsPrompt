@@ -23,11 +23,10 @@ def process_data(
     # process given options
     for option in options:
         if type(option) is str:
-            processed_options.append(
-                SelectOption(
-                    name=option,
-                    id=option,
-                ))
+            processed_options.append(SelectOption(
+                name=option,
+                id=option,
+            ))
         elif type(option) is tuple:
             processed_options.append(
                 SelectOption(
