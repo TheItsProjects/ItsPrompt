@@ -462,7 +462,9 @@ class Prompt:
                 HSplit([
                     Window(FormattedTextControl()),
                     Window(FormattedTextControl(
-                        HTML('Use UP, DOWN, LEFT, RIGHT to select a cell, TYPE to add char, BACKSPACE to delete char, ENTER to submit')),
+                        HTML(
+                            'Use UP, DOWN, LEFT, RIGHT to select a cell, TYPE to add char, BACKSPACE to delete char, ENTER to submit'
+                        )),
                            char=' ',
                            style='class:tooltip',
                            height=1)
