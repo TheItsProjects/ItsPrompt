@@ -1,3 +1,5 @@
+from pandas import DataFrame
+
 from ItsPrompt.prompt import Prompt
 
 # select
@@ -68,6 +70,19 @@ ans = Prompt.confirm(
     'Is the information correct?',
     default=True,
 )
+print(ans)
+
+# table
+data = DataFrame({
+    'Food': ['Pizza', 'Burger', 'Salad'],
+    'Qty': [1, 0, 0],
+})
+
+ans = Prompt.table(
+    'Please fill in your quantity',
+    data,
+)
+
 print(ans)
 
 # styling
