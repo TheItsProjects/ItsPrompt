@@ -7,6 +7,8 @@ created by ItsNameless
 :license: MIT, see LICENSE for more details.
 '''
 
+# mypy: disable-error-code=return-value
+
 from typing import Callable
 
 from pandas import DataFrame

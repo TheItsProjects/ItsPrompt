@@ -74,7 +74,7 @@ class InputPrompt(Application):
         self.validate = validate
 
         # save the completer
-        self.completer = None
+        self.completer: None | Completer = None
 
         if completions and completer:
             raise ValueError(
