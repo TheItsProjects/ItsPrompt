@@ -8,6 +8,7 @@ jobs:
     name: Run all tests with pytest
     runs-on: ubuntu-latest
     steps:
+      # setup python
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup python
@@ -15,6 +16,8 @@ jobs:
         with:
           python-version: "3.x"
       - name: Install modules
-        run: pip install -r requirements.txt pytest
+        run: pip install -r requirements.txt -r requirements-dev.txt
+
+      # run pytest
       - name: Run pytest
         run: python -m pytest
