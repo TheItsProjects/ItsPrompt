@@ -35,9 +35,13 @@ include = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "--cov=ItsPrompt"
+addopts = "--cov=ItsPrompt --cov-report term-missing"
 testpaths = [
     "tests",
+]
+filterwarnings = [
+    # ignore warning, see https://github.com/prompt-toolkit/python-prompt-toolkit/issues/1696
+    "ignore:There is no current event loop:DeprecationWarning",
 ]
 
 [tool.mypy]
