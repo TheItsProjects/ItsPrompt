@@ -1,0 +1,26 @@
+name: Formatting and Typing Check
+on:
+  - push
+  - pull_request
+
+jobs:
+  typing-check:
+    name: mypy Typing Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run mypy
+        uses: jpetrucciani/mypy-check@master
+        with:
+          path: 'ItsPrompt'
+          requirements_file: 'requirements.txt'
+  formatting-check:
+    name: YAPF Formatting Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: run YAPF to test if python code is correctly formatted
+        uses: AlexanderMelde/yapf-action@v1.0
+        with:
+          args: --verbose
