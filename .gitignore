@@ -162,6 +162,7 @@ cython_debug/
 # others
 prototyping
 prototyping/*
+.vscode
 
 # pyenv
 .python-version
