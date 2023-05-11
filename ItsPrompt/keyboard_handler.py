@@ -69,6 +69,7 @@ def generate_key_bindings(app: type[Application]) -> KeyBindings:
         event.app.on_space()  # type: ignore
 
     @kb.add('escape', 'enter', filter=hasattr(app, 'on_alt_enter'))
+    # Vt100 terminals convert "alt+key" to "escape,key"
     def alt_enter(event: KeyPressEvent):
         event.app.on_alt_enter()  # type: ignore
 
