@@ -3,6 +3,9 @@ from ItsPrompt.prompt import Prompt
 from prompt_toolkit.keys import Keys
 from prompt_toolkit.completion import FuzzyWordCompleter
 
+from pandas import DataFrame
+from pandas.testing import assert_frame_equal
+
 import pytest
 
 
@@ -49,6 +52,15 @@ def test_select_raises_invalid_default():
     options = ("first", "second", "third")
     with pytest.raises(ValueError):
         ans = Prompt.select("", options, default="invalid")
+
+
+def test_select_raises_keyboard_interrupt(send_keys):
+    send_keys(Keys.ControlC)
+
+    options = ("first", "second", "third")
+
+    with pytest.raises(KeyboardInterrupt):
+        ans = Prompt.select("", options)
 
 
 # --- RawSelect ---
@@ -114,6 +126,15 @@ def test_raw_select_raises_invalid_default():
         ans = Prompt.raw_select("", options, default="invalid")
 
 
+def test_raw_select_raises_keyboard_interrupt(send_keys):
+    send_keys(Keys.ControlC)
+
+    options = ("first", "second", "third")
+
+    with pytest.raises(KeyboardInterrupt):
+        ans = Prompt.raw_select("", options)
+
+
 # --- Expand ---
 @pytest.mark.parametrize(
     "keys,i",
@@ -176,6 +197,15 @@ def test_expand_raises_invalid_default():
         ans = Prompt.expand("", options, default="invalid")
 
 
+def test_expand_raises_keyboard_interrupt(send_keys):
+    send_keys(Keys.ControlC)
+
+    options = ("first", "second", "third")
+
+    with pytest.raises(KeyboardInterrupt):
+        ans = Prompt.expand("", options)
+
+
 # --- checkbox ---
 @pytest.mark.parametrize(
     "keys,i",
@@ -223,6 +253,15 @@ def test_checkbox_raises_invalid_default():
         ans = Prompt.checkbox("", options, default_checked=("invalid", ))
 
 
+def test_checkbox_raises_keyboard_interrupt(send_keys):
+    send_keys(Keys.ControlC)
+
+    options = ("first", "second", "third")
+
+    with pytest.raises(KeyboardInterrupt):
+        ans = Prompt.checkbox("", options)
+
+
 # TODO check min selections with error box (visual)
 
 
@@ -257,6 +296,13 @@ def test_confirm_with_default(send_keys, key: str, a: bool):
     ans = Prompt.confirm("", default=True)
 
     assert ans == a
+
+
+def test_confirm_raises_keyboard_interrupt(send_keys):
+    send_keys(Keys.ControlC)
+
+    with pytest.raises(KeyboardInterrupt):
+        ans = Prompt.confirm("")
 
 
 # TODO confirm selections with error box (visual)
@@ -326,6 +372,55 @@ def test_input_raises_completer_and_show_symbol_given():
         ans = Prompt.input("", completions=completions, show_symbol="*")
 
 
+def test_input_raises_keyboard_interrupt(send_keys):
+    send_keys(Keys.ControlC)
+
+    with pytest.raises(KeyboardInterrupt):
+        ans = Prompt.input("")
+
+
 # TODO input show_symbol is showing symbol (visual)
 # TODO input completer/completions is working (visual, functional)
 # TODO input validation is showing error (visual)
+
+
+# --- table ---
+@pytest.mark.parametrize(
+    "keys,a",
+    [
+        [
+            (Keys.Enter, ),
+            DataFrame(["first", "second", "third"], dtype="string"),
+        ],
+        [
+            (Keys.Down, "new", Keys.Enter),
+            DataFrame(["first", "secondnew", "third"], dtype="string"),
+        ],
+        [
+            (Keys.Left, Keys.Right, Keys.Up, Keys.Down, Keys.Enter),
+            DataFrame(["first", "second", "third"], dtype="string"),
+        ],
+        [
+            (Keys.Backspace, Keys.Enter),
+            DataFrame(["firs", "second", "third"], dtype="string"),
+        ],
+    ],
+)
+def test_table(send_keys, mock_terminal_size, keys: list[Keys | str],
+               a: DataFrame):
+    data = DataFrame(["first", "second", "third"])
+
+    send_keys(*keys)
+
+    ans = Prompt.table("", data)
+
+    assert_frame_equal(ans, a)
+
+
+def test_able_raises_keyboard_interrupt(send_keys):
+    send_keys(Keys.ControlC)
+
+    data = DataFrame(["first", "second", "third"])
+
+    with pytest.raises(KeyboardInterrupt):
+        ans = Prompt.table("", data)

@@ -4,6 +4,10 @@ from prompt_toolkit.input import create_pipe_input, ansi_escape_sequences, PipeI
 from prompt_toolkit.keys import Keys
 from prompt_toolkit.output import DummyOutput
 
+import os
+
+from typing import NamedTuple
+
 
 def key_converter(*keys: Keys | str) -> str:
     '''
@@ -47,3 +51,22 @@ def send_keys(mock_input: PipeInput):
     The returned callable can be called to convert a list of Keys or strings to one string, which will then be sent to the terminal session via PipeInput.
     '''
     yield lambda *x: mock_input.send_text(key_converter(*x))
+
+
+class FakeTerminalSize(NamedTuple):
+    columns: int
+    lines: int
+
+
+@pytest.fixture(autouse=True)
+def mock_terminal_size(monkeypatch: pytest.MonkeyPatch):
+
+    def get_fake_terminal_size(x=None):
+        '''
+        Fixture for mocking the output of the `os.get_terminal_size()` method
+        
+        This fixture is needed in order for `TablePrompt()` to work.
+        '''
+        return FakeTerminalSize(180, 60)
+
+    monkeypatch.setattr(os, "get_terminal_size", get_fake_terminal_size)
