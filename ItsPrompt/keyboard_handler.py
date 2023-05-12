@@ -78,10 +78,11 @@ def generate_key_bindings(app: type[Application]) -> KeyBindings:
     def backspace(event: KeyPressEvent):
         event.app.on_backspace()  # type: ignore
 
-    # ctrl-backspace is mapped to ctrl-w
-    @kb.add('c-w', filter=hasattr(app, 'on_ctrl_backspace'))
-    def ctrl_backspace(event: KeyPressEvent):
-        event.app.on_ctrl_backspace()  # type: ignore
+    # This Method is used nowhere, so it is commented out. If there is ever a need to use it, it is still there.
+    # # ctrl-backspace is mapped to ctrl-w
+    # @kb.add('c-w', filter=hasattr(app, 'on_ctrl_backspace'))
+    # def ctrl_backspace(event: KeyPressEvent):
+    #     event.app.on_ctrl_backspace()  # type: ignore
 
     @kb.add('<any>', filter=hasattr(app, 'on_key'))
     def wildcard(event: KeyPressEvent):
