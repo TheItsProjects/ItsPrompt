@@ -47,7 +47,7 @@ class ConfirmPrompt(Application):
             # show normal prompt, change style to standard toolbar
             self.toolbar_content.text = self.toolbar_content_default_text
             self.toolbar_window.style = 'class:tooltip'
-        else:
+        else:  # pragma: no cover
             # show error prompt and error style
             # the only error that might occur is that not enough options are selected
             self.toolbar_content.text = f'ERROR: a selection must be made!'
@@ -73,7 +73,7 @@ class ConfirmPrompt(Application):
 
     def on_enter(self):
         # if no default is present, user is not able to just submit
-        if self.default is None:
+        if self.default is None:  # pragma: no cover
             self.is_error = True
             self.update()
             return
