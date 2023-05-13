@@ -69,7 +69,7 @@ class Table:
                     header, '┐', '┬')
 
             if len(str(header)) > self.cell_width:
-                # convert the header to str in case the user did not give a header, so it is an integer
+                #   /\ convert the header to str in case the user did not give a header, so it is an integer
                 header = header[:self.cell_width - 1] + '.'
 
             table_out[1] += f'{header:^{self.cell_width}}' + '│'

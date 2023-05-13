@@ -1,0 +1,25 @@
+name: Tests
+on:
+  - push
+  - pull_request
+
+jobs:
+  testing-check:
+    name: Run all tests with pytest
+    runs-on: ubuntu-latest
+    steps:
+      # setup python
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+          cache: "pip"
+          cache-dependency-path: "requirements*.txt"
+      - name: Install modules
+        run: pip install -r requirements.txt -r requirements-dev.txt
+
+      # run pytest
+      - name: Run pytest
+        run: python -m pytest

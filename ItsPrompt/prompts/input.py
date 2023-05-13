@@ -74,7 +74,7 @@ class InputPrompt(Application):
         self.validate = validate
 
         # save the completer
-        self.completer = None
+        self.completer: None | Completer = None
 
         if completions and completer:
             raise ValueError(
@@ -86,7 +86,7 @@ class InputPrompt(Application):
             raise ValueError(
                 'Completions are not compatible with show_symbol!')
 
-        if completions:
+        if completions:  # pragma: no cover
             # a list or a dict of completions to use is given
             if type(completions) is list:
                 # we use FuzzyWordCompleter
@@ -96,15 +96,15 @@ class InputPrompt(Application):
                 self.completer = FuzzyCompleter(
                     NestedCompleter.from_nested_dict(completions))
 
-        elif completer:
+        elif completer:  # pragma: no cover
             # a self-created completer is given
             self.completer = completer
 
         # assign the created completer to the buffer
-        if self.completer:
+        if self.completer:  # pragma: no cover
             self.buffer.completer = self.completer
 
-    def update(self):
+    def update(self):  # pragma: no cover
         '''update prompt content'''
         content = f'[<question_mark>?</question_mark>] <question>{self.question}</question>: '
 
@@ -149,7 +149,7 @@ class InputPrompt(Application):
     def _submit(self):
         '''method for submitting result, as this is done by two functions'''
         # if an error is currently shown, prevent submit
-        if self.is_error:
+        if self.is_error:  # pragma: no cover
             return
 
         # return buffer if given, else default if given, else empty string
@@ -169,7 +169,8 @@ class InputPrompt(Application):
         '''either submit key or in multiline, append new line'''
         # run completion
         if (self.is_running) and self.buffer.complete_state and (
-                completion := self.buffer.complete_state.current_completion):
+                completion := self.buffer.complete_state.current_completion
+        ):  # pragma: no cover
             self.buffer.apply_completion(completion)
 
         if self.multiline:

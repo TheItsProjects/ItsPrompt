@@ -69,6 +69,7 @@ def generate_key_bindings(app: type[Application]) -> KeyBindings:
         event.app.on_space()  # type: ignore
 
     @kb.add('escape', 'enter', filter=hasattr(app, 'on_alt_enter'))
+    # Vt100 terminals convert "alt+key" to "escape,key"
     def alt_enter(event: KeyPressEvent):
         event.app.on_alt_enter()  # type: ignore
 
@@ -77,10 +78,11 @@ def generate_key_bindings(app: type[Application]) -> KeyBindings:
     def backspace(event: KeyPressEvent):
         event.app.on_backspace()  # type: ignore
 
-    # ctrl-backspace is mapped to ctrl-w
-    @kb.add('c-w', filter=hasattr(app, 'on_ctrl_backspace'))
-    def ctrl_backspace(event: KeyPressEvent):
-        event.app.on_ctrl_backspace()  # type: ignore
+    # This Method is used nowhere, so it is commented out. If there is ever a need to use it, it is still there.
+    # # ctrl-backspace is mapped to ctrl-w
+    # @kb.add('c-w', filter=hasattr(app, 'on_ctrl_backspace'))
+    # def ctrl_backspace(event: KeyPressEvent):
+    #     event.app.on_ctrl_backspace()  # type: ignore
 
     @kb.add('<any>', filter=hasattr(app, 'on_key'))
     def wildcard(event: KeyPressEvent):

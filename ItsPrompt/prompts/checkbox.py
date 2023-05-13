@@ -83,7 +83,7 @@ class CheckboxPrompt(Application):
             # show normal prompt, change style to standard toolbar
             self.toolbar_content.text = self.toolbar_content_default_text
             self.toolbar_window.style = 'class:tooltip'
-        else:
+        else:  # pragma: no cover
             # show error prompt and error style
             # the only error that might occur is that not enough options are selected
             self.toolbar_content.text = f'ERROR: a minimum of {self.min_selections} options need to be selected!'
@@ -133,7 +133,7 @@ class CheckboxPrompt(Application):
                 selected_options.append(option.id)
 
         # make sure that enough are selected
-        if len(selected_options) < self.min_selections:
+        if len(selected_options) < self.min_selections:  # pragma: no cover
             # show error
             self.is_error = True
             self.update()

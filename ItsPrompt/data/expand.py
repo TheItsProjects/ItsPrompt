@@ -24,7 +24,8 @@ def process_data(
     :rtype: list[ExpandOption]
     '''
     # check if every key is unique, otherwise return error
-    if any([options.count(option[0]) > 1 for option in options]):
+    keys = [option[0] for option in options]
+    if len(set(keys)) < len(keys):
         raise ValueError('Keys must be unique!')
 
     # check that every key string is only one char long

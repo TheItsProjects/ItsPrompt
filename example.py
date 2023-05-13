@@ -1,3 +1,5 @@
+# mypy: disable-error-code=assignment
+
 from pandas import DataFrame
 
 from ItsPrompt.prompt import Prompt
@@ -31,6 +33,7 @@ print(ans)
 ans = Prompt.expand(
     'Where do you want your food to be delivered?',
     ('my home', 'another home'),
+    allow_keyboard=True,
 )
 print(ans)
 
@@ -39,6 +42,8 @@ print(ans)
 def input_not_empty(input: str) -> str | None:
     if len(input) == 0:
         return 'Input field can not be empty!'
+
+    return None
 
 
 ans = Prompt.input(

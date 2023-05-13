@@ -92,13 +92,13 @@ class RawSelectPrompt(Application):
         if not key.isnumeric():
             return
 
-        key = int(key)
+        id = int(key)
 
         # and return if key is not in the range of possible indices
-        if key <= 0 or key > len(self.options):
+        if id <= 0 or id > len(self.options):
             return
 
-        self.selection = key - 1
+        self.selection = id - 1
 
         self.update()
 

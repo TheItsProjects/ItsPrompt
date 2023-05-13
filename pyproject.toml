@@ -6,19 +6,19 @@ build-backend = "setuptools.build_meta"
 name = "ItsPrompt"
 version = "1.2"
 authors = [
-    {name = "ItsNameless"}
+    {name = "ItsNameless"},
 ]
 description = "Prompting - the fancy way"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
     "prompt-toolkit>=3.0.37,<4.0",
-    "pandas>=1.5.3"
+    "pandas>=1.5.3",
 ]
 classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent"
+        "Operating System :: OS Independent",
 ]
 license = {file = "LICENSE"}
 
@@ -31,5 +31,20 @@ Repository = "https://github.com/TheItsProjects/ItsPrompt"
 where = ["."]
 include = [
     "ItsPrompt",
-    "ItsPrompt.*"
+    "ItsPrompt.*",
 ]
+
+[tool.pytest.ini_options]
+addopts = "--cov=ItsPrompt --cov-report term-missing"
+testpaths = [
+    "tests",
+]
+filterwarnings = [
+    # ignore warning, see https://github.com/prompt-toolkit/python-prompt-toolkit/issues/1696
+    "ignore:There is no current event loop:DeprecationWarning",
+]
+
+[tool.mypy]
+packages = "ItsPrompt"
+explicit_package_bases = true
+check_untyped_defs = true

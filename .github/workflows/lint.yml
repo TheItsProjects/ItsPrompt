@@ -1,0 +1,34 @@
+name: linting
+on:
+  - push
+  - pull_request
+
+jobs:
+  typing-check:
+    name: mypy Typing Check
+    runs-on: ubuntu-latest
+    steps:
+      # setup python
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+          cache: "pip"
+          cache-dependency-path: "requirements*.txt"
+      - name: Install modules
+        run: pip install -r requirements.txt -r requirements-dev.txt
+
+      # run mypy
+      - name: Run mypy
+        run: python -m mypy
+  formatting-check:
+    name: YAPF Formatting Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: run YAPF to test if python code is correctly formatted
+        uses: AlexanderMelde/yapf-action@v1.0
+        with:
+          args: --verbose
