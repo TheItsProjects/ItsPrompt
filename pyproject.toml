@@ -13,7 +13,6 @@ readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
     "prompt-toolkit>=3.0.37,<4.0",
-    "pandas>=1.5.3",
 ]
 classifiers = [
         "Programming Language :: Python :: 3",
@@ -33,6 +32,9 @@ include = [
     "ItsPrompt",
     "ItsPrompt.*",
 ]
+
+[options.extras_require]
+df = "pandas>=1.5.3"
 
 [tool.pytest.ini_options]
 addopts = "--cov=ItsPrompt --cov-report term-missing"
