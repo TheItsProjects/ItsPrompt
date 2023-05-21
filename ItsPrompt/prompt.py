@@ -9,9 +9,8 @@ created by ItsNameless
 
 # mypy: disable-error-code=return-value
 
-from typing import Callable
+from typing import TYPE_CHECKING, Callable, Union
 
-from pandas import DataFrame
 from prompt_toolkit import HTML
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.completion import Completer
@@ -32,6 +31,9 @@ from .prompts.input import InputPrompt
 from .prompts.raw_select import RawSelectPrompt
 from .prompts.select import SelectPrompt
 from .prompts.table import TablePrompt
+
+if TYPE_CHECKING:
+    from pandas import DataFrame
 
 
 class Prompt:
@@ -434,23 +436,20 @@ class Prompt:
     def table(
         cls,
         question: str,
-        data: DataFrame,
+        data: Union["DataFrame", dict[str, list[str]]],
         style: PromptStyle | None = None,
-    ) -> DataFrame:
+    ) -> Union["DataFrame", dict[str, list[str]]]:
         '''
         Ask the user for filling out the displayed table.
 
         This method shows the question alongside a table, which the user may navigate with the arrow keys. The user has the ability to use the up, down and enter keys to navigate between the options and change the text in each cell.
 
-        The `data` is a pandas DataFrame, where the values will be input in the cells by default.
+        The `data` is either a pandas DataFrame or a dictionary.
 
-        # TODO
         :param question: The question to display
         :type question: str
-        :param options: A list of possible options
-        :type options: tuple[str  |  tuple[str, str], ...]
-        :param default: The id of the default option to select (empty or None if the first should be default), defaults to None
-        :type default: str | None, optional
+        :param data: The data to display
+        :type data: DataFrame | dict[str, list[str]]
         :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
@@ -477,6 +476,7 @@ class Prompt:
             if style else convert_style(default_style),
         )
         ans = app.prompt()
-        if type(ans) != DataFrame and ans == None:
+        # if type(ans) is type(None):
+        if ans is None:
             raise KeyboardInterrupt()
-        return ans
+        return ans  # type: ignore

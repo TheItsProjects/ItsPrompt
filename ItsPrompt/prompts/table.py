@@ -1,11 +1,14 @@
 import html
+from typing import TYPE_CHECKING, Union
 
-from pandas import DataFrame
 from prompt_toolkit import HTML, Application
 from prompt_toolkit.data_structures import Point
 from prompt_toolkit.layout.controls import FormattedTextControl
 
 from ..data.table import Table
+
+if TYPE_CHECKING:
+    from pandas import DataFrame
 
 
 class TablePrompt(Application):
@@ -13,7 +16,7 @@ class TablePrompt(Application):
     def __init__(
         self,
         question: str,
-        data: DataFrame,
+        data: Union["DataFrame", dict[str, list[str]]],
         *args,
         **kwargs,
     ):
@@ -47,10 +50,10 @@ class TablePrompt(Application):
 
         self.prompt_content.text = HTML(content)
 
-    def prompt(self) -> DataFrame | None:
+    def prompt(self) -> Union["DataFrame", dict[str, list[str]], None]:
         '''start the application, returns the return value'''
         self.update()
-        out: DataFrame | None = self.run()
+        out: Union["DataFrame", dict[str, list[str]], None] = self.run()
 
         return out
 
@@ -93,4 +96,4 @@ class TablePrompt(Application):
 
     def on_enter(self):
         # return the modified table
-        self.exit(result=self.table.data)
+        self.exit(result=self.table.data.get_data())

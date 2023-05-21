@@ -1,11 +1,25 @@
 import os
+from typing import TYPE_CHECKING, Union
 
-from pandas import DataFrame
+from ..objects.table.table_base import TableDataBase
+from ..objects.table.table_dict import TableDataFromDict
+
+# only import pandas and TableData if pandas is installed
+try:
+    from pandas import DataFrame
+
+    from ..objects.table.table_df import TableDataFromDF
+except ModuleNotFoundError:
+    # pandas is not installed
+    pass
+
+if TYPE_CHECKING:
+    from pandas import DataFrame
 
 
 class Table:
 
-    def __init__(self, data: DataFrame) -> None:
+    def __init__(self, data: Union["DataFrame", dict[str, list[str]]]) -> None:
         '''
         Creates a table object for storing the drawable table instance
 
@@ -14,24 +28,28 @@ class Table:
         '''
         # change type of all columns to str
         # TODO maybe later support more datatypes
-        self.data = data.astype('string')
+        self.data: TableDataBase
+        if type(data) is dict:
+            self.data = TableDataFromDict(data)
+        elif type(data) is DataFrame:
+            self.data = TableDataFromDF(data)
 
         # save amount of rows
-        self.row_count = len(self.data) + 1
-        self.col_count = len(self.data.columns)
+        self.row_count = self.data.row_count
+        self.col_count = self.data.col_count
 
         # get max cell width
         max_width = os.get_terminal_size().columns
 
         # get width for each cell
-        self.cell_width = (max_width - 1) // len(self.data.columns) - 1
+        self.cell_width = (max_width - 1) // self.col_count - 1
 
         # save current selected cell
         self.cur_cell = [0, 0]  # ignoring header, as this can not be selected
 
     def _col_is_last(self, col) -> bool:
         '''checks if the given column is the last column in the DataFrame'''
-        return self.data.columns.get_loc(col) == len(self.data.columns) - 1
+        return self.data.get_column_location(col) == self.col_count - 1
 
     def _char_if_last_else_otherchar(
         self,
@@ -113,21 +131,20 @@ class Table:
 
     def add_key(self, key: str):
         '''add key to current selected cell'''
-        self.data.iat[self.cur_cell[1], self.cur_cell[0]] += key
+        self.data.add_key(self.cur_cell[1], self.cur_cell[0], key)
 
     def del_key(self):
         '''remove last key from current selected cell'''
-        self.data.iat[self.cur_cell[1],
-                      self.cur_cell[0]] = self.data.iat[self.cur_cell[1],
-                                                        self.cur_cell[0]][:-1]
+        self.data.del_key(self.cur_cell[1], self.cur_cell[0])
 
     def get_current_cursor_position(self) -> tuple[int, int]:
         '''returns the current position of the cursor, relative to the top left corner character as (0, 0)'''
         y = self.cur_cell[1] * 2 + 3  # 3 is offset for header
 
-        item_length = len(self.data.iat[
-            self.cur_cell[1],
-            self.cur_cell[0]])  # length of the item in the current cell
+        item_length = len(
+            self.data.get_item_at(
+                self.cur_cell[1],
+                self.cur_cell[0]))  # length of the item in the current cell
 
         x = (self.cell_width + 1) * self.cur_cell[
             0] + 1 + item_length  # 1 is offset for left border, item_length is length of item
