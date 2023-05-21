@@ -1,6 +1,10 @@
 # mypy: disable-error-code=assignment
 
-from pandas import DataFrame
+try:
+    from pandas import DataFrame
+    NO_PANDAS = False
+except ModuleNotFoundError:
+    NO_PANDAS = True
 
 from ItsPrompt.prompt import Prompt
 
@@ -78,17 +82,18 @@ ans = Prompt.confirm(
 print(ans)
 
 # table
-data = DataFrame({
-    'Food': ['Pizza', 'Burger', 'Salad'],
-    'Qty': [1, 0, 0],
-})
+if not NO_PANDAS:
+    data = DataFrame({
+        'Food': ['Pizza', 'Burger', 'Salad'],
+        'Qty': [1, 0, 0],
+    })
 
-ans = Prompt.table(
-    'Please fill in your quantity',
-    data,
-)
+    ans = Prompt.table(
+        'Please fill in your quantity',
+        data,
+    )
 
-print(ans)
+    print(ans)
 
 # styling
 

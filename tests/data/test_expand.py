@@ -64,8 +64,6 @@ def test_process_data_raises_h_given():
     with pytest.raises(ValueError):
         ans = process_data(options)
 
-        print(ans)
-
 
 def test_process_data_raises_type_error():
     options = (["i", "invalid"], )

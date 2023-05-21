@@ -390,19 +390,19 @@ def test_input_raises_keyboard_interrupt(send_keys):
     [
         [
             (Keys.Enter, ),
-            DataFrame(["first", "second", "third"], dtype="string"),
+            DataFrame({"0": ["first", "second", "third"]}),
         ],
         [
             (Keys.Down, "new", Keys.Enter),
-            DataFrame(["first", "secondnew", "third"], dtype="string"),
+            DataFrame({"0": ["first", "secondnew", "third"]}),
         ],
         [
             (Keys.Left, Keys.Right, Keys.Up, Keys.Down, Keys.Enter),
-            DataFrame(["first", "second", "third"], dtype="string"),
+            DataFrame({"0": ["first", "second", "third"]}),
         ],
         [
             (Keys.Backspace, Keys.Enter),
-            DataFrame(["firs", "second", "third"], dtype="string"),
+            DataFrame({"0": ["firs", "second", "third"]}),
         ],
     ],
 )
