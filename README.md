@@ -1,4 +1,7 @@
 [![PyPI version](https://badge.fury.io/py/ItsPrompt.svg)](https://badge.fury.io/py/ItsPrompt)
+[![linting](https://github.com/TheItsProjects/ItsPrompt/actions/workflows/lint.yml/badge.svg)](https://github.com/TheItsProjects/ItsPrompt/actions/workflows/lint.yml)
+[![Tests](https://github.com/TheItsProjects/ItsPrompt/actions/workflows/tests.yml/badge.svg)](https://github.com/TheItsProjects/ItsPrompt/actions/workflows/tests.yml)
+
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/ItsPrompt)](https://pypi.org/project/ItsPrompt/)
 [![GitHub issues](https://img.shields.io/github/issues/TheItsProjects/ItsPrompt)](https://github.com/TheItsProjects/ItsPrompt/issues)
 [![GitHub Repo stars](https://img.shields.io/github/stars/TheItsProjects/ItsPrompt)](https://github.com/TheItsProjects/ItsPrompt/stargazers)
