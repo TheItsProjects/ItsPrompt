@@ -32,7 +32,7 @@ from .prompts.raw_select import RawSelectPrompt
 from .prompts.select import SelectPrompt
 from .prompts.table import TablePrompt
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from pandas import DataFrame
 
 
@@ -163,7 +163,7 @@ class Prompt:
         allow_keyboard: bool = False,
         style: PromptStyle | None = None,
     ) -> str:
-        '''
+        """
         Ask the user for selecting ONE of the given `options`.
 
         The user needs to type the key of the option. If the user types `h`, all options will be shown.
@@ -185,7 +185,7 @@ class Prompt:
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The id of the selected option
         :rtype: str
-        '''
+        """
         app = ExpandPrompt(
             question,
             options,
@@ -223,7 +223,7 @@ class Prompt:
         min_selections: int = 0,
         style: PromptStyle | None = None,
     ) -> list[str]:
-        '''
+        """
         Ask the user for selecting MULTIPLE of the given `options`.
 
         The `options` will be shown as a nice list. The user may navigate with up and down, select or deselect with space and submit with enter.
@@ -245,7 +245,7 @@ class Prompt:
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The ids of the selected options
         :rtype: list[str]
-        '''
+        """
         app = CheckboxPrompt(
             question,
             options,
@@ -280,7 +280,7 @@ class Prompt:
         default: bool | None = None,
         style: PromptStyle | None = None,
     ) -> bool:
-        '''
+        """
         Ask the user for confirming or denying your prompt.
 
         The user needs to type "y", "n" or enter (only if default is given).
@@ -300,7 +300,7 @@ class Prompt:
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: Whether the user selected "y" or "n"
         :rtype: bool
-        '''
+        """
         app = ConfirmPrompt(
             question,
             default,
@@ -339,7 +339,7 @@ class Prompt:
         completion_show_multicolumn: bool = False,
         style: PromptStyle | None = None,
     ) -> str:
-        '''
+        """
         Ask the user for typing an input.
 
         If default is given, it will be returned if enter was pressed and no input was given by the user. If the user writes an input, the default will be overwritten.
@@ -377,7 +377,7 @@ class Prompt:
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The input of the user
         :rtype: str
-        '''
+        """
 
         # extracting the body, so we can display a floating auto completion field
         body = HSplit([
@@ -439,7 +439,7 @@ class Prompt:
         data: Union["DataFrame", dict[str, list[str]]],
         style: PromptStyle | None = None,
     ) -> Union["DataFrame", dict[str, list[str]]]:
-        '''
+        """
         Ask the user for filling out the displayed table.
 
         This method shows the question alongside a table, which the user may navigate with the arrow keys. The user has the ability to use the up, down and enter keys to navigate between the options and change the text in each cell.
@@ -455,7 +455,7 @@ class Prompt:
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The id of the selected option
         :rtype: str
-        '''
+        """
         app = TablePrompt(
             question,
             data,

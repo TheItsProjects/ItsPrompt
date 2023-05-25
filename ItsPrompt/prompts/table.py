@@ -7,18 +7,18 @@ from prompt_toolkit.layout.controls import FormattedTextControl
 
 from ..data.table import Table
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from pandas import DataFrame
 
 
 class TablePrompt(Application):
 
     def __init__(
-        self,
-        question: str,
-        data: Union["DataFrame", dict[str, list[str]]],
-        *args,
-        **kwargs,
+            self,
+            question: str,
+            data: Union["DataFrame", dict[str, list[str]]],
+            *args,
+            **kwargs,
     ):
         super().__init__(*args, **kwargs)
 
@@ -40,7 +40,7 @@ class TablePrompt(Application):
         )
 
     def update(self):
-        '''update prompt content'''
+        """update prompt content"""
         content = f'[<question_mark>?</question_mark>] <question>{self.question}</question>:\n'
 
         # append table
@@ -51,45 +51,45 @@ class TablePrompt(Application):
         self.prompt_content.text = HTML(content)
 
     def prompt(self) -> Union["DataFrame", dict[str, list[str]], None]:
-        '''start the application, returns the return value'''
+        """start the application, returns the return value"""
         self.update()
         out: Union["DataFrame", dict[str, list[str]], None] = self.run()
 
         return out
 
     def on_up(self):
-        '''when up is pressed, the cell one above will be selected'''
+        """when up is pressed, the cell one above will be selected"""
         self.table.on_up()
 
         self.update()
 
     def on_down(self):
-        '''when down is pressed, the cell one below will be selected'''
+        """when down is pressed, the cell one below will be selected"""
         self.table.on_down()
 
         self.update()
 
     def on_left(self):
-        '''when left is pressed, the cell one to the left will be selected'''
+        """when left is pressed, the cell one to the left will be selected"""
         self.table.on_left()
 
         self.update()
 
     def on_right(self):
-        '''when left is pressed, the cell one to the right will be selected'''
+        """when left is pressed, the cell one to the right will be selected"""
         self.table.on_right()
 
         self.update()
 
     def on_key(self, key_sequence: list[str]):
-        '''when a key is pressed, the key will be added to the current cells content'''
+        """when a key is pressed, the key will be added to the current cells content"""
         key = key_sequence[0]
         self.table.add_key(key)
 
         self.update()
 
     def on_backspace(self):
-        '''when backspace is pressed, the last char will be removed from the current cells content'''
+        """when backspace is pressed, the last char will be removed from the current cells content"""
         self.table.del_key()
 
         self.update()

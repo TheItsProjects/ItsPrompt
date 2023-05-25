@@ -6,10 +6,10 @@ from .table_base import TableDataBase
 class TableDataFromDict(TableDataBase):
 
     def __init__(self, data: dict[str, list[str]]) -> None:
-        # make sure every tuple has same length
+        # make sure every list has same length
         lengths = set([len(t) for t in data.values()])
         if len(lengths) != 1:
-            raise ValueError("Dictionary values must be same length!")
+            raise ValueError("Dictionary columns (lists) must be same length!")
 
         self.data = data
 
