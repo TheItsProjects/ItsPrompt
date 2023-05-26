@@ -1,6 +1,6 @@
 import pytest
 
-from ItsPrompt.data.select import process_data, SelectOption
+from ItsPrompt.data.select import SelectOption, process_data
 
 
 def test_process_data_standard_options():

@@ -8,9 +8,8 @@ class ExpandOption:
     id: str
 
 
-def process_data(
-        options: tuple[str | tuple[str, str, str], ...]) -> list[ExpandOption]:
-    '''
+def process_data(options: tuple[str | tuple[str, str, str], ...]) -> list[ExpandOption]:
+    """
     Processes the given `options` and returns the processed list
 
     :param options: A list of options to process
@@ -22,7 +21,7 @@ def process_data(
     :raises TypeError: If an option is not processable
     :return: A list of `ExpandOptions`
     :rtype: list[ExpandOption]
-    '''
+    """
     # check if every key is unique, otherwise return error
     keys = [option[0] for option in options]
     if len(set(keys)) < len(keys):
@@ -46,28 +45,13 @@ def process_data(
     for option in options:
         if type(option) is str:
             # use first letter as key, and str as name and id
-            processed_options.append(
-                ExpandOption(
-                    key=option[0],
-                    name=option,
-                    id=option,
-                ))
+            processed_options.append(ExpandOption(key=option[0], name=option, id=option))
         elif type(option) is tuple:
-            processed_options.append(
-                ExpandOption(
-                    key=option[0],
-                    name=option[1],
-                    id=option[2],
-                ))
+            processed_options.append(ExpandOption(key=option[0], name=option[1], id=option[2]))
         else:
             raise TypeError('Argument is not processable')
 
     # append a help option
-    processed_options.append(
-        ExpandOption(
-            key='h',
-            name='Help Menu, list or hide all options',
-            id='',
-        ))
+    processed_options.append(ExpandOption(key='h', name='Help Menu, list or hide all options', id=''))
 
     return processed_options

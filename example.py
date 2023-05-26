@@ -1,6 +1,11 @@
 # mypy: disable-error-code=assignment
 
-from pandas import DataFrame
+try:
+    from pandas import DataFrame
+
+    NO_PANDAS = False
+except ModuleNotFoundError:
+    NO_PANDAS = True
 
 from ItsPrompt.prompt import Prompt
 
@@ -24,7 +29,7 @@ print(ans)
 ans = Prompt.checkbox(
     'What beverages would you like?',
     ('Coke', 'Water', 'Juice'),
-    default_checked=('Water', ),
+    default_checked=('Water',),
     min_selections=1,
 )
 print(ans)
@@ -78,17 +83,18 @@ ans = Prompt.confirm(
 print(ans)
 
 # table
-data = DataFrame({
-    'Food': ['Pizza', 'Burger', 'Salad'],
-    'Qty': [1, 0, 0],
-})
+if not NO_PANDAS:
+    data = DataFrame({
+        'Food': ['Pizza', 'Burger', 'Salad'],
+        'Qty': [1, 0, 0],
+    })
 
-ans = Prompt.table(
-    'Please fill in your quantity',
-    data,
-)
+    ans = Prompt.table(
+        'Please fill in your quantity',
+        data,
+    )
 
-print(ans)
+    print(ans)
 
 # styling
 

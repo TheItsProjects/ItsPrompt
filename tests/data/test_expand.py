@@ -1,6 +1,6 @@
 import pytest
 
-from ItsPrompt.data.expand import process_data, ExpandOption
+from ItsPrompt.data.expand import ExpandOption, process_data
 
 
 def test_process_data_standard_options():
@@ -45,30 +45,28 @@ def test_process_data_raises_unique_keys():
 
 
 def test_process_data_raises_key_too_long():
-    options = (("tt", "too long", "tt"), )
+    options = (("tt", "too long", "tt"),)
 
     with pytest.raises(ValueError):
         ans = process_data(options)
 
 
 def test_process_data_raises_key_not_ascii():
-    options = (("❓", "not ascii", "na"), )
+    options = (("❓", "not ascii", "na"),)
 
     with pytest.raises(ValueError):
         ans = process_data(options)
 
 
 def test_process_data_raises_h_given():
-    options = (("h", "h given", "h"), )
+    options = (("h", "h given", "h"),)
 
     with pytest.raises(ValueError):
         ans = process_data(options)
 
-        print(ans)
-
 
 def test_process_data_raises_type_error():
-    options = (["i", "invalid"], )
+    options = (["i", "invalid"],)
 
     with pytest.raises(TypeError):
         ans = process_data(options)  # type: ignore # mypy: ignore

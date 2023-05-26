@@ -1,4 +1,4 @@
-from prompt_toolkit import HTML, Application
+from prompt_toolkit import Application, HTML
 from prompt_toolkit.layout.controls import FormattedTextControl
 
 from ..data.expand import process_data
@@ -18,8 +18,7 @@ class ExpandPrompt(Application):
         super().__init__(*args, **kwargs)
 
         # get prompt content box
-        self.prompt_content: FormattedTextControl = self.layout.container.get_children(
-        )[0].content  # type: ignore
+        self.prompt_content: FormattedTextControl = self.layout.container.get_children()[0].content  # type: ignore
 
         # save question
         self.question = question
@@ -49,7 +48,7 @@ class ExpandPrompt(Application):
             raise ValueError('Default value is not a valid id.')
 
     def update(self):
-        '''update prompt content'''
+        """update prompt content"""
         # question
         content = f'[<question_mark>?</question_mark>] <question>{self.question}</question>: <text>({self.keys})</text>'
 
@@ -67,37 +66,35 @@ class ExpandPrompt(Application):
         self.prompt_content.text = HTML(content)
 
     def prompt(self) -> str | None:
-        '''start the application, returns the return value'''
+        """start the application, returns the return value"""
         self.update()
         out: str | None = self.run()
 
         return out
 
     def on_up(self):
-        '''when up is pressed, the previous indexed option will be selected'''
+        """when up is pressed, the previous indexed option will be selected"""
         if not self.allow_keyboard:
             return
 
-        self.selection = self.keys[(self.keys.index(self.selection) - 1) %
-                                   len(self.keys)]
+        self.selection = self.keys[(self.keys.index(self.selection) - 1) % len(self.keys)]
 
         self.update()
 
     def on_down(self):
-        '''when down is pressed, the next indexed option will be selected'''
+        """when down is pressed, the next indexed option will be selected"""
         if not self.allow_keyboard:
             return
 
-        self.selection = self.keys[(self.keys.index(self.selection) + 1) %
-                                   len(self.keys)]
+        self.selection = self.keys[(self.keys.index(self.selection) + 1) % len(self.keys)]
 
         self.update()
 
     def on_key(self, key_sequence: list[str]):
-        '''when a index is pressed, which is available to select, select this index'''
+        """when an index is pressed, which is available to select, select this index"""
         key = key_sequence[0]
 
-        # return if key is not a an available key
+        # return if key is not an available key
         if not key in self.keys:
             return
 

@@ -3,42 +3,44 @@ from prompt_toolkit.key_binding import KeyBindings, KeyPressEvent
 
 
 def generate_key_bindings(app: type[Application]) -> KeyBindings:
-    '''
+    """
     Generates a KeyBindings object for use in a Prompt class
 
-    The `app` is used to check whether specific functions for handling the key events exist. It has to be a Prompt object (e.g. InputPrompt).
-    
+    The `app` is used to check whether specific functions for handling the key events exist. It has to be a Prompt
+    object (e.g. InputPrompt).
+
     The available functions are:
-    
+
     `on_up()`
-    
+
     `on_down()`
-    
+
     `on_left()`
-    
+
     `on_right()`
-    
+
     `on_enter()`
-    
+
     `on_space()`
-    
+
     `on_alt_enter()`
-    
+
     `on_backspace()`
-    
+
     `on_ctrl_backspace()`
-    
+
     `on_key()`
 
     :param app: An application type to check whether one of the above functions exists
     :type app: type[Application]
     :return: An usable KeyBindings instance
     :rtype: KeyBindings
-    '''
+    """
 
     kb = KeyBindings()
 
-    # Each of the options gets the keyboard input and runs the equivalent function in the event.app class, if the function exists.
+    # Each of the options gets the keyboard input and runs the equivalent function in the event.app class,
+    # if the function exists.
 
     @kb.add('c-c')
     def quit(event: KeyPressEvent):
@@ -87,7 +89,6 @@ def generate_key_bindings(app: type[Application]) -> KeyBindings:
     @kb.add('<any>', filter=hasattr(app, 'on_key'))
     def wildcard(event: KeyPressEvent):
         # wildcard function, used for prompts which need standard key presses like numbers or characters
-        event.app.on_key(  # type: ignore
-            [key.key for key in event.key_sequence], )
+        event.app.on_key([key.key for key in event.key_sequence])  # type: ignore
 
     return kb
