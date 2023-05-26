@@ -1,25 +1,32 @@
-'''
+"""
 # ItsPrompt
 
 created by ItsNameless
 
 :copyright: (c) 2023-present ItsNameless
 :license: MIT, see LICENSE for more details.
-'''
+"""
 
 # mypy: disable-error-code=return-value
 
-from typing import TYPE_CHECKING, Callable, Union
+from typing import Callable, TYPE_CHECKING, Union
 
 from prompt_toolkit import HTML
 from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.completion import Completer
-from prompt_toolkit.layout.containers import (Float, FloatContainer, HSplit,
-                                              VSplit, Window)
+from prompt_toolkit.layout.containers import (
+    Float,
+    FloatContainer,
+    HSplit,
+    VSplit,
+    Window,
+)
 from prompt_toolkit.layout.controls import BufferControl, FormattedTextControl
 from prompt_toolkit.layout.layout import Layout
-from prompt_toolkit.layout.menus import (CompletionsMenu,
-                                         MultiColumnCompletionsMenu)
+from prompt_toolkit.layout.menus import (
+    CompletionsMenu,
+    MultiColumnCompletionsMenu,
+)
 
 from .data.style import PromptStyle, convert_style, default_style
 from .data.type import CompletionDict
@@ -37,16 +44,16 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 class Prompt:
-    '''
+    """
     # Modern python prompter
-    
+
     This tool is used to ask the user questions, the fancy way.
-    
+
     Usage:
     ```
     answer = Prompt.checkbox('option 1', 'option 2')
     ```
-    '''
+    """
 
     @classmethod
     def select(
@@ -56,42 +63,48 @@ class Prompt:
         default: str | None = None,
         style: PromptStyle | None = None,
     ) -> str:
-        '''
+        """
         Ask the user for selecting ONE of the given `options`.
 
-        This method shows the question alongside the `options` as a nice list. The user has the ability to use the up, down and enter keys to navigate between the options and select the one thats right.
+        This method shows the question alongside the `options` as a nice list. The user has the ability to use the
+        up, down and enter keys to navigate between the options and select the one thats right.
 
-        The `options` are either a string, which is used as the display value and the id, or a tuple[str, str], where the first string is the display value and the second is the option's id.
+        The `options` are either a string, which is used as the display value and the id, or a tuple[str, str],
+        where the first string is the display value and the second is the option's id.
 
         :param question: The question to display
         :type question: str
         :param options: A list of possible options
         :type options: tuple[str  |  tuple[str, str], ...]
-        :param default: The id of the default option to select (empty or None if the first should be default), defaults to None
+        :param default: The id of the default option to select (empty or None if the first should be default),
+        defaults to None
         :type default: str | None, optional
         :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The id of the selected option
         :rtype: str
-        '''
+        """
         app = SelectPrompt(
             question,
             options,
             default,
             layout=Layout(
-                HSplit([
-                    Window(FormattedTextControl(), always_hide_cursor=True),
-                    Window(FormattedTextControl(
-                        HTML('Use UP, DOWN to select, ENTER to submit')),
-                           char=' ',
-                           style='class:tooltip',
-                           height=1)
-                ])),
+                HSplit(
+                    [
+                        Window(FormattedTextControl(), always_hide_cursor=True),
+                        Window(
+                            FormattedTextControl(HTML('Use UP, DOWN to select, ENTER to submit')),
+                            char=' ',
+                            style='class:tooltip',
+                            height=1
+                        )
+                    ]
+                )
+            ),
             key_bindings=generate_key_bindings(SelectPrompt),
             erase_when_done=True,
-            style=convert_style(style)
-            if style else convert_style(default_style),
+            style=convert_style(style) if style else convert_style(default_style),
         )
         ans = app.prompt()
         if ans == None:
@@ -107,18 +120,21 @@ class Prompt:
         allow_keyboard: bool = False,
         style: PromptStyle | None = None,
     ) -> str:
-        '''
+        """
         Ask the user for selection ONE of the given `options`.
 
-        This method shows the question alongside the `options` as a nice list. The user needs to type the index of the answer. If `allow_keyboard` is given, the user may use the keyboard as in the `select()` method.
+        This method shows the question alongside the `options` as a nice list. The user needs to type the index of
+        the answer. If `allow_keyboard` is given, the user may use the keyboard as in the `select()` method.
 
-        The `options` are either a string, which is used as the display value and the id, or a tuple[str, str], where the first string is the display value and the second is the option's id.
+        The `options` are either a string, which is used as the display value and the id, or a tuple[str, str],
+        where the first string is the display value and the second is the option's id.
 
         :param question: The question to display
         :type question: str
         :param options: A list of possible options
         :type options: tuple[str  |  tuple[str, str], ...]
-        :param default: The id of the default option to select (empty or None if the first should be default), defaults to None
+        :param default: The id of the default option to select (empty or None if the first should be default),
+        defaults to None
         :type default: str | None, optional
         :param allow_keyboard: Whether the user should be able to select the answer with up and down, defaults to False
         :type allow_keyboard: bool, optional
@@ -127,27 +143,28 @@ class Prompt:
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The id of the selected option
         :rtype: str
-        '''
+        """
         app = RawSelectPrompt(
             question,
             options,
             default,
             allow_keyboard,
             layout=Layout(
-                HSplit([
-                    Window(FormattedTextControl(), always_hide_cursor=True),
-                    Window(FormattedTextControl(
-                        HTML(
-                            'Type the INDEX of your selection, ENTER to submit'
-                        )),
-                           char=' ',
-                           style='class:tooltip',
-                           height=1)
-                ])),
+                HSplit(
+                    [
+                        Window(FormattedTextControl(), always_hide_cursor=True),
+                        Window(
+                            FormattedTextControl(HTML('Type the INDEX of your selection, ENTER to submit')),
+                            char=' ',
+                            style='class:tooltip',
+                            height=1
+                        )
+                    ]
+                )
+            ),
             key_bindings=generate_key_bindings(RawSelectPrompt),
             erase_when_done=True,
-            style=convert_style(style)
-            if style else convert_style(default_style),
+            style=convert_style(style) if style else convert_style(default_style),
         )
         ans = app.prompt()
         if ans == None:
@@ -168,7 +185,8 @@ class Prompt:
 
         The user needs to type the key of the option. If the user types `h`, all options will be shown.
 
-        The `options` are either a string, where `s[0]` will be the key to select and the string will be used as name and id, or a tuple[str, str, str] where `t[0]` will be the key, `t[1]` the name and `t[2]` the id of the option.
+        The `options` are either a string, where `s[0]` will be the key to select and the string will be used as name
+        and id, or a tuple[str, str, str] where `t[0]` will be the key, `t[1]` the name and `t[2]` the id of the option.
 
         Every key must be a unique ascii character and of length 1, and there may not be a key assigned to `h`.
 
@@ -176,7 +194,8 @@ class Prompt:
         :type question: str
         :param options: A list of possible options
         :type options: tuple[str  |  tuple[str, str, str], ...]
-        :param default: The id of the default option to select (empty or None if `h` should be default), defaults to None
+        :param default: The id of the default option to select (empty or None if `h` should be default), defaults to
+        None
         :type default: str | None, optional
         :param allow_keyboard: Whether the user should be able to select the answer with up and down, defaults to False
         :type allow_keyboard: bool, optional
@@ -192,20 +211,23 @@ class Prompt:
             default,
             allow_keyboard,
             layout=Layout(
-                HSplit([
-                    Window(FormattedTextControl(), always_hide_cursor=True),
-                    Window(FormattedTextControl(
-                        HTML(
-                            'Type the KEY for your selection, ENTER to submit (use h to show all options)'
-                        )),
-                           char=' ',
-                           style='class:tooltip',
-                           height=1)
-                ])),
+                HSplit(
+                    [
+                        Window(FormattedTextControl(), always_hide_cursor=True),
+                        Window(
+                            FormattedTextControl(
+                                HTML('Type the KEY for your selection, ENTER to submit (use h to show all options)')
+                            ),
+                            char=' ',
+                            style='class:tooltip',
+                            height=1
+                        )
+                    ]
+                )
+            ),
             key_bindings=generate_key_bindings(ExpandPrompt),
             erase_when_done=True,
-            style=convert_style(style)
-            if style else convert_style(default_style),
+            style=convert_style(style) if style else convert_style(default_style),
         )
         ans = app.prompt()
         if ans == None:
@@ -217,8 +239,7 @@ class Prompt:
         cls,
         question: str,
         options: tuple[str | tuple[str, str], ...],
-        pointer_at: int
-        | None = None,
+        pointer_at: int | None = None,
         default_checked: tuple[str, ...] | None = None,
         min_selections: int = 0,
         style: PromptStyle | None = None,
@@ -226,9 +247,11 @@ class Prompt:
         """
         Ask the user for selecting MULTIPLE of the given `options`.
 
-        The `options` will be shown as a nice list. The user may navigate with up and down, select or deselect with space and submit with enter.
+        The `options` will be shown as a nice list. The user may navigate with up and down, select or deselect with
+        space and submit with enter.
 
-        The `options` are either a string, which is used as the display value and the id, or a tuple[str, str], where the first string is the display value and the second is the option's id.
+        The `options` are either a string, which is used as the display value and the id, or a tuple[str, str],
+        where the first string is the display value and the second is the option's id.
 
         :param question: The question to display
         :type question: str
@@ -238,7 +261,8 @@ class Prompt:
         :type pointer_at: int | None, optional
         :param default_checked: A list of ids, which should be checked by default (empty if None)
         :type default_checked: tuple[str, ...] | None, optional
-        :param min_selections: A minimum amount of options that need to be checked before submitting (prohibits the user of submitting, if not enough are checked; 0 if None)
+        :param min_selections: A minimum amount of options that need to be checked before submitting (prohibits the
+        user of submitting, if not enough are checked; 0 if None)
         :type min_selections: int, optional
         :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
@@ -253,20 +277,23 @@ class Prompt:
             default_checked,
             min_selections,
             layout=Layout(
-                HSplit([
-                    Window(FormattedTextControl(), always_hide_cursor=True),
-                    Window(FormattedTextControl(
-                        HTML(
-                            'Use UP, DOWN to change selection, SPACE to select, ENTER to submit'
-                        )),
-                           char=' ',
-                           style='class:tooltip',
-                           height=1)
-                ])),
+                HSplit(
+                    [
+                        Window(FormattedTextControl(), always_hide_cursor=True),
+                        Window(
+                            FormattedTextControl(
+                                HTML('Use UP, DOWN to change selection, SPACE to select, ENTER to submit')
+                            ),
+                            char=' ',
+                            style='class:tooltip',
+                            height=1
+                        )
+                    ]
+                )
+            ),
             key_bindings=generate_key_bindings(CheckboxPrompt),
             erase_when_done=True,
-            style=convert_style(style)
-            if style else convert_style(default_style),
+            style=convert_style(style) if style else convert_style(default_style),
         )
         ans = app.prompt()
         if ans == None:
@@ -289,7 +316,8 @@ class Prompt:
 
         If `default` is `False`, the prompt will be in the style of (n/Y).
 
-        If `default` is `None` (or not given), the prompt will be in the style of (y/n). In this case, the user may not use enter to submit the default, as there is no default given.
+        If `default` is `None` (or not given), the prompt will be in the style of (y/n). In this case, the user may
+        not use enter to submit the default, as there is no default given.
 
         :param question: The question to display
         :type question: str
@@ -305,20 +333,21 @@ class Prompt:
             question,
             default,
             layout=Layout(
-                HSplit([
-                    Window(FormattedTextControl(), always_hide_cursor=True),
-                    Window(FormattedTextControl(
-                        HTML(
-                            'Press Y or N, ENTER if default value is available'
-                        )),
-                           char=' ',
-                           style='class:tooltip',
-                           height=1)
-                ])),
+                HSplit(
+                    [
+                        Window(FormattedTextControl(), always_hide_cursor=True),
+                        Window(
+                            FormattedTextControl(HTML('Press Y or N, ENTER if default value is available')),
+                            char=' ',
+                            style='class:tooltip',
+                            height=1
+                        )
+                    ]
+                )
+            ),
             key_bindings=generate_key_bindings(ConfirmPrompt),
             erase_when_done=True,
-            style=convert_style(style)
-            if style else convert_style(default_style),
+            style=convert_style(style) if style else convert_style(default_style),
         )
 
         ans = app.prompt()
@@ -342,15 +371,21 @@ class Prompt:
         """
         Ask the user for typing an input.
 
-        If default is given, it will be returned if enter was pressed and no input was given by the user. If the user writes an input, the default will be overwritten.
+        If default is given, it will be returned if enter was pressed and no input was given by the user. If the user
+        writes an input, the default will be overwritten.
 
         If multiline is activated, enter will not submit, but rather create a newline. Use `alt+enter` to submit.
 
-        If show_symbol is given, all chars (except newlines) will be replaced with this character in the interface. The result will still be the input the user typed, it just will not appear in the CLI.
+        If show_symbol is given, all chars (except newlines) will be replaced with this character in the interface.
+        The result will still be the input the user typed, it just will not appear in the CLI.
 
-        Validate takes a function which receives a `str` (the current input of the user) and may return None or a `str`. If the function returns None, the prompt may assume that the input is valid. If it returns a `str`, this will be the error shown to the user. The user will not be able to submit the input, if validate returns an error.
+        Validate takes a function which receives a `str` (the current input of the user) and may return None or a
+        `str`. If the function returns None, the prompt may assume that the input is valid. If it returns a `str`,
+        this will be the error shown to the user. The user will not be able to submit the input, if validate returns
+        an error.
 
-        Completions may be a list of possible completion strings or a nested dictionary where the key is a completion string and the value is a new dict in the same style (more in the README.md).
+        Completions may be a list of possible completion strings or a nested dictionary where the key is a completion
+        string and the value is a new dict in the same style (more in the README.md).
 
         You can use your own Completer as well (more in the README.md).
 
@@ -370,7 +405,8 @@ class Prompt:
         :type completions: list[str] | CompletionDict | None, optional
         :param completer: A completer to use, defaults to None
         :type completer: Completer | None, optional
-        :param completion_show_multicolumn: Whether to show the completions as a scrollable list or as multiple columns, defaults to False
+        :param completion_show_multicolumn: Whether to show the completions as a scrollable list or as multiple
+        columns, defaults to False
         :type completion_show_multicolumn: bool, optional
         :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
@@ -380,27 +416,27 @@ class Prompt:
         """
 
         # extracting the body, so we can display a floating auto completion field
-        body = HSplit([
-            VSplit([
-                Window(
-                    FormattedTextControl(),
-                    always_hide_cursor=True,
-                    dont_extend_width=True,
+        body = HSplit(
+            [
+                VSplit(
+                    [
+                        Window(
+                            FormattedTextControl(),
+                            always_hide_cursor=True,
+                            dont_extend_width=True,
+                        ),
+                        Window(BufferControl(Buffer(complete_while_typing=True))),
+                        # the completer will be passed in the Application class
+                    ]
                 ),
                 Window(
-                    BufferControl(Buffer(complete_while_typing=True))
-                ),  # the completer will be passed in the Application class
-            ]),
-            Window(
-                FormattedTextControl(
-                    HTML(
-                        f'Type your answer, {"ALT+ENTER" if multiline else "ENTER"} to submit'
-                    )),
-                char=' ',
-                style='class:tooltip',
-                height=1,
-            )
-        ])
+                    FormattedTextControl(HTML(f'Type your answer, {"ALT+ENTER" if multiline else "ENTER"} to submit')),
+                    char=' ',
+                    style='class:tooltip',
+                    height=1,
+                )
+            ]
+        )
 
         app = InputPrompt(
             question,
@@ -415,16 +451,17 @@ class Prompt:
                     content=body,
                     floats=[
                         Float(
-                            MultiColumnCompletionsMenu(show_meta=False) if
-                            completion_show_multicolumn else CompletionsMenu(),
+                            MultiColumnCompletionsMenu(show_meta=False)
+                            if completion_show_multicolumn else CompletionsMenu(),
                             xcursor=True,
                             ycursor=True,
                         )
-                    ])),
+                    ]
+                )
+            ),
             key_bindings=generate_key_bindings(InputPrompt),
             erase_when_done=True,
-            style=convert_style(style)
-            if style else convert_style(default_style),
+            style=convert_style(style) if style else convert_style(default_style),
         )
 
         ans = app.prompt()
@@ -442,7 +479,9 @@ class Prompt:
         """
         Ask the user for filling out the displayed table.
 
-        This method shows the question alongside a table, which the user may navigate with the arrow keys. The user has the ability to use the up, down and enter keys to navigate between the options and change the text in each cell.
+        This method shows the question alongside a table, which the user may navigate with the arrow keys. The user
+        has the ability to use the up, down and enter keys to navigate between the options and change the text in
+        each cell.
 
         The `data` is either a pandas DataFrame or a dictionary.
 
@@ -460,20 +499,26 @@ class Prompt:
             question,
             data,
             layout=Layout(
-                HSplit([
-                    Window(FormattedTextControl()),
-                    Window(FormattedTextControl(
-                        HTML(
-                            'Use UP, DOWN, LEFT, RIGHT to select a cell, TYPE to add char, BACKSPACE to delete char, ENTER to submit'
-                        )),
-                           char=' ',
-                           style='class:tooltip',
-                           height=1)
-                ])),
+                HSplit(
+                    [
+                        Window(FormattedTextControl()),
+                        Window(
+                            FormattedTextControl(
+                                HTML(
+                                    'Use UP, DOWN, LEFT, RIGHT to select a cell, TYPE to add char, BACKSPACE to '
+                                    'delete char, ENTER to submit'
+                                )
+                            ),
+                            char=' ',
+                            style='class:tooltip',
+                            height=1
+                        )
+                    ]
+                )
+            ),
             key_bindings=generate_key_bindings(TablePrompt),
             erase_when_done=True,
-            style=convert_style(style)
-            if style else convert_style(default_style),
+            style=convert_style(style) if style else convert_style(default_style),
         )
         ans = app.prompt()
         # if type(ans) is type(None):

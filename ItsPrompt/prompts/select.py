@@ -1,4 +1,4 @@
-from prompt_toolkit import HTML, Application
+from prompt_toolkit import Application, HTML
 from prompt_toolkit.layout.controls import FormattedTextControl
 
 from ..data.select import process_data
@@ -17,8 +17,7 @@ class SelectPrompt(Application):
         super().__init__(*args, **kwargs)
 
         # get prompt content box
-        self.prompt_content: FormattedTextControl = self.layout.container.get_children(
-        )[0].content  # type: ignore
+        self.prompt_content: FormattedTextControl = self.layout.container.get_children()[0].content  # type: ignore
 
         # save question
         self.question = question
@@ -39,7 +38,7 @@ class SelectPrompt(Application):
             raise ValueError('Default value is not a valid id.')
 
     def update(self):
-        '''update prompt content'''
+        """update prompt content"""
         content = f'[<question_mark>?</question_mark>] <question>{self.question}</question>:'
 
         for i, option in enumerate(self.options):
@@ -51,20 +50,20 @@ class SelectPrompt(Application):
         self.prompt_content.text = HTML(content)
 
     def prompt(self) -> str | None:
-        '''start the application, returns the return value'''
+        """start the application, returns the return value"""
         self.update()
         out: str | None = self.run()
 
         return out
 
     def on_up(self):
-        '''when up is pressed, the previous indexed option will be selected'''
+        """when up is pressed, the previous indexed option will be selected"""
         self.selection = (self.selection - 1) % len(self.options)
 
         self.update()
 
     def on_down(self):
-        '''when down is pressed, the next indexed option will be selected'''
+        """when down is pressed, the next indexed option will be selected"""
         self.selection = (self.selection + 1) % len(self.options)
 
         self.update()

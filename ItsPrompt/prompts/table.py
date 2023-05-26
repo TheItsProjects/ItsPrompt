@@ -1,7 +1,7 @@
 import html
 from typing import TYPE_CHECKING, Union
 
-from prompt_toolkit import HTML, Application
+from prompt_toolkit import Application, HTML
 from prompt_toolkit.data_structures import Point
 from prompt_toolkit.layout.controls import FormattedTextControl
 
@@ -14,17 +14,16 @@ if TYPE_CHECKING:  # pragma: no cover
 class TablePrompt(Application):
 
     def __init__(
-            self,
-            question: str,
-            data: Union["DataFrame", dict[str, list[str]]],
-            *args,
-            **kwargs,
+        self,
+        question: str,
+        data: Union["DataFrame", dict[str, list[str]]],
+        *args,
+        **kwargs,
     ):
         super().__init__(*args, **kwargs)
 
         # get prompt content box
-        self.prompt_content: FormattedTextControl = self.layout.container.get_children(
-        )[0].content  # type: ignore
+        self.prompt_content: FormattedTextControl = self.layout.container.get_children()[0].content  # type: ignore
 
         # save question
         self.question = question
@@ -35,8 +34,7 @@ class TablePrompt(Application):
         # set cursor
         self.prompt_content.get_cursor_position = lambda: Point(
             self.table.get_current_cursor_position()[0],
-            self.table.get_current_cursor_position()[1] +
-            1,  # add 1 offset for height of question
+            self.table.get_current_cursor_position()[1] + 1,  # add 1 offset for height of question
         )
 
     def update(self):
@@ -46,7 +44,7 @@ class TablePrompt(Application):
         # append table
         content += html.escape(
             self.table.get_table_as_str()
-        )  # escaping is needed so formatting from PromptToolkit wont destroy the whole table
+        )  # escaping is needed so formatting from PromptToolkit won't destroy the whole table
 
         self.prompt_content.text = HTML(content)
 

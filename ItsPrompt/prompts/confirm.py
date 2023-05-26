@@ -1,4 +1,4 @@
-from prompt_toolkit import HTML, Application
+from prompt_toolkit import Application, HTML
 from prompt_toolkit.layout.containers import Window
 from prompt_toolkit.layout.controls import FormattedTextControl
 
@@ -15,14 +15,11 @@ class ConfirmPrompt(Application):
         super().__init__(*args, **kwargs)
 
         # get prompt content box
-        self.prompt_content: FormattedTextControl = self.layout.container.get_children(
-        )[0].content  # type: ignore
+        self.prompt_content: FormattedTextControl = self.layout.container.get_children()[0].content  # type: ignore
 
         # save toolbar window and box (for showing errors)
-        self.toolbar_window: Window = self.layout.container.get_children()[
-            1]  # type: ignore
-        self.toolbar_content: FormattedTextControl = self.layout.container.get_children(
-        )[1].content  # type: ignore
+        self.toolbar_window: Window = self.layout.container.get_children()[1]  # type: ignore
+        self.toolbar_content: FormattedTextControl = self.layout.container.get_children()[1].content  # type: ignore
 
         # save standard toolbar content
         self.toolbar_content_default_text = self.toolbar_content.text
@@ -37,8 +34,9 @@ class ConfirmPrompt(Application):
         self.default = default
 
     def update(self):
-        '''update prompt content'''
-        content = f'[<question_mark>?</question_mark>] <question>{self.question}</question>: <text>({"Y" if self.default==True else "y"}/{"N" if self.default==False else "n"})</text>'
+        """update prompt content"""
+        content = f'[<question_mark>?</question_mark>] <question>{self.question}</question>: <text>(' \
+                  f'{"Y" if self.default == True else "y"}/{"N" if self.default == False else "n"})</text>'
 
         self.prompt_content.text = HTML(content)
 
@@ -54,14 +52,14 @@ class ConfirmPrompt(Application):
             self.toolbar_window.style = 'class:error'
 
     def prompt(self) -> bool | None:
-        '''start the application, returns the return value'''
+        """start the application, returns the return value"""
         self.update()
         out: bool | None = self.run()
 
         return out
 
     def on_key(self, key_sequence: list[str]):
-        '''when Y or N is pressed, select value and submit'''
+        """when Y or N is pressed, select value and submit"""
         key = key_sequence[0]
 
         # return if key is not an available key

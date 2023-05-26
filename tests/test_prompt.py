@@ -233,8 +233,7 @@ def test_checkbox(send_keys, keys: list[Keys | str], i: list[int]):
         [(" ", Keys.Up, " ", Keys.Enter), (2,)],
     ],
 )
-def test_checkbox_with_default(send_keys, keys: list[Keys | str],
-                               i: list[int]):
+def test_checkbox_with_default(send_keys, keys: list[Keys | str], i: list[int]):
     options = ("first", "second", "third")
 
     send_keys(*keys)
@@ -404,8 +403,7 @@ def test_input_raises_keyboard_interrupt(send_keys):
         ],
     ],
 )
-def test_table_dataframe(send_keys, mock_terminal_size, keys: list[Keys | str],
-                         a: DataFrame):
+def test_table_dataframe(send_keys, mock_terminal_size, keys: list[Keys | str], a: DataFrame):
     data = DataFrame(["first", "second", "third"])
 
     send_keys(*keys)
@@ -436,8 +434,7 @@ def test_table_dataframe(send_keys, mock_terminal_size, keys: list[Keys | str],
         ],
     ],
 )
-def test_table_dictionary(send_keys, mock_terminal_size, keys: list[Keys | str],
-                          a: dict[str, list[str]]):
+def test_table_dictionary(send_keys, mock_terminal_size, keys: list[Keys | str], a: dict[str, list[str]]):
     data = {"0": ["first", "second", "third"]}
 
     send_keys(*keys)
@@ -459,7 +456,7 @@ def test_table_raises_keyboard_interrupt(send_keys):
 def test_table_dictionary_raises_lists_not_same_lengths(send_keys):
     send_keys(Keys.ControlC)
 
-    data = {"0": ["first", "second", "third"], "1": ["other first", ]}
+    data = {"0": ["first", "second", "third"], "1": ["other first"]}
 
     with pytest.raises(ValueError):
         ans = Prompt.table("", data)

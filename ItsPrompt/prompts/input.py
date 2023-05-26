@@ -1,10 +1,13 @@
-import string
 from typing import Callable
 
-from prompt_toolkit import HTML, Application
+from prompt_toolkit import Application, HTML
 from prompt_toolkit.buffer import Buffer
-from prompt_toolkit.completion import (Completer, FuzzyCompleter,
-                                       FuzzyWordCompleter, NestedCompleter)
+from prompt_toolkit.completion import (
+    Completer,
+    FuzzyCompleter,
+    FuzzyWordCompleter,
+    NestedCompleter,
+)
 from prompt_toolkit.layout.containers import Window
 from prompt_toolkit.layout.controls import FormattedTextControl
 from prompt_toolkit.layout.processors import PasswordProcessor
@@ -33,8 +36,7 @@ class InputPrompt(Application):
         _vsplit = _body[0].get_children()
 
         # get prompt content box
-        self.prompt_content: FormattedTextControl = _vsplit[
-            0].content  # type: ignore
+        self.prompt_content: FormattedTextControl = _vsplit[0].content  # type: ignore
 
         # get input buffer
         self.buffer: Buffer = _vsplit[1].content.buffer  # type: ignore
@@ -66,9 +68,7 @@ class InputPrompt(Application):
 
         # when show_symbol is given, use PasswordProcessor to show the symbol instead of the text
         if self.show_symbol:
-            _vsplit[1].content.input_processors = [
-                PasswordProcessor(self.show_symbol)
-            ]
+            _vsplit[1].content.input_processors = [PasswordProcessor(self.show_symbol)]
 
         # save validator function
         self.validate = validate
@@ -77,14 +77,11 @@ class InputPrompt(Application):
         self.completer: None | Completer = None
 
         if completions and completer:
-            raise ValueError(
-                'completions and completer are mutually exclusive! Please use only one of them!'
-            )
+            raise ValueError("completions and completer are mutually exclusive! Please use only one of them!")
 
         if show_symbol and (completions or completer):
             # symbol and completer are mutually exclusive
-            raise ValueError(
-                'Completions are not compatible with show_symbol!')
+            raise ValueError('Completions are not compatible with show_symbol!')
 
         if completions:  # pragma: no cover
             # a list or a dict of completions to use is given
@@ -93,8 +90,7 @@ class InputPrompt(Application):
                 self.completer = FuzzyWordCompleter(list(completions))
             elif type(completions) is dict:
                 # we use FuzzyCompleter with NestedCompleter
-                self.completer = FuzzyCompleter(
-                    NestedCompleter.from_nested_dict(completions))
+                self.completer = FuzzyCompleter(NestedCompleter.from_nested_dict(completions))
 
         elif completer:  # pragma: no cover
             # a self-created completer is given
@@ -105,7 +101,7 @@ class InputPrompt(Application):
             self.buffer.completer = self.completer
 
     def update(self):  # pragma: no cover
-        '''update prompt content'''
+        """update prompt content"""
         content = f'[<question_mark>?</question_mark>] <question>{self.question}</question>: '
 
         if self.default and self.buffer.text == '':
@@ -140,14 +136,14 @@ class InputPrompt(Application):
             self.buffer.start_completion()
 
     def prompt(self) -> str | None:
-        '''start the application, returns the return value'''
+        """start the application, returns the return value"""
         self.update()
         out: str | None = self.run()
 
         return out
 
     def _submit(self):
-        '''method for submitting result, as this is done by two functions'''
+        """method for submitting result, as this is done by two functions"""
         # if an error is currently shown, prevent submit
         if self.is_error:  # pragma: no cover
             return
@@ -161,15 +157,15 @@ class InputPrompt(Application):
             self.exit(result='')
 
     def on_alt_enter(self):
-        '''if multiline is enabled, this will submit'''
+        """if multiline is enabled, this will submit"""
         if self.multiline:
             self._submit()
 
     def on_enter(self):
-        '''either submit key or in multiline, append new line'''
+        """either submit key or in multiline, append new line"""
         # run completion
-        if (self.is_running) and self.buffer.complete_state and (
-                completion := self.buffer.complete_state.current_completion
+        if self.is_running and self.buffer.complete_state and (
+            completion := self.buffer.complete_state.current_completion
         ):  # pragma: no cover
             self.buffer.apply_completion(completion)
 

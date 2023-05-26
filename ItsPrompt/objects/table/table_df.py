@@ -9,8 +9,7 @@ class TableDataFromDF(TableDataBase):
 
     def __init__(self, data: DataFrame) -> None:
         self.data = data.astype("str")  # convert all values to str
-        self.data = self.data.rename(
-            columns=lambda x: str(x))  # convert all headers to str
+        self.data = self.data.rename(columns=lambda x: str(x))  # convert all headers to str
 
     @property
     def row_count(self) -> int:

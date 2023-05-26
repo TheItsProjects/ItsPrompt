@@ -3,7 +3,7 @@ from typing import NamedTuple
 
 import pytest
 from prompt_toolkit.application import create_app_session
-from prompt_toolkit.input import create_pipe_input, ansi_escape_sequences, PipeInput
+from prompt_toolkit.input import PipeInput, ansi_escape_sequences, create_pipe_input
 from prompt_toolkit.keys import Keys
 from prompt_toolkit.output import DummyOutput
 

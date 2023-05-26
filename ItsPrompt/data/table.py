@@ -52,10 +52,10 @@ class Table:
         return self.data.get_column_location(col) == self.col_count - 1
 
     def _char_if_last_else_otherchar(
-            self,
-            col,
-            char: str,
-            otherchar: str,
+        self,
+        col,
+        char: str,
+        otherchar: str,
     ) -> str:
         """returns the `char` if the given column is the last in the DataFrame, otherwise returns the `otherchar`"""
         return char if self._col_is_last(col) else otherchar
@@ -68,8 +68,7 @@ class Table:
         """
 
         # set initial list (each entry represents a line to print)
-        table_out = [''] * (self.row_count * 2 + 1
-                            )  # 2 lines for every row + bottom border
+        table_out = [''] * (self.row_count * 2 + 1)  # 2 lines for every row + bottom border
 
         # append left border to every string
         table_out[0] += '┌'
@@ -82,9 +81,7 @@ class Table:
 
         # add headers
         for header in self.data.columns:
-            table_out[
-                0] += '─' * self.cell_width + self._char_if_last_else_otherchar(
-                header, '┐', '┬')
+            table_out[0] += '─' * self.cell_width + self._char_if_last_else_otherchar(header, '┐', '┬')
 
             if len(str(header)) > self.cell_width:
                 #   /\ convert the header to str in case the user did not give a header, so it is an integer
@@ -95,17 +92,11 @@ class Table:
         # add values, iterate over each column
         for header, values in self.data.items():
             # iterate over each row
-            for i, val in zip(
-                    range(2, len(table_out), 2),
-                    values):  # start at 2, because first two rows are header
-                table_out[
-                    i] += '─' * self.cell_width + self._char_if_last_else_otherchar(
-                    header, '┤', '┼')
+            for i, val in zip(range(2, len(table_out), 2), values):  # start at 2, because first two rows are header
+                table_out[i] += '─' * self.cell_width + self._char_if_last_else_otherchar(header, '┤', '┼')
                 table_out[i + 1] += f'{str(val):{self.cell_width}}' + '│'
 
-            table_out[
-                -1] += '─' * self.cell_width + self._char_if_last_else_otherchar(
-                header, '┘', '┴')
+            table_out[-1] += '─' * self.cell_width + self._char_if_last_else_otherchar(header, '┘', '┴')
 
         return '\n'.join(table_out)
 
@@ -122,12 +113,12 @@ class Table:
     def on_left(self):
         """when left is pressed, select same row, but column one to the left (or last column if current is 0)"""
 
-        self.cur_cell[0] = (self.cur_cell[0] - 1) % (self.col_count)
+        self.cur_cell[0] = (self.cur_cell[0] - 1) % self.col_count
 
     def on_right(self):
         """when right is pressed, select same row, but column one to the right (or first column if current is last)"""
 
-        self.cur_cell[0] = (self.cur_cell[0] + 1) % (self.col_count)
+        self.cur_cell[0] = (self.cur_cell[0] + 1) % self.col_count
 
     def add_key(self, key: str):
         """add key to current selected cell"""
@@ -141,11 +132,9 @@ class Table:
         """returns the current position of the cursor, relative to the top left corner character as (0, 0)"""
         y = self.cur_cell[1] * 2 + 3  # 3 is offset for header
 
-        item_length = len(
-            self.data.get_item_at(
-                self.cur_cell[1],
-                self.cur_cell[0]))  # length of the item in the current cell
+        item_length = len(self.data.get_item_at(self.cur_cell[1], self.cur_cell[0]))
+        # length of the item in the current cell
 
-        x = (self.cell_width + 1) * self.cur_cell[
-            0] + 1 + item_length  # 1 is offset for left border, item_length is length of item
-        return (x, y)
+        x = (self.cell_width + 1) * self.cur_cell[0] + 1 + item_length
+        # 1 is offset for left border, item_length is length of item
+        return x, y

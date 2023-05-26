@@ -2,6 +2,7 @@
 
 try:
     from pandas import DataFrame
+
     NO_PANDAS = False
 except ModuleNotFoundError:
     NO_PANDAS = True
@@ -28,7 +29,7 @@ print(ans)
 ans = Prompt.checkbox(
     'What beverages would you like?',
     ('Coke', 'Water', 'Juice'),
-    default_checked=('Water', ),
+    default_checked=('Water',),
     min_selections=1,
 )
 print(ans)

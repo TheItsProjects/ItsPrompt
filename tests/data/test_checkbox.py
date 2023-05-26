@@ -1,6 +1,6 @@
 import pytest
 
-from ItsPrompt.data.checkbox import process_data, CheckboxOption
+from ItsPrompt.data.checkbox import CheckboxOption, process_data
 
 
 def test_process_data_standard_options():

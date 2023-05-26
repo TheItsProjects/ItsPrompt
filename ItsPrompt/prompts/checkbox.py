@@ -1,4 +1,4 @@
-from prompt_toolkit import HTML, Application
+from prompt_toolkit import Application, HTML
 from prompt_toolkit.layout.containers import Window
 from prompt_toolkit.layout.controls import FormattedTextControl
 
@@ -6,7 +6,6 @@ from ..data.checkbox import process_data
 
 
 class CheckboxPrompt(Application):
-
     CHECKED_SIGN = '\u25cf'
     UNCHECKED_SIGN = '\u25cb'
 
@@ -23,14 +22,11 @@ class CheckboxPrompt(Application):
         super().__init__(*args, **kwargs)
 
         # get prompt content box
-        self.prompt_content: FormattedTextControl = self.layout.container.get_children(
-        )[0].content  # type: ignore
+        self.prompt_content: FormattedTextControl = self.layout.container.get_children()[0].content  # type: ignore
 
         # save toolbar window and box (for showing errors)
-        self.toolbar_window: Window = self.layout.container.get_children()[
-            1]  # type: ignore
-        self.toolbar_content: FormattedTextControl = self.layout.container.get_children(
-        )[1].content  # type: ignore
+        self.toolbar_window: Window = self.layout.container.get_children()[1]  # type: ignore
+        self.toolbar_content: FormattedTextControl = self.layout.container.get_children()[1].content  # type: ignore
 
         # save standard toolbar content
         self.toolbar_content_default_text = self.toolbar_content.text
@@ -62,42 +58,45 @@ class CheckboxPrompt(Application):
                     was_set += 1
 
             if was_set != len(default_checked):
-                raise ValueError(
-                    'At least one of the given default_checked values is invalid.'
-                )
+                raise ValueError('At least one of the given default_checked values is invalid.')
 
     def update(self):
-        '''update prompt content'''
+        """update prompt content"""
         content = f'[<question_mark>?</question_mark>] <question>{self.question}</question>:'
 
         for i, option in enumerate(self.options):
             if i == self.selection:
-                content += f'\n<selected_option>  > {self.__class__.CHECKED_SIGN if option.is_selected else self.__class__.UNCHECKED_SIGN} {option.name}</selected_option>'
+                content += f'\n<selected_option>  > ' \
+                           f'{self.__class__.CHECKED_SIGN if option.is_selected else self.__class__.UNCHECKED_SIGN} ' \
+                           f'{option.name}</selected_option>'
             else:
-                content += f'\n<option>    {self.__class__.CHECKED_SIGN if option.is_selected else self.__class__.UNCHECKED_SIGN} {option.name}</option>'
+                content += f'\n<option>    ' \
+                           f'{self.__class__.CHECKED_SIGN if option.is_selected else self.__class__.UNCHECKED_SIGN} ' \
+                           f' {option.name} < / option > '
 
-        self.prompt_content.text = HTML(content)
+                self.prompt_content.text = HTML(content)
 
-        # show error, if error should be shown, else show normal prompt
-        if not self.is_error:
-            # show normal prompt, change style to standard toolbar
-            self.toolbar_content.text = self.toolbar_content_default_text
-            self.toolbar_window.style = 'class:tooltip'
-        else:  # pragma: no cover
-            # show error prompt and error style
-            # the only error that might occur is that not enough options are selected
-            self.toolbar_content.text = f'ERROR: a minimum of {self.min_selections} options need to be selected!'
-            self.toolbar_window.style = 'class:error'
+                # show error, if error should be shown, else show normal prompt
+                if not self.is_error:
+                    # show normal prompt, change style to standard toolbar
+                    self.toolbar_content.text = self.toolbar_content_default_text
+                    self.toolbar_window.style = 'class:tooltip'
+                else:  # pragma: no cover
+                    # show error prompt and error style
+                    # the only error that might occur is that not enough options are selected
+                    self.toolbar_content.text = f'ERROR: a minimum of {self.min_selections} options need to be ' \
+                                                f'selected!'
+                    self.toolbar_window.style = 'class:error'
 
     def prompt(self) -> list[str] | None:
-        '''start the application, returns the return value'''
+        """start the application, returns the return value"""
         self.update()
         out: list[str] | None = self.run()
 
         return out
 
     def on_up(self):
-        '''when up is pressed, the previous indexed option will be selected'''
+        """when up is pressed, the previous indexed option will be selected"""
         self.selection = (self.selection - 1) % len(self.options)
 
         # reset error
@@ -106,7 +105,7 @@ class CheckboxPrompt(Application):
         self.update()
 
     def on_down(self):
-        '''when down is pressed, the next indexed option will be selected'''
+        """when down is pressed, the next indexed option will be selected"""
         self.selection = (self.selection + 1) % len(self.options)
 
         # reset error
@@ -115,9 +114,8 @@ class CheckboxPrompt(Application):
         self.update()
 
     def on_space(self):
-        '''when space is pressed, select or deselect current selection'''
-        self.options[self.selection].is_selected = not self.options[
-            self.selection].is_selected
+        """when space is pressed, select or deselect current selection"""
+        self.options[self.selection].is_selected = not self.options[self.selection].is_selected
 
         # reset error
         self.is_error = False
