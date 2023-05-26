@@ -72,7 +72,7 @@ class CheckboxPrompt(Application):
             else:
                 content += f'\n<option>    ' \
                            f'{self.__class__.CHECKED_SIGN if option.is_selected else self.__class__.UNCHECKED_SIGN} ' \
-                           f' {option.name} < / option > '
+                           f' {option.name} </option> '
 
                 self.prompt_content.text = HTML(content)
 
