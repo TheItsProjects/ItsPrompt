@@ -94,6 +94,12 @@ This package is hosted on pypi, so the installation is as simple as it can get:
 python3 -m pip install ItsPrompt
 ```
 
+This will install `ItsPrompt` without pandas. If you want to use `TablePrompt` (see [table](#table)) with
+`pandas.DataFrame`, you can install pandas support either by:
+
+- installing pandas separately
+- install `ItsPrompt` via `pip install ItsPrompt[df]`
+
 ---
 
 ## Usage
@@ -206,10 +212,10 @@ Prompt.input(
     question='question',
     default='something',
     multiline=False,
-    show_symbol='*', # not compatible with complete, completer
+    show_symbol='*',  # not compatible with complete, completer
     validate=validation_function,
-    complete=['completion1', 'completion2'], # either use complete
-    completer=my_completer,                  # or completer
+    complete=['completion1', 'completion2'],  # either use complete
+    completer=my_completer,  # or completer
     completion_show_multicolumn=True,
     style=my_style,
 )
@@ -222,6 +228,14 @@ Prompt.input(
 ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/table.png)
 
 ```py
+Prompt.table(
+    question="something",
+    data={"0": ["something"]},
+    style=my_style,
+)
+
+# or, after having installed pandas
+
 Prompt.table(
     question='something',
     data=DataFrame(['something']),
@@ -368,10 +382,11 @@ def input_not_empty(input: str) -> str | None:
     if len(input) == 0:
         return 'Address can not be empty!'
 
+
 Prompt.input(
     ...
-    validate=input_not_empty,
-    ...
+validate = input_not_empty,
+...
 )
 ```
 
@@ -399,8 +414,8 @@ To give auto completion options, there are three ways:
 ```py
 prompt.input(
     ...
-    completions=['Mainstreet 4', 'Fifth way'],
-    ...
+completions = ['Mainstreet 4', 'Fifth way'],
+...
 )
 ```
 
@@ -411,21 +426,21 @@ example:
 
 ```py
 completions = {
-    '1' : {
-        '1.1' : None,
-        '1.2' : {
+    '1': {
+        '1.1': None,
+        '1.2': {
             '1.2.1', '1.2.2'
         }
     },
-    '2' : {
-        '2.1' : { '2.1.1' }
+    '2': {
+        '2.1': {'2.1.1'}
     }
 }
 
 prompt.input(
     ...
-    completions=completions,
-    ...
+completions = completions,
+...
 )
 ```
 
@@ -460,8 +475,8 @@ To add your own completer to an input field, you can use the `completer` argumen
 ```py
 prompt.input(
     ...
-    completer=my_completer,
-    ...
+completer = my_completer,
+...
 )
 ```
 
