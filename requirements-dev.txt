@@ -5,3 +5,4 @@ mypy==1.2.0
 pytest-cov==4.0.0
 pandas-stubs==2.0.1.230501
 pandas>=1.5.3
+toml==0.10.2
