@@ -6,7 +6,7 @@ from prompt_toolkit.data_structures import Point
 from prompt_toolkit.layout.controls import FormattedTextControl
 
 from ..data.table import Table
-from ..data.type import TablePromptDict
+from ..data.type import TablePromptDict, TablePromptList
 
 if TYPE_CHECKING:  # pragma: no cover
     from pandas import DataFrame
@@ -17,7 +17,7 @@ class TablePrompt(Application):
     def __init__(
         self,
         question: str,
-        data: Union["DataFrame", dict[str, list[str]]],
+        data: Union["DataFrame", TablePromptDict, TablePromptList],
         *args,
         **kwargs,
     ):

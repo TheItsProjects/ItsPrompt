@@ -1,8 +1,10 @@
 import os
 from typing import TYPE_CHECKING, Union
 
+from .type import TablePromptDict, TablePromptList
 from ..objects.table.table_base import TableDataBase
 from ..objects.table.table_dict import TableDataFromDict
+from ..objects.table.table_list import TableDataFromList
 
 # only import pandas and TableData if pandas is installed
 try:
@@ -19,7 +21,7 @@ if TYPE_CHECKING:  # pragma: no cover
 
 class Table:
 
-    def __init__(self, data: Union["DataFrame", dict[str, list[str]]]) -> None:
+    def __init__(self, data: Union["DataFrame", TablePromptDict, TablePromptList]) -> None:
         """
         Creates a table object for storing the drawable table instance
 
@@ -31,6 +33,8 @@ class Table:
         self.data: TableDataBase
         if type(data) is dict:
             self.data = TableDataFromDict(data)
+        elif type(data) is list:
+            self.data = TableDataFromList(data)
         elif type(data) is DataFrame:
             self.data = TableDataFromDF(data)
 
