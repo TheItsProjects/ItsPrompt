@@ -4,6 +4,7 @@ from pandas.testing import assert_frame_equal
 from prompt_toolkit.completion import FuzzyWordCompleter
 from prompt_toolkit.keys import Keys
 
+from ItsPrompt.data.type import TablePromptDict, TablePromptList
 from ItsPrompt.prompt import Prompt
 
 
@@ -434,8 +435,39 @@ def test_table_dataframe(send_keys, mock_terminal_size, keys: list[Keys | str], 
         ],
     ],
 )
-def test_table_dictionary(send_keys, mock_terminal_size, keys: list[Keys | str], a: dict[str, list[str]]):
+def test_table_dictionary(send_keys, mock_terminal_size, keys: list[Keys | str], a: TablePromptDict):
     data = {"0": ["first", "second", "third"]}
+
+    send_keys(*keys)
+
+    ans = Prompt.table("", data)
+
+    assert ans == a
+
+
+@pytest.mark.parametrize(
+    "keys,a",
+    [
+        [
+            (Keys.Enter,),
+            [["first", "second", "third"]],
+        ],
+        [
+            (Keys.Down, "new", Keys.Enter),
+            [["first", "secondnew", "third"]],
+        ],
+        [
+            (Keys.Left, Keys.Right, Keys.Up, Keys.Down, Keys.Enter),
+            [["first", "second", "third"]],
+        ],
+        [
+            (Keys.Backspace, Keys.Enter),
+            [["firs", "second", "third"]],
+        ],
+    ],
+)
+def test_table_list(send_keys, mock_terminal_size, keys: list[Keys | str], a: TablePromptList):
+    data = [["first", "second", "third"]]
 
     send_keys(*keys)
 
