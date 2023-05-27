@@ -1,11 +1,12 @@
 from typing import Generator
 
 from .table_base import TableDataBase
+from ...data.type import TablePromptDict
 
 
 class TableDataFromDict(TableDataBase):
 
-    def __init__(self, data: dict[str, list[str]]) -> None:
+    def __init__(self, data: TablePromptDict) -> None:
         # make sure every list has same length
         lengths = set([len(t) for t in data.values()])
         if len(lengths) != 1:
@@ -52,5 +53,5 @@ class TableDataFromDict(TableDataBase):
     def get_column_location(self, val: str) -> int:
         return self.columns.index(val)
 
-    def get_data(self) -> dict[str, list[str]]:
+    def get_data(self) -> TablePromptDict:
         return self.data
