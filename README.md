@@ -228,13 +228,21 @@ Prompt.input(
 ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/table.png)
 
 ```py
+# using a dictionary
 Prompt.table(
     question="something",
     data={"0": ["something"]},
     style=my_style,
 )
 
-# or, after having installed pandas
+# using a list
+Prompt.table(
+    question="something",
+    data=[["something"]],
+    style=my_style,
+)
+
+# or, after having installed pandas, using a DataFrame
 
 Prompt.table(
     question='something',
@@ -266,10 +274,65 @@ If an option is given as a `tuple`, the first value will be the options name, th
 
 ### Data
 
-The `table` prompt takes a mandatory `data` argument, which needs to be a `pandas.DataFrame`.
+The `table` prompt takes a mandatory `data` argument, which needs to be either:
 
-This `DataFrame` is used as the content of the table. The user may change the fields of the table. The output of
-the `table` prompt is a `pandas.DataFrame` with the user given values.
+- a `TablePromptList`
+- a `TablePromptDict`
+- a `pandas.DataFrame` (NOTE: `pandas` needs to be installed!)
+
+The `data` is used as the content of the table. The user may change the fields of the table. The output of the `table`
+prompt is of the same type, as the input data is represented, with the user given values.
+
+***TablePromptList***
+
+This is a list of the type: `list[list[str]]`.
+
+Every sub-list is a column, every item is a cell.
+
+```py
+[["field 1", "field 2"], ["field 3", "field 4"]]
+```
+
+will be rendered:
+
+| 0       | 1       |
+|---------|---------|
+| field 1 | field 3 |
+| field 2 | field 4 |
+
+***TablePromptDict***
+
+This is a dictionary of the type: `dict[str, list[str]]`.
+
+Every key is a column name, every value is the column itself.
+
+```py
+{"column 1": ["field 1", "field 2"], "column 2": ["field 3", "field 4"]}
+```
+
+will be rendered:
+
+| column 1 | column 2 |
+|----------|----------|
+| field 1  | field 3  |
+| field 2  | field 4  |
+
+***DataFrame***
+
+To use `pandas.DataFrame`, you first need to install `pandas`.
+
+```py
+DataFrame(["field 1", "field 2"])
+```
+
+will be rendered:
+
+| 0       |
+|---------|
+| field 1 |
+| field 2 |
+
+***Additional information***
 
 Currently, the output will convert all input values to a `str`, so `int`, `bool`, ... will be converted to strings. This
 is a current limitation of the way the table is displayed, but may later be updated.
