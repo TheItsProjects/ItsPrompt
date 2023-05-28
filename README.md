@@ -450,8 +450,12 @@ my_style.error = 'fg:ansired bg:ansiwhite'
 The `input` allows you to validate the input before submitting it. For every character the user types, the validation
 will be run and a friendly error will be shown in the toolbar.
 
-To use the validation feature, create a function which takes a `str` as an argument and returns either a `str`
-or `None`.
+To use the validation feature, either:
+
+- create a function which takes a `str` as an argument and returns either a `str`
+  or `None` or
+- create a function (e.g. a lambda) which takes a `str` as an argument and returns `True` (no error will be shown)
+  or `False` (an error will be shown).
 
 ```py
 def input_not_empty(input: str) -> str | None:
@@ -459,25 +463,35 @@ def input_not_empty(input: str) -> str | None:
         return 'Address can not be empty!'
 
 
+# using a function
 Prompt.input(
-    ...
-validate = input_not_empty,
-...
+    ...,
+    validate=input_not_empty,
+    ...,
+)
+
+# using lambda
+Prompt.input(
+    ...,
+    validate=lambda x: "test" in x,
+    ...,
 )
 ```
 
 The `str` argument will be the current user input, which can then be checked, but not changed!
 
-If you want to show that the validation succeeded, return `None` (or nothing). This will not trigger any errors.
+If you want to show that the validation succeeded, return `None` (or nothing, or `True`). This will not trigger any
+errors.
 
-If you want to show an error, return a `str` with the errors text. Your text will be shown in the toolbar. As long as
-the validation returns a `str`, the user may not submit the input.
+If you want to show an error, return a `str` with the errors text or `False`. If you return a `str`, your text will be
+shown in the toolbar. If you return `False`, a general error message will be shown. As long as the validation returns
+a `str` or `False`, the user may not submit the input.
 
 ---
 
 ### Prompt Completion
 
-The `input` prompt type supports auto completion as well.
+The `input` prompt type supports autocompletion as well.
 
 > If you use a completer, you are unable to use `show_symbol`!
 
@@ -489,9 +503,9 @@ To give auto completion options, there are three ways:
 
 ```py
 prompt.input(
-    ...
-completions = ['Mainstreet 4', 'Fifth way'],
-...
+    ...,
+    completions=['Mainstreet 4', 'Fifth way'],
+    ...,
 )
 ```
 
@@ -514,9 +528,9 @@ completions = {
 }
 
 prompt.input(
-    ...
-completions = completions,
-...
+    ...,
+    completions=completions,
+    ...,
 )
 ```
 
@@ -550,9 +564,9 @@ To add your own completer to an input field, you can use the `completer` argumen
 
 ```py
 prompt.input(
-    ...
-completer = my_completer,
-...
+    ...,
+    completer=my_completer,
+    ...,
 )
 ```
 
