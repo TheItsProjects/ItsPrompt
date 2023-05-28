@@ -362,7 +362,7 @@ class Prompt:
         default: str | None = None,
         multiline: bool = False,
         show_symbol: str | None = None,
-        validate: Callable[[str], str | None] | None = None,
+        validate: Callable[[str], str | bool | None] | None = None,
         completions: list[str] | CompletionDict | None = None,
         completer: Completer | None = None,
         completion_show_multicolumn: bool = False,
@@ -379,10 +379,15 @@ class Prompt:
         If show_symbol is given, all chars (except newlines) will be replaced with this character in the interface.
         The result will still be the input the user typed, it just will not appear in the CLI.
 
-        Validate takes a function which receives a `str` (the current input of the user) and may return None or a
-        `str`. If the function returns None, the prompt may assume that the input is valid. If it returns a `str`,
-        this will be the error shown to the user. The user will not be able to submit the input, if validate returns
-        an error.
+        Validate takes a function which receives a `str` (the current input of the user) and may return None, a
+        `str` or simply a boolean value.
+
+        If the function returns None (or True), the prompt may assume that the input is
+        valid.
+
+        If it returns a `str`, this will be the error shown to the user. If it returns `False`, the error shown will
+        simply be a general error statement without additional information. The user will not be able to submit the
+        input, if validate returns an error.
 
         Completions may be a list of possible completion strings or a nested dictionary where the key is a completion
         string and the value is a new dict in the same style (more in the README.md).
@@ -400,13 +405,12 @@ class Prompt:
         :param show_symbol: A symbol to show instead of the users input, defaults to None
         :type show_symbol: str | None, optional
         :param validate: A function to check the users input in real-time, defaults to None
-        :type validate: Callable[[str], str | None] | None, optional
+        :type validate: Callable[[str], str | bool | None] | None, optional
         :param completions: The completions to use, defaults to None
         :type completions: list[str] | CompletionDict | None, optional
         :param completer: A completer to use, defaults to None
         :type completer: Completer | None, optional
-        :param completion_show_multicolumn: Whether to show the completions as a scrollable list or as multiple
-        columns, defaults to False
+        :param completion_show_multicolumn: if True, shows completions as multiple columns, defaults to False
         :type completion_show_multicolumn: bool, optional
         :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
