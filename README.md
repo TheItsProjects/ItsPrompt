@@ -138,6 +138,8 @@ Prompt.select(
 )
 ```
 
+Read more about the options attribute at [Options](#options).
+
 *additional information on the function arguments can be found in the docstring*
 
 ### `raw_select`
@@ -153,6 +155,8 @@ Prompt.raw_select(
     style=my_style,
 )
 ```
+
+Read more about the options attribute at [Options](#options).
 
 *additional information on the function arguments can be found in the docstring*
 
@@ -170,6 +174,8 @@ Prompt.expand(
 )
 ```
 
+Read more about the options attribute at [Options](#options).
+
 *additional information on the function arguments can be found in the docstring*
 
 ### `checkbox`
@@ -186,6 +192,8 @@ Prompt.checkbox(
     style=my_style,
 )
 ```
+
+Read more about the options attribute at [Options](#options).
 
 *additional information on the function arguments can be found in the docstring*
 
@@ -221,6 +229,9 @@ Prompt.input(
 )
 ```
 
+Read more about the prompt validation and prompt completion attribute at [Prompt Validation](#prompt-validation)
+and [Prompt Commpletion](#prompt-completion).
+
 *additional information on the function arguments can be found in the docstring*
 
 ### `table`
@@ -228,13 +239,21 @@ Prompt.input(
 ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/table.png)
 
 ```py
+# using a dictionary
 Prompt.table(
     question="something",
     data={"0": ["something"]},
     style=my_style,
 )
 
-# or, after having installed pandas
+# using a list
+Prompt.table(
+    question="something",
+    data=[["something"]],
+    style=my_style,
+)
+
+# or, after having installed pandas, using a DataFrame
 
 Prompt.table(
     question='something',
@@ -242,6 +261,8 @@ Prompt.table(
     style=my_style,
 )
 ```
+
+Read more about the data attribute at [TablePrompt Data](#tableprompt-data).
 
 *additional information on the function arguments can be found in the docstring*
 
@@ -264,12 +285,67 @@ If an option is given as a `tuple`, the first value will be the options name, th
 
 ---
 
-### Data
+### TablePrompt Data
 
-The `table` prompt takes a mandatory `data` argument, which needs to be a `pandas.DataFrame`.
+The `table` prompt takes a mandatory `data` argument, which needs to be either:
 
-This `DataFrame` is used as the content of the table. The user may change the fields of the table. The output of
-the `table` prompt is a `pandas.DataFrame` with the user given values.
+- a `TablePromptList`
+- a `TablePromptDict`
+- a `pandas.DataFrame` (NOTE: `pandas` needs to be installed!)
+
+The `data` is used as the content of the table. The user may change the fields of the table. The output of the `table`
+prompt is of the same type, as the input data is represented, with the user given values.
+
+***TablePromptList***
+
+This is a list of the type: `list[list[str]]`.
+
+Every sub-list is a column, every item is a cell.
+
+```py
+[["field 1", "field 2"], ["field 3", "field 4"]]
+```
+
+will be rendered:
+
+| 0       | 1       |
+|---------|---------|
+| field 1 | field 3 |
+| field 2 | field 4 |
+
+***TablePromptDict***
+
+This is a dictionary of the type: `dict[str, list[str]]`.
+
+Every key is a column name, every value is the column itself.
+
+```py
+{"column 1": ["field 1", "field 2"], "column 2": ["field 3", "field 4"]}
+```
+
+will be rendered:
+
+| column 1 | column 2 |
+|----------|----------|
+| field 1  | field 3  |
+| field 2  | field 4  |
+
+***DataFrame***
+
+To use `pandas.DataFrame`, you first need to install `pandas`.
+
+```py
+DataFrame(["field 1", "field 2"])
+```
+
+will be rendered:
+
+| 0       |
+|---------|
+| field 1 |
+| field 2 |
+
+***Additional information***
 
 Currently, the output will convert all input values to a `str`, so `int`, `bool`, ... will be converted to strings. This
 is a current limitation of the way the table is displayed, but may later be updated.

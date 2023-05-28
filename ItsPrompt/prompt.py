@@ -29,7 +29,7 @@ from prompt_toolkit.layout.menus import (
 )
 
 from .data.style import PromptStyle, convert_style, default_style
-from .data.type import CompletionDict
+from .data.type import CompletionDict, TablePromptDict, TablePromptList
 from .keyboard_handler import generate_key_bindings
 from .prompts.checkbox import CheckboxPrompt
 from .prompts.confirm import ConfirmPrompt
@@ -473,9 +473,9 @@ class Prompt:
     def table(
         cls,
         question: str,
-        data: Union["DataFrame", dict[str, list[str]]],
+        data: Union["DataFrame", TablePromptDict, TablePromptList],
         style: PromptStyle | None = None,
-    ) -> Union["DataFrame", dict[str, list[str]]]:
+    ) -> Union["DataFrame", TablePromptDict, TablePromptList]:
         """
         Ask the user for filling out the displayed table.
 
@@ -483,12 +483,12 @@ class Prompt:
         has the ability to use the up, down and enter keys to navigate between the options and change the text in
         each cell.
 
-        The `data` is either a pandas DataFrame or a dictionary.
+        The `data` is either a pandas DataFrame, a list or a dictionary (more in the README.md).
 
         :param question: The question to display
         :type question: str
         :param data: The data to display
-        :type data: DataFrame | dict[str, list[str]]
+        :type data: DataFrame | TablePromptDict | TablePromptList
         :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
