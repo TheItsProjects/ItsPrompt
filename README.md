@@ -383,20 +383,20 @@ Prompt.input(
 )
 ```
 
-![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling_raw_select_annotated.png)
+![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling_raw_select.png)
 
-![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling_input_annotated.png)
+![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling_input.png)
 
-| ID | styling tag       | default style                         |
-|----|-------------------|---------------------------------------|
-| 1  | `question_mark`   | `fg:ansigreen`                        |
-| 2  | `question`        | *                                     |
-| 3  | `option`          | *                                     |
-| 4  | `selected_option` | `fg:ansicyan`                         |
-| 5  | `tooltip`         | `fg:ansibrightblue bg:ansiwhite bold` |
-| 6  | `text`            | *                                     |
-| 7  | `grayout`         | `fg:ansibrightblack`                  |
-| 8  | `error`           | `fg:ansiwhite bg:ansired bold`        |
+| styling tag       | default style                         |                                             default design                                             |
+|-------------------|---------------------------------------|:------------------------------------------------------------------------------------------------------:|
+| `question_mark`   | `fg:ansigreen`                        |  ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/question_mark.png)  |
+| `question`        | *                                     |    ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/question.png)     |
+| `option`          | *                                     |     ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/option.png)      |
+| `selected_option` | `fg:ansicyan`                         | ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/selected_option.png) |
+| `tooltip`         | `fg:ansibrightblue bg:ansiwhite bold` |     ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/tooltip.png)     |
+| `text`            | *                                     |      ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/text.png)       |
+| `grayout`         | `fg:ansibrightblack`                  |     ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/grayout.png)     |
+| `error`           | `fg:ansiwhite bg:ansired bold`        |      ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/error.png)      |
 
 *\*These values are not changed from the default `prompt-toolkit` values.*
 
