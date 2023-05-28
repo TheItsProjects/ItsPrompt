@@ -138,6 +138,8 @@ Prompt.select(
 )
 ```
 
+Read more about the options attribute at [Options](#options).
+
 *additional information on the function arguments can be found in the docstring*
 
 ### `raw_select`
@@ -153,6 +155,8 @@ Prompt.raw_select(
     style=my_style,
 )
 ```
+
+Read more about the options attribute at [Options](#options).
 
 *additional information on the function arguments can be found in the docstring*
 
@@ -170,6 +174,8 @@ Prompt.expand(
 )
 ```
 
+Read more about the options attribute at [Options](#options).
+
 *additional information on the function arguments can be found in the docstring*
 
 ### `checkbox`
@@ -186,6 +192,8 @@ Prompt.checkbox(
     style=my_style,
 )
 ```
+
+Read more about the options attribute at [Options](#options).
 
 *additional information on the function arguments can be found in the docstring*
 
@@ -221,6 +229,9 @@ Prompt.input(
 )
 ```
 
+Read more about the prompt validation and prompt completion attribute at [Prompt Validation](#prompt-validation)
+and [Prompt Commpletion](#prompt-completion).
+
 *additional information on the function arguments can be found in the docstring*
 
 ### `table`
@@ -251,6 +262,8 @@ Prompt.table(
 )
 ```
 
+Read more about the data attribute at [TablePrompt Data](#tableprompt-data).
+
 *additional information on the function arguments can be found in the docstring*
 
 ---
@@ -272,7 +285,7 @@ If an option is given as a `tuple`, the first value will be the options name, th
 
 ---
 
-### Data
+### TablePrompt Data
 
 The `table` prompt takes a mandatory `data` argument, which needs to be either:
 
