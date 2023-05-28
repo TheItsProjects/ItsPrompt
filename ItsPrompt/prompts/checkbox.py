@@ -72,21 +72,21 @@ class CheckboxPrompt(Application):
             else:
                 content += f'\n<option>    ' \
                            f'{self.__class__.CHECKED_SIGN if option.is_selected else self.__class__.UNCHECKED_SIGN} ' \
-                           f' {option.name} </option> '
+                           f'{option.name} </option>'
 
-                self.prompt_content.text = HTML(content)
+            self.prompt_content.text = HTML(content)
 
-                # show error, if error should be shown, else show normal prompt
-                if not self.is_error:
-                    # show normal prompt, change style to standard toolbar
-                    self.toolbar_content.text = self.toolbar_content_default_text
-                    self.toolbar_window.style = 'class:tooltip'
-                else:  # pragma: no cover
-                    # show error prompt and error style
-                    # the only error that might occur is that not enough options are selected
-                    self.toolbar_content.text = f'ERROR: a minimum of {self.min_selections} options need to be ' \
-                                                f'selected!'
-                    self.toolbar_window.style = 'class:error'
+            # show error, if error should be shown, else show normal prompt
+            if not self.is_error:
+                # show normal prompt, change style to standard toolbar
+                self.toolbar_content.text = self.toolbar_content_default_text
+                self.toolbar_window.style = 'class:tooltip'
+            else:  # pragma: no cover
+                # show error prompt and error style
+                # the only error that might occur is that not enough options are selected
+                self.toolbar_content.text = f'ERROR: a minimum of {self.min_selections} options need to be ' \
+                                            f'selected!'
+                self.toolbar_window.style = 'class:error'
 
     def prompt(self) -> list[str] | None:
         """start the application, returns the return value"""

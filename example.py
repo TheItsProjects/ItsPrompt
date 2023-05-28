@@ -42,6 +42,14 @@ ans = Prompt.expand(
 )
 print(ans)
 
+# standard input with simple lambda validation
+ans = Prompt.input(
+    'Please type your id',
+    validate=lambda x: "test" in x,
+)
+
+print(ans)
+
 
 # standard input with validation
 def input_not_empty(input: str) -> str | None:

@@ -23,7 +23,7 @@ class InputPrompt(Application):
         default: str | None = None,
         multiline: bool = False,
         show_symbol: str | None = None,
-        validate: Callable[[str], str | None] | None = None,
+        validate: Callable[[str], str | bool | None] | None = None,
         completions: list[str] | CompletionDict | None = None,
         completer: Completer | None = None,
         *args,
@@ -115,7 +115,16 @@ class InputPrompt(Application):
 
         validation_result = self.validate(self.buffer.text)
 
-        self.is_error = bool(validation_result)
+        if validation_result in (None, True):
+            self.is_error = False
+        else:
+            # validation_result is either a string (which will be the displayed error) or False (if the user used a
+            # lambda statement)
+            self.is_error = True
+
+        # error is either the error returned by the validation function or a default error, if the validation
+        # returned False (in case it is a lambda)
+        error = validation_result if type(validation_result) is str else "Please check your Input!"
 
         # show error, if error should be shown, else show normal prompt
         if not self.is_error:
@@ -124,7 +133,7 @@ class InputPrompt(Application):
             self.toolbar_window.style = 'class:tooltip'
         else:
             # show error prompt and error style
-            self.toolbar_content.text = validation_result
+            self.toolbar_content.text = error
             self.toolbar_window.style = 'class:error'
 
         # run completion
