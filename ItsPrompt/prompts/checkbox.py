@@ -15,6 +15,7 @@ class CheckboxPrompt(Application):
         options: tuple[str | tuple[str, str], ...],
         pointer_at: int | None = None,
         default_checked: tuple[str, ...] | None = None,
+        disabled: tuple[str, ...] | None = None,
         min_selections: int = 0,
         *args,
         **kwargs,
@@ -43,9 +44,6 @@ class CheckboxPrompt(Application):
         # process options
         self.options = process_data(options)
 
-        # set pointer selection
-        self.selection = pointer_at if pointer_at else 0
-
         # default check default option (or none if not given)
         if default_checked is not None:
             was_set = 0  # Keeping track of options which where selected.
@@ -60,19 +58,41 @@ class CheckboxPrompt(Application):
             if was_set != len(default_checked):
                 raise ValueError('At least one of the given default_checked values is invalid.')
 
+        # disable options (or none if not given)
+        if disabled is not None:
+            was_set = 0  # Keeping track of options which where disabled.
+            # If was_set is not as big as len(disabled),
+            # then we know that there was an invalid option which could not be disabled,
+            # so we raise an error.
+            for option in self.options:
+                if option.id in disabled:
+                    option.is_disabled = True
+                    was_set += 1
+
+            if was_set != len(disabled):
+                raise ValueError("At least one of the given disabled values is invalid.")
+
+        # set pointer selection
+        self.selection = pointer_at if pointer_at else 0
+
+        # if the current selection is disabled, we will skip it
+        while self.options[self.selection].is_disabled:
+            self.selection = (self.selection + 1) % len(self.options)
+
     def update(self):
         """update prompt content"""
         content = f'[<question_mark>?</question_mark>] <question>{self.question}</question>:'
 
         for i, option in enumerate(self.options):
+            disabled = ("<disabled>", "</disabled>") if option.is_disabled else ("", "")
+            # Disabled tags will only be inserted if the option is disabled,
+            # otherwise there will only be an empty string inserted.
+            selected = self.__class__.CHECKED_SIGN if option.is_selected else self.__class__.UNCHECKED_SIGN
+
             if i == self.selection:
-                content += f'\n<selected_option>  > ' \
-                           f'{self.__class__.CHECKED_SIGN if option.is_selected else self.__class__.UNCHECKED_SIGN} ' \
-                           f'{option.name}</selected_option>'
+                content += f"\n{disabled[0]}<selected_option>  > {selected} {option.name}</selected_option>{disabled[1]}"
             else:
-                content += f'\n<option>    ' \
-                           f'{self.__class__.CHECKED_SIGN if option.is_selected else self.__class__.UNCHECKED_SIGN} ' \
-                           f'{option.name} </option>'
+                content += f"\n{disabled[0]}<option>    {selected} {option.name} </option>{disabled[1]}"
 
             self.prompt_content.text = HTML(content)
 
@@ -99,6 +119,10 @@ class CheckboxPrompt(Application):
         """when up is pressed, the previous indexed option will be selected"""
         self.selection = (self.selection - 1) % len(self.options)
 
+        # if the current selection is disabled, we will skip it
+        while self.options[self.selection].is_disabled:
+            self.selection = (self.selection - 1) % len(self.options)
+
         # reset error
         self.is_error = False
 
@@ -107,6 +131,10 @@ class CheckboxPrompt(Application):
     def on_down(self):
         """when down is pressed, the next indexed option will be selected"""
         self.selection = (self.selection + 1) % len(self.options)
+
+        # if the current selection is disabled, we will skip it
+        while self.options[self.selection].is_disabled:
+            self.selection = (self.selection + 1) % len(self.options)
 
         # reset error
         self.is_error = False

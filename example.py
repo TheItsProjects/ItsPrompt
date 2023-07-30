@@ -30,6 +30,7 @@ ans = Prompt.checkbox(
     'What beverages would you like?',
     ('Coke', 'Water', 'Juice'),
     default_checked=('Water',),
+    disabled=("Coke",),
     min_selections=1,
 )
 print(ans)
