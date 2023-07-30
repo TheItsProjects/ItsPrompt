@@ -7,9 +7,9 @@ def test_process_data_standard_options():
     options = ("first", "second", "third")
 
     result = [
-        CheckboxOption("first", "first", False),
-        CheckboxOption("second", "second", False),
-        CheckboxOption("third", "third", False),
+        CheckboxOption("first", "first", False, False),
+        CheckboxOption("second", "second", False, False),
+        CheckboxOption("third", "third", False, False),
     ]
 
     ans = process_data(options)
@@ -25,9 +25,9 @@ def test_process_data_tuple_options():
     )
 
     result = [
-        CheckboxOption("first", "1", False),
-        CheckboxOption("second", "2", False),
-        CheckboxOption("third", "3", False),
+        CheckboxOption("first", "1", False, False),
+        CheckboxOption("second", "2", False, False),
+        CheckboxOption("third", "3", False, False),
     ]
 
     ans = process_data(options)

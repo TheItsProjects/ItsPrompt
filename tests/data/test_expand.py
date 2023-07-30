@@ -7,10 +7,10 @@ def test_process_data_standard_options():
     options = ("first", "second", "third")
 
     result = [
-        ExpandOption("f", "first", "first"),
-        ExpandOption("s", "second", "second"),
-        ExpandOption("t", "third", "third"),
-        ExpandOption("h", "Help Menu, list or hide all options", ""),
+        ExpandOption("f", "first", "first", False),
+        ExpandOption("s", "second", "second", False),
+        ExpandOption("t", "third", "third", False),
+        ExpandOption("h", "Help Menu, list or hide all options", "", False),
     ]
 
     ans = process_data(options)
@@ -26,10 +26,10 @@ def test_process_data_tuple_options():
     )
 
     result = [
-        ExpandOption("1", "first", "1"),
-        ExpandOption("2", "second", "2"),
-        ExpandOption("3", "third", "3"),
-        ExpandOption("h", "Help Menu, list or hide all options", ""),
+        ExpandOption("1", "first", "1", False),
+        ExpandOption("2", "second", "2", False),
+        ExpandOption("3", "third", "3", False),
+        ExpandOption("h", "Help Menu, list or hide all options", "", False),
     ]
 
     ans = process_data(options)
