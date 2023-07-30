@@ -171,7 +171,7 @@ class Prompt:
         question: str,
         options: tuple[str | tuple[str, str, str], ...],
         default: str | None = None,
-        disabled: tuple[str, ...] | None = None,  # TODO
+        disabled: tuple[str, ...] | None = None,
         allow_keyboard: bool = False,
         style: PromptStyle | None = None,
     ) -> str:
