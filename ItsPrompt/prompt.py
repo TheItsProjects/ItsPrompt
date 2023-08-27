@@ -86,6 +86,7 @@ class Prompt:
             question,
             options,
             default,
+            disabled,
             layout=Layout(
                 HSplit(
                     [
