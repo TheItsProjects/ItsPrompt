@@ -61,7 +61,7 @@ class Prompt:
         question: str,
         options: tuple[str | tuple[str, str], ...],
         default: str | None = None,
-        disabled: tuple[str, ...] | None = None,  # TODO
+        disabled: tuple[str, ...] | None = None,
         style: PromptStyle | None = None,
     ) -> str:
         """
