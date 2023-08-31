@@ -56,3 +56,35 @@ def test_select_raises_keyboard_interrupt(send_keys):
 
     with pytest.raises(KeyboardInterrupt):
         ans = Prompt.select("", options)
+
+
+# yapf: disable
+@pytest.mark.parametrize(
+    "keys,i",
+    [
+        [(Keys.Enter,), 1],
+        [(Keys.Up, Keys.Enter), 2],
+        [(Keys.Down, Keys.Down, Keys.Enter), 1]
+    ]
+)
+# yapf: enable
+def test_select_with_disabled(send_keys, keys: list[Keys | str], i: int):
+    options = ("first", "second", "third")
+
+    send_keys(*keys)
+
+    ans = Prompt.select("", options, disabled=("first",))
+
+    assert ans == options[i]
+
+
+def test_select_raises_invalid_disabled():
+    options = ("first", "second", "third")
+    with pytest.raises(ValueError):
+        ans = Prompt.select("", options, disabled=("invalid",))
+
+
+def test_select_raises_default_is_disabled():
+    options = ("first", "second", "third")
+    with pytest.raises(ValueError):
+        ans = Prompt.select("", options, default="first", disabled=("first",))

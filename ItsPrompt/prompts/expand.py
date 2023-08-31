@@ -37,7 +37,7 @@ class ExpandPrompt(Application):
         self.keys = ''.join([option.key for option in self.options])
 
         # save disabled keys
-        self.disabled = disabled if disabled else ()
+        self.disabled = [key[0] for key in disabled] if disabled else ()
 
         # default select default option (or "help" if not given)
         if default is None:

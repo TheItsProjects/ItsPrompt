@@ -158,7 +158,7 @@ class CheckboxPrompt(Application):
             if option.is_selected:
                 selected_options.append(option.id)
 
-        # make sure that enough are selected
+        # make sure that enough options are selected
         if len(selected_options) < self.min_selections:  # pragma: no cover
             # show error
             self.is_error = True

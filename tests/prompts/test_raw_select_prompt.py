@@ -74,3 +74,54 @@ def test_raw_select_raises_keyboard_interrupt(send_keys):
 
     with pytest.raises(KeyboardInterrupt):
         ans = Prompt.raw_select("", options)
+
+
+# yapf: disable
+@pytest.mark.parametrize(
+    "keys,i",
+    [
+        [(Keys.Enter,), 1],
+        [("1", Keys.Enter), 1]
+    ]
+)
+# yapf: enable
+def test_raw_select_with_disabled(send_keys, keys: list[Keys | str], i: int):
+    options = ("first", "second", "third")
+
+    send_keys(*keys)
+
+    ans = Prompt.raw_select("", options, disabled=("first",))
+
+    assert ans == options[i]
+
+
+# yapf: disable
+@pytest.mark.parametrize(
+    "keys,i",
+    [
+        [(Keys.Enter,), 1],
+        [(Keys.Up, Keys.Enter), 2],
+        [(Keys.Down, Keys.Down, Keys.Enter), 1]
+    ]
+)
+# yapf: enable
+def test_raw_select_with_disabled_and_keyboard(send_keys, keys: list[Keys | str], i: int):
+    options = ("first", "second", "third")
+
+    send_keys(*keys)
+
+    ans = Prompt.raw_select("", options, disabled=("first",), allow_keyboard=True)
+
+    assert ans == options[i]
+
+
+def test_raw_select_raises_invalid_disabled():
+    options = ("first", "second", "third")
+    with pytest.raises(ValueError):
+        ans = Prompt.raw_select("", options, disabled=("invalid",))
+
+
+def test_raw_select_raises_default_is_disabled():
+    options = ("first", "second", "third")
+    with pytest.raises(ValueError):
+        ans = Prompt.raw_select("", options, default="first", disabled=("first",))

@@ -73,3 +73,51 @@ def test_expand_raises_keyboard_interrupt(send_keys):
 
     with pytest.raises(KeyboardInterrupt):
         ans = Prompt.expand("", options)
+
+
+# yapf: disable
+@pytest.mark.parametrize(
+    "keys,i",
+    [
+        [("f", Keys.Enter, "s", Keys.Enter), 1]
+    ]
+)
+# yapf: enable
+def test_expand_with_disabled(send_keys, keys: list[Keys | str], i: int):
+    options = ("first", "second", "third")
+
+    send_keys(*keys)
+
+    ans = Prompt.expand("", options, disabled=("first",))
+
+    assert ans == options[i]
+
+
+def test_expand_raises_invalid_disabled():
+    options = ("first", "second", "third")
+    with pytest.raises(ValueError):
+        ans = Prompt.expand("", options, disabled=("invalid",))
+
+
+def test_expand_raises_default_is_disabled():
+    options = ("first", "second", "third")
+    with pytest.raises(ValueError):
+        ans = Prompt.expand("", options, default="first", disabled=("first",))
+
+
+@pytest.mark.parametrize(
+    "keys,i",
+    [
+        [(Keys.Down, Keys.Enter), 1],
+        [("s", Keys.Up, Keys.Up, Keys.Enter), 2],  # s, h, t
+        [(Keys.Down, Keys.Enter), 1]
+    ]
+)
+def test_expand_with_disabled_and_keyboard(send_keys, keys: list[Keys | str], i: int):
+    options = ("first", "second", "third")
+
+    send_keys(*keys)
+
+    ans = Prompt.expand("", options, disabled=("first",), allow_keyboard=True)
+
+    assert ans == options[i]

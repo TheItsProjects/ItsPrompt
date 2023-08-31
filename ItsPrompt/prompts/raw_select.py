@@ -48,11 +48,12 @@ class RawSelectPrompt(Application):
         if default is not None:
             for i, option in enumerate(self.options):
                 if option.id == default:
+                    if option.is_disabled:
+                        raise ValueError("Default value must not be disabled.")
                     self.selection = i
                     break
             else:
                 raise ValueError('Default value is not a valid id.')
-
         else:
             self.selection = 0
 

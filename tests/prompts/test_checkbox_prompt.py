@@ -59,4 +59,30 @@ def test_checkbox_raises_keyboard_interrupt(send_keys):
         ans = Prompt.checkbox("", options)
 
 
+# yapf: disable
+@pytest.mark.parametrize(
+    "keys,i",
+    [
+        [(" ", Keys.Enter,), (1,)],
+        [(Keys.Up, " ", Keys.Enter), (2,)],
+        [(Keys.Down, Keys.Down, " ", Keys.Enter), (1,)]
+    ]
+)
+# yapf: enable
+def test_checkbox_with_disabled(send_keys, keys: list[Keys | str], i: list[int]):
+    options = ("first", "second", "third")
+
+    send_keys(*keys)
+
+    ans = Prompt.checkbox("", options, disabled=("first",))
+
+    assert ans == [options[n] for n in i]
+
+
+def test_checkbox_raises_invalid_disabled():
+    options = ("first", "second", "third")
+    with pytest.raises(ValueError):
+        ans = Prompt.checkbox("", options, disabled=("invalid",))
+
+
 # TODO check min selections with error box (visual)
