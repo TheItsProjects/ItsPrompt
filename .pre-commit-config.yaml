@@ -4,6 +4,7 @@ repos:
     rev: v0.33.0
     hooks:
       - id: yapf
+        args: [ --diff ]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.2.0
     hooks:

@@ -7,9 +7,9 @@ def test_process_data_standard_options():
     options = ("first", "second", "third")
 
     result = [
-        SelectOption("first", "first"),
-        SelectOption("second", "second"),
-        SelectOption("third", "third"),
+        SelectOption("first", "first", False),
+        SelectOption("second", "second", False),
+        SelectOption("third", "third", False),
     ]
 
     ans = process_data(options)
@@ -25,9 +25,9 @@ def test_process_data_tuple_options():
     )
 
     result = [
-        SelectOption("first", "1"),
-        SelectOption("second", "2"),
-        SelectOption("third", "3"),
+        SelectOption("first", "1", False),
+        SelectOption("second", "2", False),
+        SelectOption("third", "3", False),
     ]
 
     ans = process_data(options)

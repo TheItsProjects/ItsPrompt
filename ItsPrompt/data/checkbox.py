@@ -6,6 +6,7 @@ class CheckboxOption:
     name: str
     id: str
     is_selected: bool
+    is_disabled: bool
 
 
 def process_data(options: tuple[str | tuple[str, str], ...]) -> list[CheckboxOption]:
@@ -23,9 +24,9 @@ def process_data(options: tuple[str | tuple[str, str], ...]) -> list[CheckboxOpt
     # process given options
     for option in options:
         if type(option) is str:
-            processed_options.append(CheckboxOption(name=option, id=option, is_selected=False))
+            processed_options.append(CheckboxOption(name=option, id=option, is_selected=False, is_disabled=False))
         elif type(option) is tuple:
-            processed_options.append(CheckboxOption(name=option[0], id=option[1], is_selected=False))
+            processed_options.append(CheckboxOption(name=option[0], id=option[1], is_selected=False, is_disabled=False))
         else:
             raise TypeError('Argument is not processable')
 

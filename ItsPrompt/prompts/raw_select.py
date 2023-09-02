@@ -11,6 +11,7 @@ class RawSelectPrompt(Application):
         question: str,
         options: tuple[str | tuple[str, str], ...],
         default: str | None = None,
+        disabled: tuple[str, ...] | None = None,
         allow_keyboard: bool = False,
         *args,
         **kwargs,
@@ -29,17 +30,36 @@ class RawSelectPrompt(Application):
         # process options
         self.options = process_data(options)
 
-        # default select default option (or first if not given)
-        if default is None:
-            self.selection = 0
-            return
+        # disable options (or none if not given)
+        if disabled is not None:
+            was_set = 0  # Keeping track of options which where disabled.
+            # If was_set is not as big as len(disabled),
+            # then we know that there was an invalid option which could not be disabled,
+            # so we raise an error.
+            for option in self.options:
+                if option.id in disabled:
+                    option.is_disabled = True
+                    was_set += 1
 
-        for i, option in enumerate(self.options):
-            if option.id == default:
-                self.selection = i
-                break
+            if was_set != len(disabled):
+                raise ValueError("At least one of the given disabled values is invalid.")
+
+        # default select default option (or first if not given)
+        if default is not None:
+            for i, option in enumerate(self.options):
+                if option.id == default:
+                    if option.is_disabled:
+                        raise ValueError("Default value must not be disabled.")
+                    self.selection = i
+                    break
+            else:
+                raise ValueError('Default value is not a valid id.')
         else:
-            raise ValueError('Default value is not a valid id.')
+            self.selection = 0
+
+        # if the current selection is disabled, we will skip it
+        while self.options[self.selection].is_disabled:
+            self.selection = (self.selection + 1) % len(self.options)
 
     def update(self):
         """update prompt content"""
@@ -48,10 +68,14 @@ class RawSelectPrompt(Application):
 
         # options
         for i, option in enumerate(self.options):
+            disabled = ("<disabled>", "</disabled>") if option.is_disabled else ("", "")
+            # Disabled tags will only be inserted if the option is disabled,
+            # otherwise there will only be an empty string inserted.
+
             if i == self.selection:
-                content += f'\n<selected_option>    {i + 1}) {option.name}</selected_option>'
+                content += f'\n{disabled[0]}<selected_option>    {i + 1}) {option.name}</selected_option>{disabled[1]}'
             else:
-                content += f'\n<option>    {i + 1}) {option.name}</option>'
+                content += f'\n{disabled[0]}<option>    {i + 1}) {option.name}</option>{disabled[1]}'
 
         # text
         content += f'\n<text>    Answer: {self.selection + 1}</text>'
@@ -72,6 +96,10 @@ class RawSelectPrompt(Application):
 
         self.selection = (self.selection - 1) % len(self.options)
 
+        # if the current selection is disabled, we will skip it
+        while self.options[self.selection].is_disabled:
+            self.selection = (self.selection - 1) % len(self.options)
+
         self.update()
 
     def on_down(self):
@@ -80,6 +108,10 @@ class RawSelectPrompt(Application):
             return
 
         self.selection = (self.selection + 1) % len(self.options)
+
+        # if the current selection is disabled, we will skip it
+        while self.options[self.selection].is_disabled:
+            self.selection = (self.selection + 1) % len(self.options)
 
         self.update()
 
@@ -95,6 +127,10 @@ class RawSelectPrompt(Application):
 
         # and return if key is not in the range of possible indices
         if id <= 0 or id > len(self.options):
+            return
+
+        # and return if selection is disabled
+        if self.options[id - 1].is_disabled:
             return
 
         self.selection = id - 1

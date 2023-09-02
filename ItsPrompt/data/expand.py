@@ -6,6 +6,7 @@ class ExpandOption:
     key: str
     name: str
     id: str
+    is_disabled: bool
 
 
 def process_data(options: tuple[str | tuple[str, str, str], ...]) -> list[ExpandOption]:
@@ -44,14 +45,16 @@ def process_data(options: tuple[str | tuple[str, str, str], ...]) -> list[Expand
     # process given options
     for option in options:
         if type(option) is str:
-            # use first letter as key, and str as name and id
-            processed_options.append(ExpandOption(key=option[0], name=option, id=option))
+            # use the first letter as the key, and str as name and id
+            processed_options.append(ExpandOption(key=option[0], name=option, id=option, is_disabled=False))
         elif type(option) is tuple:
-            processed_options.append(ExpandOption(key=option[0], name=option[1], id=option[2]))
+            processed_options.append(ExpandOption(key=option[0], name=option[1], id=option[2], is_disabled=False))
         else:
             raise TypeError('Argument is not processable')
 
     # append a help option
-    processed_options.append(ExpandOption(key='h', name='Help Menu, list or hide all options', id=''))
+    processed_options.append(
+        ExpandOption(key='h', name='Help Menu, list or hide all options', id='', is_disabled=False)
+    )
 
     return processed_options

@@ -61,6 +61,7 @@ class Prompt:
         question: str,
         options: tuple[str | tuple[str, str], ...],
         default: str | None = None,
+        disabled: tuple[str, ...] | None = None,
         style: PromptStyle | None = None,
     ) -> str:
         """
@@ -73,14 +74,10 @@ class Prompt:
         where the first string is the display value and the second is the option's id.
 
         :param question: The question to display
-        :type question: str
         :param options: A list of possible options
-        :type options: tuple[str  |  tuple[str, str], ...]
-        :param default: The id of the default option to select (empty or None if the first should be default),
-        defaults to None
-        :type default: str | None, optional
+        :param default: The id of the default option to select (empty or None if the first should be default), defaults to None
+        :param disabled: A list of ids, which should be disabled by default (empty if None)
         :param style: A separate style to style the prompt (empty or None for default style), defaults to None
-        :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The id of the selected option
         :rtype: str
@@ -89,6 +86,7 @@ class Prompt:
             question,
             options,
             default,
+            disabled,
             layout=Layout(
                 HSplit(
                     [
@@ -117,6 +115,7 @@ class Prompt:
         question: str,
         options: tuple[str | tuple[str, str], ...],
         default: str | None = None,
+        disabled: tuple[str, ...] | None = None,
         allow_keyboard: bool = False,
         style: PromptStyle | None = None,
     ) -> str:
@@ -130,16 +129,11 @@ class Prompt:
         where the first string is the display value and the second is the option's id.
 
         :param question: The question to display
-        :type question: str
         :param options: A list of possible options
-        :type options: tuple[str  |  tuple[str, str], ...]
-        :param default: The id of the default option to select (empty or None if the first should be default),
-        defaults to None
-        :type default: str | None, optional
+        :param default: The id of the default option to select (empty or None if the first should be default), defaults to None
+        :param disabled: A list of ids, which should be disabled by default (empty if None)
         :param allow_keyboard: Whether the user should be able to select the answer with up and down, defaults to False
-        :type allow_keyboard: bool, optional
         :param style: A separate style to style the prompt (empty or None for default style), defaults to None
-        :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The id of the selected option
         :rtype: str
@@ -148,6 +142,7 @@ class Prompt:
             question,
             options,
             default,
+            disabled,
             allow_keyboard,
             layout=Layout(
                 HSplit(
@@ -167,7 +162,7 @@ class Prompt:
             style=convert_style(style) if style else convert_style(default_style),
         )
         ans = app.prompt()
-        if ans == None:
+        if ans is None:
             raise KeyboardInterrupt()
         return ans
 
@@ -177,6 +172,7 @@ class Prompt:
         question: str,
         options: tuple[str | tuple[str, str, str], ...],
         default: str | None = None,
+        disabled: tuple[str, ...] | None = None,
         allow_keyboard: bool = False,
         style: PromptStyle | None = None,
     ) -> str:
@@ -191,16 +187,11 @@ class Prompt:
         Every key must be a unique ascii character and of length 1, and there may not be a key assigned to `h`.
 
         :param question: The question to display
-        :type question: str
         :param options: A list of possible options
-        :type options: tuple[str  |  tuple[str, str, str], ...]
-        :param default: The id of the default option to select (empty or None if `h` should be default), defaults to
-        None
-        :type default: str | None, optional
+        :param default: The id of the default option to select (empty or None if `h` should be default), defaults to None
+        :param disabled: A list of ids, which should be disabled by default (empty if None)
         :param allow_keyboard: Whether the user should be able to select the answer with up and down, defaults to False
-        :type allow_keyboard: bool, optional
         :param style: A separate style to style the prompt (empty or None for default style), defaults to None
-        :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The id of the selected option
         :rtype: str
@@ -209,6 +200,7 @@ class Prompt:
             question,
             options,
             default,
+            disabled,
             allow_keyboard,
             layout=Layout(
                 HSplit(
@@ -230,7 +222,7 @@ class Prompt:
             style=convert_style(style) if style else convert_style(default_style),
         )
         ans = app.prompt()
-        if ans == None:
+        if ans is None:
             raise KeyboardInterrupt()
         return ans
 
@@ -241,6 +233,7 @@ class Prompt:
         options: tuple[str | tuple[str, str], ...],
         pointer_at: int | None = None,
         default_checked: tuple[str, ...] | None = None,
+        disabled: tuple[str, ...] | None = None,
         min_selections: int = 0,
         style: PromptStyle | None = None,
     ) -> list[str]:
@@ -254,18 +247,12 @@ class Prompt:
         where the first string is the display value and the second is the option's id.
 
         :param question: The question to display
-        :type question: str
         :param options: A list of possible options
-        :type options: tuple[str  |  tuple[str, str], ...]
         :param pointer_at: A 0-indexed value, where the pointer should start (0 if None), defaults to None
-        :type pointer_at: int | None, optional
         :param default_checked: A list of ids, which should be checked by default (empty if None)
-        :type default_checked: tuple[str, ...] | None, optional
-        :param min_selections: A minimum amount of options that need to be checked before submitting (prohibits the
-        user of submitting, if not enough are checked; 0 if None)
-        :type min_selections: int, optional
+        :param disabled: A list of ids, which should be disabled by default (empty if None)
+        :param min_selections: A minimum amount of options that need to be checked before submitting (prohibits the user of submitting, if not enough are checked; 0 if None)
         :param style: A separate style to style the prompt (empty or None for default style), defaults to None
-        :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The ids of the selected options
         :rtype: list[str]
@@ -275,6 +262,7 @@ class Prompt:
             options,
             pointer_at,
             default_checked,
+            disabled,
             min_selections,
             layout=Layout(
                 HSplit(
