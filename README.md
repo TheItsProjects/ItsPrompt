@@ -134,6 +134,7 @@ Prompt.select(
     question='question',
     options=('option1', ('option2', 'opt2')),
     default='option1',
+    disabled=('option2',),
     style=my_style,
 )
 ```
@@ -151,6 +152,7 @@ Prompt.raw_select(
     question='question',
     options=('option1', ('option2', 'opt2')),
     default='opt2',
+    disabled=('option1',),
     allow_keyboard=True,
     style=my_style,
 )
@@ -169,6 +171,7 @@ Prompt.expand(
     question='question',
     options=('option1', ('2', 'option2', 'opt2')),
     default='opt2',
+    disabled=('option1',),
     allow_keyboard=True,
     style=my_style,
 )
@@ -187,7 +190,8 @@ Prompt.checkbox(
     question='question',
     options=('option1', ('option2', 'opt2')),
     pointer_at=1,
-    default_checked='option1',
+    default_checked=('option1',),
+    disabled=('option2',),
     min_selections=1,
     style=my_style,
 )
