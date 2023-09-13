@@ -30,8 +30,7 @@ from prompt_toolkit.layout.menus import (
 
 from .data.style import PromptStyle, convert_style, default_style
 from .keyboard_handler import generate_key_bindings
-from .objects.prompts.separator import Separator
-from .objects.prompts.type import CompletionDict, TablePromptDict, TablePromptList
+from .objects.prompts.type import CompletionDict, TablePromptDict, TablePromptList, OptionsList
 from .prompts.checkbox import CheckboxPrompt
 from .prompts.confirm import ConfirmPrompt
 from .prompts.expand import ExpandPrompt
@@ -60,7 +59,7 @@ class Prompt:
     def select(
         cls,
         question: str,
-        options: tuple[str | tuple[str, str], ...],
+        options: OptionsList,
         default: str | None = None,
         disabled: tuple[str, ...] | None = None,
         style: PromptStyle | None = None,
@@ -69,7 +68,7 @@ class Prompt:
         Ask the user for selecting ONE of the given `options`.
 
         This method shows the question alongside the `options` as a nice list. The user has the ability to use the
-        up, down and enter keys to navigate between the options and select the one thats right.
+        up, down and enter keys to navigate between the options and select the one that is right.
 
         The `options` are either a string, which is used as the display value and the id, or a tuple[str, str],
         where the first string is the display value and the second is the option's id.
@@ -114,7 +113,7 @@ class Prompt:
     def raw_select(
         cls,
         question: str,
-        options: tuple[str | tuple[str, str], ...],
+        options: OptionsList,
         default: str | None = None,
         disabled: tuple[str, ...] | None = None,
         allow_keyboard: bool = False,

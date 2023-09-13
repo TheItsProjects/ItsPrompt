@@ -276,14 +276,27 @@ Read more about the data attribute at [TablePrompt Data](#tableprompt-data).
 
 ### Options
 
-The `options` is always a `tuple` containing `str` and `tuple` objects.
+The `options` is always a `tuple` with the following type annotation:
+
+```py
+OptionsList = tuple[str | OptionWithId | Separator, ...]
+```
 
 If an option is given as a `str`, this will be used as the options display name and the id, which will be returned when
 selecting this option.
 
 *In case of `expand`, the first character of the `str` will be used as its key.*
 
-If an option is given as a `tuple`, the first value will be the options name, the second value the options id to return.
+If an option is given as a `OptionsWithId`,
+the first value will be the option name, the second value the option id to return.
+
+The last value is only usable in expand options.
+
+The type annotation is as follows:
+
+```py
+OptionWithId = tuple[str, str, str | None]
+```
 
 *In case of `expand`, the first value will be the key, the second value the name and the third value the id.*
 

@@ -2,6 +2,7 @@ from prompt_toolkit import Application, HTML
 from prompt_toolkit.layout.controls import FormattedTextControl
 
 from ..data.select import process_data
+from ..objects.prompts.type import OptionsList
 
 
 class RawSelectPrompt(Application):
@@ -9,7 +10,7 @@ class RawSelectPrompt(Application):
     def __init__(
         self,
         question: str,
-        options: tuple[str | tuple[str, str], ...],
+        options: OptionsList,
         default: str | None = None,
         disabled: tuple[str, ...] | None = None,
         allow_keyboard: bool = False,
