@@ -1,7 +1,7 @@
 import os
 from typing import TYPE_CHECKING, Union
 
-from .type import TablePromptDict, TablePromptList
+from ..objects.prompts.type import TablePromptDict, TablePromptList
 from ..objects.table.table_base import TableDataBase
 from ..objects.table.table_dict import TableDataFromDict
 from ..objects.table.table_list import TableDataFromList

@@ -3,7 +3,7 @@ from pandas import DataFrame
 from pandas.testing import assert_frame_equal
 from prompt_toolkit.keys import Keys
 
-from ItsPrompt.data.type import TablePromptDict, TablePromptList
+from ItsPrompt.objects.prompts.type import TablePromptDict, TablePromptList
 from ItsPrompt.prompt import Prompt
 
 

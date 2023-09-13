@@ -12,7 +12,7 @@ from prompt_toolkit.layout.containers import Window
 from prompt_toolkit.layout.controls import FormattedTextControl
 from prompt_toolkit.layout.processors import PasswordProcessor
 
-from ..data.type import CompletionDict
+from ..objects.prompts.type import CompletionDict
 
 
 class InputPrompt(Application):

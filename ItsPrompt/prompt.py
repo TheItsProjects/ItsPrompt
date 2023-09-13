@@ -29,8 +29,9 @@ from prompt_toolkit.layout.menus import (
 )
 
 from .data.style import PromptStyle, convert_style, default_style
-from .data.type import CompletionDict, TablePromptDict, TablePromptList
 from .keyboard_handler import generate_key_bindings
+from .objects.prompts.separator import Separator
+from .objects.prompts.type import CompletionDict, TablePromptDict, TablePromptList
 from .prompts.checkbox import CheckboxPrompt
 from .prompts.confirm import ConfirmPrompt
 from .prompts.expand import ExpandPrompt

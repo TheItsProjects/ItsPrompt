@@ -1,7 +1,7 @@
 from typing import Generator
 
 from .table_base import TableDataBase
-from ...data.type import TablePromptDict
+from ..prompts.type import TablePromptDict
 
 
 class TableDataFromDict(TableDataBase):

@@ -6,7 +6,7 @@ from prompt_toolkit.data_structures import Point
 from prompt_toolkit.layout.controls import FormattedTextControl
 
 from ..data.table import Table
-from ..data.type import TablePromptDict, TablePromptList
+from ..objects.prompts.type import TablePromptDict, TablePromptList
 
 if TYPE_CHECKING:  # pragma: no cover
     from pandas import DataFrame
