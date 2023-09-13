@@ -20,6 +20,7 @@ class PromptStyle:
     text: str = ''
     grayout: str = ''
     disabled: str = ''
+    seperator: str = ''
 
 
 default_style = PromptStyle(
@@ -29,6 +30,7 @@ default_style = PromptStyle(
     error="fg:ansiwhite bg:ansired bold",
     grayout="fg:ansibrightblack",
     disabled="fg:ansibrightblack",
+    seperator="fg:ansibrightgreen",
 )
 
 
@@ -45,10 +47,10 @@ def convert_style(style: PromptStyle) -> Style:
 
 
 def create_from_default() -> PromptStyle:
-    '''
+    """
     Returns a copy of the default style, which can be edited without changing the default style.
 
-    :return: A editable copy of the default style
+    :return: An editable copy of the default style
     :rtype: PromptStyle
-    '''
+    """
     return copy.deepcopy(default_style)
