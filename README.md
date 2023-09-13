@@ -300,6 +300,19 @@ OptionWithId = tuple[str, str, str | None]
 
 *In case of `expand`, the first value will be the key, the second value the name and the third value the id.*
 
+The `separator` is used for creating distinctive sections in the prompt types:
+
+- `select`
+- `raw_select`
+- `checkbox`
+- `expand`
+
+It is purely cosmetic. To use it, simply add a class instance in your options tuple and give it a name:
+
+```py
+options = (Separator('The veggies'), 'Salad', Separator('The meaties'), 'Pizza')
+```
+
 ---
 
 ### TablePrompt Data
@@ -414,7 +427,7 @@ Prompt.input(
 | `text`            | *                                     |                     ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/text.png)                      |
 | `grayout`         | `fg:ansibrightblack`                  |                    ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/grayout.png)                    |
 | `error`           | `fg:ansiwhite bg:ansired bold`        |                     ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/error.png)                     |
-| `seperator`       | `fg:ansibrightgreen`                  | ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/0d2f2df964115eecd06867d69c350e272cc1b1e5/media/styling/separator.png) |
+| `separator`       | `fg:ansibrightgreen`                  | ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/0d2f2df964115eecd06867d69c350e272cc1b1e5/media/styling/separator.png) |
 
 *\*These values are not changed from the default `prompt-toolkit` values.*
 

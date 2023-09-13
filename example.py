@@ -1,4 +1,5 @@
 # mypy: disable-error-code=assignment
+from ItsPrompt.objects.prompts.separator import Separator
 
 try:
     from pandas import DataFrame
@@ -12,7 +13,7 @@ from ItsPrompt.prompt import Prompt
 # select
 ans = Prompt.select(
     'What food would you like?',
-    ('Pizza', 'Burger', 'Salad'),
+    (Separator('The veggies'), 'Salad', Separator('The meaties'), 'Pizza', 'Burger'),
     default='Pizza',
 )
 print(ans)

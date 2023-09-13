@@ -20,7 +20,7 @@ class PromptStyle:
     text: str = ''
     grayout: str = ''
     disabled: str = ''
-    seperator: str = ''
+    separator: str = ''
 
 
 default_style = PromptStyle(
@@ -30,7 +30,7 @@ default_style = PromptStyle(
     error="fg:ansiwhite bg:ansired bold",
     grayout="fg:ansibrightblack",
     disabled="fg:ansibrightblack",
-    seperator="fg:ansibrightgreen",
+    separator="fg:ansibrightgreen",
 )
 
 

@@ -2,7 +2,7 @@ class Separator:
 
     def __init__(self, label: str):
         """
-        Initializes an instance of the Seperator class with the given text.
+        Initializes an instance of the Separator class with the given text.
 
         :param label: The text to be stored.
         """

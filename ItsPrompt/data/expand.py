@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 
+from ..objects.prompts.option import Option
+
 
 @dataclass
-class ExpandOption:
+class ExpandOption(Option):
     key: str
     name: str
     id: str

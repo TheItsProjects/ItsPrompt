@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 
+from ..objects.prompts.option import Option
+
 
 @dataclass
-class CheckboxOption:
+class CheckboxOption(Option):
     name: str
     id: str
     is_selected: bool
