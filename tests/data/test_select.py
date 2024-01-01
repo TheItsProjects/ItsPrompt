@@ -1,6 +1,7 @@
 import pytest
 
 from ItsPrompt.data.select import SelectOption, process_data
+from ItsPrompt.objects.prompts.separator import Separator
 
 
 def test_process_data_standard_options():
@@ -40,3 +41,18 @@ def test_process_data_raises_type_error():
 
     with pytest.raises(TypeError):
         ans = process_data(options)  # type: ignore # mypy: ignore
+
+
+def test_process_data_with_separator():
+    separator = Separator("second")
+    options = ("first", separator, "third")
+
+    result = [
+        SelectOption("first", "first", False),
+        separator,
+        SelectOption("third", "third", False)
+    ]
+
+    ans = process_data(options)
+
+    assert ans.with_separators == result

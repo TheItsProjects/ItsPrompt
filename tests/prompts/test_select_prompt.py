@@ -1,6 +1,7 @@
 import pytest
 from prompt_toolkit.keys import Keys
 
+from ItsPrompt.objects.prompts.separator import Separator
 from ItsPrompt.prompt import Prompt
 
 
@@ -76,6 +77,16 @@ def test_select_with_disabled(send_keys, keys: list[Keys | str], i: int):
     ans = Prompt.select("", options, disabled=("first",))
 
     assert ans == options[i]
+
+
+def test_select_with_separator(send_keys):
+    options = ("first", "second", Separator("separator"), "third")
+
+    send_keys(Keys.Down, Keys.Down, Keys.Enter)
+
+    ans = Prompt.select("", options)
+
+    assert ans == "third"
 
 
 def test_select_raises_invalid_disabled():
