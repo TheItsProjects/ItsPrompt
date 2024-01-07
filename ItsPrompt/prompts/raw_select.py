@@ -2,6 +2,7 @@ from prompt_toolkit import Application, HTML
 from prompt_toolkit.layout.controls import FormattedTextControl
 
 from ..data.select import process_data
+from ..objects.prompts.separator import Separator
 from ..objects.prompts.type import OptionsList
 
 
@@ -68,15 +69,20 @@ class RawSelectPrompt(Application):
         content = f'[<question_mark>?</question_mark>] <question>{self.question}</question>:'
 
         # options
-        for i, option in enumerate(self.options):
-            disabled = ("<disabled>", "</disabled>") if option.is_disabled else ("", "")
+        for i, option in self.options.with_separators_enumerate():
+
+            if type(option) is Separator:
+                content += f"\n<separator>{option.label}</separator>"
+                continue
+
+            disabled = ("<disabled>", "</disabled>") if option.is_disabled else ("", "")  # type: ignore
             # Disabled tags will only be inserted if the option is disabled,
             # otherwise there will only be an empty string inserted.
 
             if i == self.selection:
-                content += f'\n{disabled[0]}<selected_option>    {i + 1}) {option.name}</selected_option>{disabled[1]}'
+                content += f'\n{disabled[0]}<selected_option>    {i + 1}) {option.name}</selected_option>{disabled[1]}'  # type: ignore
             else:
-                content += f'\n{disabled[0]}<option>    {i + 1}) {option.name}</option>{disabled[1]}'
+                content += f'\n{disabled[0]}<option>    {i + 1}) {option.name}</option>{disabled[1]}'  # type: ignore
 
         # text
         content += f'\n<text>    Answer: {self.selection + 1}</text>'
