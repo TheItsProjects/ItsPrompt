@@ -2,6 +2,8 @@ from prompt_toolkit import Application, HTML
 from prompt_toolkit.layout.controls import FormattedTextControl
 
 from ..data.expand import process_data
+from ..objects.prompts.separator import Separator
+from ..objects.prompts.type import OptionsList
 
 
 class ExpandPrompt(Application):
@@ -9,7 +11,7 @@ class ExpandPrompt(Application):
     def __init__(
         self,
         question: str,
-        options: tuple[str | tuple[str, str, str], ...],
+        options: OptionsList,
         default: str | None = None,
         disabled: tuple[str, ...] | None = None,
         allow_keyboard: bool = False,
@@ -76,15 +78,20 @@ class ExpandPrompt(Application):
 
         # options, show only if it is expanded
         if self.is_expanded:
-            for option in self.options:
-                disabled = ("<disabled>", "</disabled>") if option.is_disabled else ("", "")
+            for _, option in self.options.with_separators_enumerate():
+
+                if type(option) is Separator:
+                    content += f"\n<separator>{option.label}</separator>"
+                    continue
+
+                disabled = ("<disabled>", "</disabled>") if option.is_disabled else ("", "")  # type: ignore
                 # Disabled tags will only be inserted if the option is disabled,
                 # otherwise there will only be an empty string inserted.
 
-                if option.key == self.selection:
-                    content += f'\n{disabled[0]}<selected_option>    {option.key}) {option.name}</selected_option>{disabled[1]}'
+                if option.key == self.selection:  # type: ignore
+                    content += f'\n{disabled[0]}<selected_option>    {option.key}) {option.name}</selected_option>{disabled[1]}'  # type: ignore
                 else:
-                    content += f'\n{disabled[0]}<option>    {option.key}) {option.name}</option>{disabled[1]}'
+                    content += f'\n{disabled[0]}<option>    {option.key}) {option.name}</option>{disabled[1]}'  # type: ignore
 
         # text
         content += f'\n<text>    Answer: {self.selection}</text>'

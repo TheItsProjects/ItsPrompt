@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from ItsPrompt.objects.prompts.option import Option
-from ItsPrompt.objects.prompts.options_with_seperator import OptionsWithSeperator
+from ItsPrompt.objects.prompts.options_with_seperator import OptionsWithSeparator
 from ItsPrompt.objects.prompts.separator import Separator
 from ItsPrompt.objects.prompts.type import OptionsList
 
@@ -13,7 +13,7 @@ class SelectOption(Option):
     is_disabled: bool
 
 
-def process_data(options: OptionsList) -> OptionsWithSeperator[SelectOption | Separator]:
+def process_data(options: OptionsList) -> OptionsWithSeparator[SelectOption | Separator]:
     """
     Processes the given `options` and returns the processed list
 
@@ -36,4 +36,4 @@ def process_data(options: OptionsList) -> OptionsWithSeperator[SelectOption | Se
         else:
             raise TypeError('Argument is not processable')
 
-    return OptionsWithSeperator(*processed_options)
+    return OptionsWithSeparator(*processed_options)

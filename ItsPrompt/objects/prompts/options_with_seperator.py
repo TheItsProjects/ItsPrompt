@@ -5,7 +5,7 @@ from ItsPrompt.objects.prompts.separator import Separator
 OptionOrSeparator = TypeVar("OptionOrSeparator")
 
 
-class OptionsWithSeperator(Generic[OptionOrSeparator], list):
+class OptionsWithSeparator(Generic[OptionOrSeparator], list):
     """
     The `OptionsWithSeparator` class is a subclass of the built-in list class in Python.
 

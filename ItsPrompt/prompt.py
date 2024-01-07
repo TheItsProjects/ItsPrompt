@@ -170,7 +170,7 @@ class Prompt:
     def expand(
         cls,
         question: str,
-        options: tuple[str | tuple[str, str, str], ...],
+        options: OptionsList,
         default: str | None = None,
         disabled: tuple[str, ...] | None = None,
         allow_keyboard: bool = False,
