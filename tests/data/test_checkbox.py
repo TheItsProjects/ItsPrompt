@@ -1,6 +1,7 @@
 import pytest
 
 from ItsPrompt.data.checkbox import CheckboxOption, process_data
+from ItsPrompt.objects.prompts.separator import Separator
 
 
 def test_process_data_standard_options():
@@ -30,7 +31,7 @@ def test_process_data_tuple_options():
         CheckboxOption("third", "3", False, False),
     ]
 
-    ans = process_data(options)
+    ans = process_data(options)  # type: ignore
 
     assert ans == result
 
@@ -40,3 +41,14 @@ def test_process_data_raises_type_error():
 
     with pytest.raises(TypeError):
         ans = process_data(options)  # type: ignore # mypy: ignore
+
+
+def test_process_data_with_separator():
+    separator = Separator("second")
+    options = ("first", separator, "third")
+
+    result = [CheckboxOption("first", "first", False, False), separator, CheckboxOption("third", "third", False, False)]
+
+    ans = process_data(options)
+
+    assert ans.with_separators == result

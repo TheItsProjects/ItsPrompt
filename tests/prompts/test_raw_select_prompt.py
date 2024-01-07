@@ -1,6 +1,7 @@
 import pytest
 from prompt_toolkit.keys import Keys
 
+from ItsPrompt.objects.prompts.separator import Separator
 from ItsPrompt.prompt import Prompt
 
 
@@ -113,6 +114,16 @@ def test_raw_select_with_disabled_and_keyboard(send_keys, keys: list[Keys | str]
     ans = Prompt.raw_select("", options, disabled=("first",), allow_keyboard=True)
 
     assert ans == options[i]
+
+
+def test_raw_select_with_separator(send_keys):
+    options = ("first", "second", Separator("separator"), "third")
+
+    send_keys("1", "2", Keys.Enter)
+
+    ans = Prompt.raw_select("", options)
+
+    assert ans == "second"
 
 
 def test_raw_select_raises_invalid_disabled():
