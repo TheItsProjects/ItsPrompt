@@ -230,7 +230,7 @@ class Prompt:
     def checkbox(
         cls,
         question: str,
-        options: tuple[str | tuple[str, str], ...],
+        options: OptionsList,
         pointer_at: int | None = None,
         default_checked: tuple[str, ...] | None = None,
         disabled: tuple[str, ...] | None = None,

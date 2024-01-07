@@ -3,6 +3,8 @@ from prompt_toolkit.layout.containers import Window
 from prompt_toolkit.layout.controls import FormattedTextControl
 
 from ..data.checkbox import process_data
+from ..objects.prompts.separator import Separator
+from ..objects.prompts.type import OptionsList
 
 
 class CheckboxPrompt(Application):
@@ -12,7 +14,7 @@ class CheckboxPrompt(Application):
     def __init__(
         self,
         question: str,
-        options: tuple[str | tuple[str, str], ...],
+        options: OptionsList,
         pointer_at: int | None = None,
         default_checked: tuple[str, ...] | None = None,
         disabled: tuple[str, ...] | None = None,
@@ -83,30 +85,35 @@ class CheckboxPrompt(Application):
         """update prompt content"""
         content = f'[<question_mark>?</question_mark>] <question>{self.question}</question>:'
 
-        for i, option in enumerate(self.options):
-            disabled = ("<disabled>", "</disabled>") if option.is_disabled else ("", "")
+        for i, option in self.options.with_separators_enumerate():
+
+            if type(option) is Separator:
+                content += f"\n<separator>{option.label}</separator>"
+                continue
+
+            disabled = ("<disabled>", "</disabled>") if option.is_disabled else ("", "")  # type: ignore
             # Disabled tags will only be inserted if the option is disabled,
             # otherwise there will only be an empty string inserted.
-            selected = self.__class__.CHECKED_SIGN if option.is_selected else self.__class__.UNCHECKED_SIGN
+            selected = self.__class__.CHECKED_SIGN if option.is_selected else self.__class__.UNCHECKED_SIGN  # type: ignore
 
             if i == self.selection:
-                content += f"\n{disabled[0]}<selected_option>  > {selected} {option.name}</selected_option>{disabled[1]}"
+                content += f"\n{disabled[0]}<selected_option>  > {selected} {option.name}</selected_option>{disabled[1]}"  # type: ignore
             else:
-                content += f"\n{disabled[0]}<option>    {selected} {option.name} </option>{disabled[1]}"
+                content += f"\n{disabled[0]}<option>    {selected} {option.name} </option>{disabled[1]}"  # type: ignore
 
-            self.prompt_content.text = HTML(content)
+        self.prompt_content.text = HTML(content)
 
-            # show error, if error should be shown, else show normal prompt
-            if not self.is_error:
-                # show normal prompt, change style to standard toolbar
-                self.toolbar_content.text = self.toolbar_content_default_text
-                self.toolbar_window.style = 'class:tooltip'
-            else:  # pragma: no cover
-                # show error prompt and error style
-                # the only error that might occur is that not enough options are selected
-                self.toolbar_content.text = f'ERROR: a minimum of {self.min_selections} options need to be ' \
-                                            f'selected!'
-                self.toolbar_window.style = 'class:error'
+        # show error, if error should be shown, else show normal prompt
+        if not self.is_error:
+            # show normal prompt, change style to standard toolbar
+            self.toolbar_content.text = self.toolbar_content_default_text
+            self.toolbar_window.style = 'class:tooltip'
+        else:  # pragma: no cover
+            # show error prompt and error style
+            # the only error that might occur is that not enough options are selected
+            self.toolbar_content.text = f'ERROR: a minimum of {self.min_selections} options need to be ' \
+                                        f'selected!'
+            self.toolbar_window.style = 'class:error'
 
     def prompt(self) -> list[str] | None:
         """start the application, returns the return value"""
