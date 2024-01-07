@@ -37,12 +37,20 @@ us!*
 To submit a PR, follow these steps:
 
 1. Fork the repository and create a new branch from the main branch.
-2. Make your changes and commit them with a meaningful message.
-3. Push your branch to your forked repository on GitHub.
-4. Create a PR from your branch to the main branch of the original repository.
-5. Wait for the project maintainers to review your PR and provide feedback or approval.
-6. If requested, make any necessary changes and update your PR accordingly.
-7. Once your PR is merged, delete your branch and fork.
+2. Set up your local clone using [Setting up the project for development](#setting-up-the-project-for-development).
+3. Make your changes and commit them with a meaningful message.
+4. Push your branch to your forked repository on GitHub.
+5. Create a PR from your branch to the main branch of the original repository.
+6. Wait for the project maintainers to review your PR and provide feedback or approval.
+7. If requested, make any necessary changes and update your PR accordingly.
+8. Once your PR is merged, delete your branch and fork.
+
+### Setting up the project for development
+
+Before you can start working on ItsPrompt, you need to do a few things:
+
+1. Install all required dependencies from `requirements.txt` and `requirements-dev.txt`.
+2. Install our pre-commit hooks using `pre-commit install` in your main project directory.
 
 ### Providing Feedback
 
