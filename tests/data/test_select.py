@@ -31,7 +31,7 @@ def test_process_data_tuple_options():
         SelectOption("third", "3", False),
     ]
 
-    ans = process_data(options)
+    ans = process_data(options)  # type: ignore
 
     assert ans == result
 
@@ -47,11 +47,7 @@ def test_process_data_with_separator():
     separator = Separator("second")
     options = ("first", separator, "third")
 
-    result = [
-        SelectOption("first", "first", False),
-        separator,
-        SelectOption("third", "third", False)
-    ]
+    result = [SelectOption("first", "first", False), separator, SelectOption("third", "third", False)]
 
     ans = process_data(options)
 
