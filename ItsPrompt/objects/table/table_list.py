@@ -1,5 +1,5 @@
 from .table_dict import TableDataFromDict
-from ...data.type import TablePromptDict, TablePromptList
+from ..prompts.type import TablePromptDict, TablePromptList
 
 
 class TableDataFromList(TableDataFromDict):

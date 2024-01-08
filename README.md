@@ -276,16 +276,42 @@ Read more about the data attribute at [TablePrompt Data](#tableprompt-data).
 
 ### Options
 
-The `options` is always a `tuple` containing `str` and `tuple` objects.
+The `options` is always a `tuple` with the following type annotation:
+
+```py
+OptionsList = tuple[str | OptionWithId | Separator, ...]
+```
 
 If an option is given as a `str`, this will be used as the options display name and the id, which will be returned when
 selecting this option.
 
 *In case of `expand`, the first character of the `str` will be used as its key.*
 
-If an option is given as a `tuple`, the first value will be the options name, the second value the options id to return.
+If an option is given as a `OptionsWithId`,
+the first value will be the option name, the second value the option id to return.
+
+The last value is only usable in expand options.
+
+The type annotation is as follows:
+
+```py
+OptionWithId = tuple[str, str, str | None]
+```
 
 *In case of `expand`, the first value will be the key, the second value the name and the third value the id.*
+
+The `separator` is used for creating distinctive sections in the prompt types:
+
+- `select`
+- `raw_select`
+- `checkbox`
+- `expand`
+
+It is purely cosmetic. To use it, simply add a class instance in your options tuple and give it a name:
+
+```py
+options = (Separator('The veggies'), 'Salad', Separator('The meaties'), 'Pizza')
+```
 
 ---
 
@@ -391,16 +417,17 @@ Prompt.input(
 
 ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling_input.png)
 
-| styling tag       | default style                         |                                             default design                                             |
-|-------------------|---------------------------------------|:------------------------------------------------------------------------------------------------------:|
-| `question_mark`   | `fg:ansigreen`                        |  ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/question_mark.png)  |
-| `question`        | *                                     |    ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/question.png)     |
-| `option`          | *                                     |     ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/option.png)      |
-| `selected_option` | `fg:ansicyan`                         | ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/selected_option.png) |
-| `tooltip`         | `fg:ansibrightblue bg:ansiwhite bold` |     ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/tooltip.png)     |
-| `text`            | *                                     |      ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/text.png)       |
-| `grayout`         | `fg:ansibrightblack`                  |     ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/grayout.png)     |
-| `error`           | `fg:ansiwhite bg:ansired bold`        |      ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/error.png)      |
+| styling tag       | default style                         |                                                            default design                                                            |
+|-------------------|---------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------:|
+| `question_mark`   | `fg:ansigreen`                        |                 ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/question_mark.png)                 |
+| `question`        | *                                     |                   ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/question.png)                    |
+| `option`          | *                                     |                    ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/option.png)                     |
+| `selected_option` | `fg:ansicyan`                         |                ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/selected_option.png)                |
+| `tooltip`         | `fg:ansibrightblue bg:ansiwhite bold` |                    ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/tooltip.png)                    |
+| `text`            | *                                     |                     ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/text.png)                      |
+| `grayout`         | `fg:ansibrightblack`                  |                    ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/grayout.png)                    |
+| `error`           | `fg:ansiwhite bg:ansired bold`        |                     ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling/error.png)                     |
+| `separator`       | `fg:ansibrightgreen`                  | ![](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/0d2f2df964115eecd06867d69c350e272cc1b1e5/media/styling/separator.png) |
 
 *\*These values are not changed from the default `prompt-toolkit` values.*
 

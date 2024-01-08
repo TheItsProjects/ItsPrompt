@@ -1,6 +1,7 @@
 import pytest
 from prompt_toolkit.keys import Keys
 
+from ItsPrompt.objects.prompts.separator import Separator
 from ItsPrompt.prompt import Prompt
 
 
@@ -121,3 +122,13 @@ def test_expand_with_disabled_and_keyboard(send_keys, keys: list[Keys | str], i:
     ans = Prompt.expand("", options, disabled=("first",), allow_keyboard=True)
 
     assert ans == options[i]
+
+
+def test_expand_with_separator(send_keys):
+    options = ("first", "second", Separator("separator"), "third")
+
+    send_keys("h", "t", Keys.Enter)
+
+    ans = Prompt.expand("", options)
+
+    assert ans == "third"

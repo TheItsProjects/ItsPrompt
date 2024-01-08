@@ -1,6 +1,7 @@
 import pytest
 from prompt_toolkit.keys import Keys
 
+from ItsPrompt.objects.prompts.separator import Separator
 from ItsPrompt.prompt import Prompt
 
 
@@ -77,6 +78,16 @@ def test_checkbox_with_disabled(send_keys, keys: list[Keys | str], i: list[int])
     ans = Prompt.checkbox("", options, disabled=("first",))
 
     assert ans == [options[n] for n in i]
+
+
+def test_checkbox_with_separator(send_keys):
+    options = ("first", "second", Separator("separator"), "third")
+
+    send_keys(Keys.Down, Keys.Down, " ", Keys.Enter)
+
+    ans = Prompt.checkbox("", options)
+
+    assert ans == ["third"]
 
 
 def test_checkbox_raises_invalid_disabled():
