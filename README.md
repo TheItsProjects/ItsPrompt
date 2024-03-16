@@ -287,7 +287,7 @@ selecting this option.
 
 *In case of `expand`, the first character of the `str` will be used as its key.*
 
-If an option is given as a `OptionsWithId`,
+If an option is given as a `OptionWithId`,
 the first value will be the option name, the second value the option id to return.
 
 The last value is only usable in expand options.
@@ -526,7 +526,7 @@ The `input` prompt type supports autocompletion as well.
 
 > If you use a completer, you are unable to use `show_symbol`!
 
-To give auto completion options, there are three ways:
+To give autocompletion options, there are three ways:
 
 ***Creating a simple list of possible completions***
 
@@ -584,7 +584,7 @@ There are a number of completers available, for example:
 - `PathCompleter`
     - automatically complete file system paths
 - `ExecutableCompleter`
-    - automatically complete executables in file system
+    - automatically complete executables in a file system
 - `WordCompleter`
     - As simple as it can get. Just completes the letters of the word, that are actually present (the `FuzzyCompleter`
       which `completions` uses in background completes based on a probability, and may show matches which are not
