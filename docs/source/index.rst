@@ -11,3 +11,4 @@ Welcome to ItsPrompt's documentation!
     :caption: API Documentation:
     
     api/prompt
+    api/objects
