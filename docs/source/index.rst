@@ -7,7 +7,7 @@ Welcome to ItsPrompt's documentation!
 =====================================
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
     :caption: API Documentation:
     
     api/prompt
