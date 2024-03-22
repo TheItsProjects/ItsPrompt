@@ -5,7 +5,7 @@ class Separator:
     - :meth:`~ItsPrompt.prompt.Prompt.select`
     - :meth:`~ItsPrompt.prompt.Prompt.raw_select`
     - :meth:`~ItsPrompt.prompt.Prompt.checkbox`
-    - :meth:`~  ItsPrompt.prompt.Prompt.expand`
+    - :meth:`~ItsPrompt.prompt.Prompt.expand`
 
     It is purely cosmetic.
     """
