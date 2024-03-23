@@ -28,9 +28,9 @@ attribute in the `PromptStyle` class, which you can style with valid `prompt_too
         validate=lambda x: 'error',
     )
 
-.. image:: https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling_raw_select.png
+.. image:: ../media/styling_raw_select.png
 
-.. image:: https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/styling_input.png
+.. image:: ../media/styling_input.png
 
 +-------------------+---------------------------------------+-------------------------------------------------+
 | styling tag       | default style                         | default design                                  |

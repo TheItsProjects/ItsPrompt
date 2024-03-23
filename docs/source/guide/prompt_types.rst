@@ -10,7 +10,7 @@ The following prompt types are available in ItsPrompt:
 select
 ------
 
-.. image:: https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/select.png
+.. image:: ../media/select.png
 
 .. code-block:: python
 
@@ -25,7 +25,7 @@ To read more about the parameters of the `select` prompt, see the definition of 
 raw_select
 ----------
 
-.. image:: https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/raw_select.png
+.. image:: ../media/raw_select.png
 
 .. code-block:: python
 
@@ -40,7 +40,7 @@ To read more about the parameters of the `raw_select` prompt, see the definition
 expand
 ------
 
-.. image:: https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/expand.png
+.. image:: ../media/expand.png
 
 .. code-block:: python
 
@@ -55,7 +55,7 @@ To read more about the parameters of the `expand` prompt, see the definition of 
 checkbox
 --------
 
-.. image:: https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/checkbox.png
+.. image:: ../media/checkbox.png
 
 .. code-block:: python
 
@@ -72,7 +72,7 @@ To read more about the parameters of the `checkbox` prompt, see the definition o
 confirm
 -------
 
-.. image:: https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/confirm.png
+.. image:: ../media/confirm.png
 
 .. code-block:: python
 
@@ -86,7 +86,7 @@ To read more about the parameters of the `confirm` prompt, see the definition of
 input
 -----
 
-.. image:: https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/input.png
+.. image:: ../media/input.png
 
 .. code-block:: python
 
@@ -102,7 +102,7 @@ To read more about the parameters of the `input` prompt, see the definition of :
 table
 -----
 
-.. image:: https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/table.png
+.. image:: ../media/table.png
 
 .. code-block:: python
 
