@@ -29,7 +29,7 @@ from prompt_toolkit.layout.menus import (
     MultiColumnCompletionsMenu,
 )
 
-from .data.style import PromptStyle, convert_style, default_style
+from .data.style import PromptStyle, _convert_style, default_style
 from .keyboard_handler import generate_key_bindings
 from .objects.prompts.type import CompletionDict, TablePromptDict, TablePromptList, OptionsList
 from .prompts.checkbox import CheckboxPrompt
@@ -103,7 +103,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(SelectPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
         ans = app.prompt()
         if ans == None:
@@ -160,7 +160,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(RawSelectPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
         ans = app.prompt()
         if ans is None:
@@ -220,7 +220,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(ExpandPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
         ans = app.prompt()
         if ans is None:
@@ -282,7 +282,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(CheckboxPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
         ans = app.prompt()
         if ans == None:
@@ -336,7 +336,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(ConfirmPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
 
         ans = app.prompt()
@@ -456,7 +456,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(InputPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
 
         ans = app.prompt()
@@ -513,7 +513,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(TablePrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
         ans = app.prompt()
         # if type(ans) is type(None):

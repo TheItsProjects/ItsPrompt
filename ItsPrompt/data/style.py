@@ -37,7 +37,7 @@ The default style for the prompts.
 """
 
 
-def convert_style(style: PromptStyle) -> Style:
+def _convert_style(style: PromptStyle) -> Style:
     """
     Converts the given `PromptStyle` to a usable `Style` object.
 
