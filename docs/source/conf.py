@@ -7,8 +7,10 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'ItsPrompt'
-copyright = '2024, ItsNameless'
+copyright = '2024-present, ItsNameless'
 author = 'ItsNameless'
+version = '1.5'
+release = '1.5.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
