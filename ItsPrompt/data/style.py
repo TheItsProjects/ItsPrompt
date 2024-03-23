@@ -32,9 +32,12 @@ default_style = PromptStyle(
     disabled="fg:ansibrightblack",
     separator="fg:ansibrightgreen",
 )
+"""
+The default style for the prompts.
+"""
 
 
-def convert_style(style: PromptStyle) -> Style:
+def _convert_style(style: PromptStyle) -> Style:
     """
     Converts the given `PromptStyle` to a usable `Style` object.
 
@@ -48,7 +51,7 @@ def convert_style(style: PromptStyle) -> Style:
 
 def create_from_default() -> PromptStyle:
     """
-    Returns a copy of the default style, which can be edited without changing the default style.
+    Returns a copy of the :data:`default_style` which can be edited without changing the default style.
 
     :return: An editable copy of the default style
     :rtype: PromptStyle

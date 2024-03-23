@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ItsPrompt"
-version = "1.4"
+version = "1.5"
 authors = [
     { name = "ItsNameless" },
 ]
@@ -56,3 +56,4 @@ dedent_closing_brackets = true
 packages = "ItsPrompt"
 explicit_package_bases = true
 check_untyped_defs = true
+exclude = ["docs", "venv"]

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from ItsPrompt.objects.prompts.option import Option
-from ItsPrompt.objects.prompts.options_with_seperator import OptionsWithSeparator
+from ItsPrompt.objects.prompts.options_with_separator import OptionsWithSeparator
 from ItsPrompt.objects.prompts.separator import Separator
 from ItsPrompt.objects.prompts.type import OptionsList
 

@@ -1,5 +1,6 @@
 """
-# ItsPrompt
+ItsPrompt
+=========
 
 created by ItsNameless
 
@@ -28,7 +29,7 @@ from prompt_toolkit.layout.menus import (
     MultiColumnCompletionsMenu,
 )
 
-from .data.style import PromptStyle, convert_style, default_style
+from .data.style import PromptStyle, _convert_style, default_style
 from .keyboard_handler import generate_key_bindings
 from .objects.prompts.type import CompletionDict, TablePromptDict, TablePromptList, OptionsList
 from .prompts.checkbox import CheckboxPrompt
@@ -65,7 +66,7 @@ class Prompt:
         style: PromptStyle | None = None,
     ) -> str:
         """
-        Ask the user for selecting ONE of the given `options`.
+        Ask the user for selecting **one** of the given `options`.
 
         This method shows the question alongside the `options` as a nice list. The user has the ability to use the
         up, down and enter keys to navigate between the options and select the one that is right.
@@ -102,7 +103,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(SelectPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
         ans = app.prompt()
         if ans == None:
@@ -120,7 +121,7 @@ class Prompt:
         style: PromptStyle | None = None,
     ) -> str:
         """
-        Ask the user for selection ONE of the given `options`.
+        Ask the user for selecting **one** of the given `options`.
 
         This method shows the question alongside the `options` as a nice list. The user needs to type the index of
         the answer. If `allow_keyboard` is given, the user may use the keyboard as in the `select()` method.
@@ -159,7 +160,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(RawSelectPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
         ans = app.prompt()
         if ans is None:
@@ -177,7 +178,7 @@ class Prompt:
         style: PromptStyle | None = None,
     ) -> str:
         """
-        Ask the user for selecting ONE of the given `options`.
+        Ask the user for selecting **one** of the given `options`.
 
         The user needs to type the key of the option. If the user types `h`, all options will be shown.
 
@@ -219,7 +220,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(ExpandPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
         ans = app.prompt()
         if ans is None:
@@ -238,7 +239,7 @@ class Prompt:
         style: PromptStyle | None = None,
     ) -> list[str]:
         """
-        Ask the user for selecting MULTIPLE of the given `options`.
+        Ask the user for selecting **multiple** of the given `options`.
 
         The `options` will be shown as a nice list. The user may navigate with up and down, select or deselect with
         space and submit with enter.
@@ -281,7 +282,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(CheckboxPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
         ans = app.prompt()
         if ans == None:
@@ -335,7 +336,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(ConfirmPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
 
         ans = app.prompt()
@@ -359,30 +360,32 @@ class Prompt:
         """
         Ask the user for typing an input.
 
-        If default is given, it will be returned if enter was pressed and no input was given by the user. If the user
-        writes an input, the default will be overwritten.
+        If :data:`default` is given, it will be returned if enter was pressed and no input was given by the user. If the user
+        writes an input, the :data:`default` will be overwritten.
 
-        If multiline is activated, enter will not submit, but rather create a newline. Use `alt+enter` to submit.
+        If :data:`multiline` is activated, enter will not submit, but rather create a newline. Use ``alt+enter`` to submit.
 
-        If show_symbol is given, all chars (except newlines) will be replaced with this character in the interface.
-        The result will still be the input the user typed, it just will not appear in the CLI.
+        If :data:`show_symbol` is given, all chars (except newlines) will be replaced with this character in the interface.
+        The result will still be the input the user typed, it just will not appear in the CLI. This is useful for
+        password inputs.
 
-        Validate takes a function which receives a `str` (the current input of the user) and may return None, a
-        `str` or simply a boolean value.
+        :data:`validate` takes a function which receives a :class:`str` (the current input of the user) and may 
+        return :class:`None`, a :class:`str` or simply a boolean value.
 
-        If the function returns None (or True), the prompt may assume that the input is
+        If the function returns :class:`None` (or ``True``), the prompt may assume that the input is
         valid.
 
-        If it returns a `str`, this will be the error shown to the user. If it returns `False`, the error shown will
-        simply be a general error statement without additional information. The user will not be able to submit the
-        input, if validate returns an error.
+        If it returns a :class:`str`, this will be the error shown to the user. If it returns ``False``, the error 
+        shown will simply be a general error statement without additional information. The user will not be able to 
+        submit the input, if :data:`validate` returns an error.
 
-        Completions may be a list of possible completion strings or a nested dictionary where the key is a completion
-        string and the value is a new dict in the same style (more in the README.md).
+        :data:`completions` may be a list of possible completion strings or a nested dictionary where the key is a 
+        completion string and the value is a new dict in the same style (more in the README.md).
 
-        You can use your own Completer as well (more in the README.md).
+        You can use your own :class:`Completer` as well (more in the README.md).
 
-        THESE VALUES ARE MUTUALLY EXCLUSIVE. You may not use both. If you use a completer, you can not use show_symbol!
+        :data:`completions` **and** :data:`completer` **are mutually exclusive!** You may not use both. If you use a :data:`completer`, you can not use 
+        :data:`show_symbol`!
 
         :param question: The question to display
         :type question: str
@@ -402,7 +405,7 @@ class Prompt:
         :type completion_show_multicolumn: bool, optional
         :param style: A separate style to style the prompt (empty or None for default style), defaults to None
         :type style: PromptStyle | None, optional
-        :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
+        :raises KeyboardInterrupt: When the user presses ctrl-c, :class:`KeyboardInterrupt` will be raised
         :return: The input of the user
         :rtype: str
         """
@@ -453,11 +456,11 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(InputPrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
 
         ans = app.prompt()
-        if ans == None:
+        if ans is None:
             raise KeyboardInterrupt()
         return ans
 
@@ -472,10 +475,10 @@ class Prompt:
         Ask the user for filling out the displayed table.
 
         This method shows the question alongside a table, which the user may navigate with the arrow keys. The user
-        has the ability to use the up, down and enter keys to navigate between the options and change the text in
+        can use the up, down and enter keys to navigate between the options and change the text in
         each cell.
 
-        The `data` is either a pandas DataFrame, a list or a dictionary (more in the README.md).
+        The `data` is either a :class:`pandas.DataFrame`, a :class:`list` or a :class:`dict` (more in the README.md).
 
         :param question: The question to display
         :type question: str
@@ -485,7 +488,7 @@ class Prompt:
         :type style: PromptStyle | None, optional
         :raises KeyboardInterrupt: When the user presses ctrl-c, `KeyboardInterrupt` will be raised
         :return: The id of the selected option
-        :rtype: str
+        :rtype: DataFrame | TablePromptDict | TablePromptList
         """
         app = TablePrompt(
             question,
@@ -510,7 +513,7 @@ class Prompt:
             ),
             key_bindings=generate_key_bindings(TablePrompt),
             erase_when_done=True,
-            style=convert_style(style) if style else convert_style(default_style),
+            style=_convert_style(style) if style else _convert_style(default_style),
         )
         ans = app.prompt()
         # if type(ans) is type(None):
