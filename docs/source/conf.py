@@ -18,6 +18,7 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'sphinx.ext.intersphi
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
     'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
+    'prompt_toolkit': ('https://python-prompt-toolkit.readthedocs.io/en/master/', None),
 }
 templates_path = ['_templates']
 exclude_patterns = []  # type: ignore
