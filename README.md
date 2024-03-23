@@ -85,7 +85,8 @@ This package is hosted on pypi, so the installation is as simple as it can get:
 python3 -m pip install ItsPrompt
 ```
 
-This will install `ItsPrompt` without pandas. If you want to use `TablePrompt` (see [table](https://WIP)) with
+This will install `ItsPrompt` without pandas. If you want to use `TablePrompt`
+(see [table](https://itsprompt.readthedocs.io/en/latest/guide/prompt_types.html#table)) with
 `pandas.DataFrame`, you can install pandas support either by:
 
 - installing pandas separately
@@ -114,13 +115,13 @@ You see how easy it is?
 
 ## Usage
 
-To learn more about the usage, visit our [documentation](https://WIP).
+To learn more about the usage, visit our [documentation](https://itsprompt.readthedocs.io).
 
 ---
 
 ## Further Information
 
-Visit our [documentation](http://itsprompt.readthedocs.io/) to learn more about the usage of **ItsPrompt**!
+Visit our [documentation](https://itsprompt.readthedocs.io/) to learn more about the usage of **ItsPrompt**!
 
 If you need some easy examples, refer to [example.py](example.py)!
 
