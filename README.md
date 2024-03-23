@@ -31,7 +31,6 @@ of this problem, so you can focus on the important things!
 ## TOC
 
 <!-- TOC -->
-
 * [ItsPrompt](#itsprompt)
   * [TOC](#toc)
     * [A small, thankful note](#a-small-thankful-note)
@@ -40,7 +39,6 @@ of this problem, so you can focus on the important things!
   * [Quick Example](#quick-example)
   * [Usage](#usage)
   * [Further Information](#further-information)
-
 <!-- TOC -->
 
 ---
