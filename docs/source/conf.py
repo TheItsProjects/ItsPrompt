@@ -13,7 +13,9 @@ author = 'ItsNameless'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'sphinx.ext.intersphinx']
+extensions = [
+    'sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'sphinx.ext.intersphinx', 'sphinx.ext.doctest', 'sphinx.ext.coverage'
+]
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
