@@ -12,6 +12,9 @@ By participating in this project, you agree to abide by the [Code of Conduct](ht
 
 There are many ways you can contribute to this project. Here are some guidelines to help you get started.
 
+If you want to read more about development, please refer to
+the [Development Guide](https://itsprompt.readthedocs.io/en/latest/development_guide/getting_started.html).
+
 ### Reporting Issues
 
 If you encounter any problems or have any suggestions for improvement, please open an issue on GitHub using the
