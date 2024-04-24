@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="Make vhs" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile">
+        <makefile filename="Makefile" target="vhs" workingDirectory="$PROJECT_DIR$/docs" arguments="">
+            <envs/>
+        </makefile>
+        <method v="2"/>
+    </configuration>
+</component>

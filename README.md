@@ -8,7 +8,7 @@
 [![GitHub](https://img.shields.io/github/license/TheitsProjects/ItsPrompt)](https://github.com/TheItsProjects/ItsPrompt/blob/main/LICENSE)
 [![Discord](https://img.shields.io/discord/1082381448624996514)](https://discord.gg/rP9Qke2jDs)
 
-[![Read the Docs](https://img.shields.io/readthedocs/ItsPrompt)](http://itsprompt.readthedocs.io/)
+[![Read the Docs](https://img.shields.io/readthedocs/itsprompt)](http://itsprompt.readthedocs.io/)
 
 ![Demonstration](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/ItsPrompt.gif)
 
@@ -85,7 +85,8 @@ This package is hosted on pypi, so the installation is as simple as it can get:
 python3 -m pip install ItsPrompt
 ```
 
-This will install `ItsPrompt` without pandas. If you want to use `TablePrompt` (see [table](https://WIP)) with
+This will install `ItsPrompt` without pandas. If you want to use `TablePrompt`
+(see [table](https://itsprompt.readthedocs.io/en/latest/guide/prompt_types.html#table)) with
 `pandas.DataFrame`, you can install pandas support either by:
 
 - installing pandas separately
@@ -114,13 +115,13 @@ You see how easy it is?
 
 ## Usage
 
-To learn more about the usage, visit our [documentation](https://WIP).
+To learn more about the usage, visit our [documentation](https://itsprompt.readthedocs.io).
 
 ---
 
 ## Further Information
 
-Visit our [documentation](http://itsprompt.readthedocs.io/) to learn more about the usage of **ItsPrompt**!
+Visit our [documentation](https://itsprompt.readthedocs.io/) to learn more about the usage of **ItsPrompt**!
 
 If you need some easy examples, refer to [example.py](example.py)!
 

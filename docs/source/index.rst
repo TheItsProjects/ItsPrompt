@@ -3,6 +3,8 @@
 Welcome to ItsPrompt's Documentation!
 =====================================
 
+.. image:: ./media/ItsPrompt.gif
+
 `ItsPrompt` is an easy-to-use module for managing prompts for the user. It allows you to ask the user for input in a fancy
 way, taking care of the problem of user input so you can focus on creating a great program. 
 
@@ -39,3 +41,10 @@ Table of Contents
     
     api/prompt
     api/objects
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Development Guide:
+
+    development_guide/getting_started
+    development_guide/documentation
