@@ -10,7 +10,7 @@
 
 [![Read the Docs](https://img.shields.io/readthedocs/itsprompt)](http://itsprompt.readthedocs.io/)
 
-![Demonstration](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/media/ItsPrompt.gif)
+![Demonstration](https://raw.githubusercontent.com/TheItsProjects/ItsPrompt/main/docs/source/media/ItsPrompt.gif)
 
 # ItsPrompt
 
