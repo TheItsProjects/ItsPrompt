@@ -1,0 +1,14 @@
+# --- Set Up --------------------------
+# Load Config
+Source ./configuration/base_config.tape
+Source ./configuration/small_window_config.tape # use big_window_config.tape for bigger window
+
+# --- Main ----------------------------
+# run example.py
+Type@0.1s "python3 demos/FILE.py" Enter Sleep 1s # replace FILE.py with the file you want to run
+
+Screenshot ../../source/media/MEDIA.png # replace MEDIA.png with the name of the file you want to save the screenshot to
+
+Sleep 1s
+
+Ctrl+C
