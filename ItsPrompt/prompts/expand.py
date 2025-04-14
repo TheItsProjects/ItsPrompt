@@ -94,7 +94,7 @@ class ExpandPrompt(Application):
                     content += f'\n{disabled[0]}<option>    {option.key}) {option.name}</option>{disabled[1]}'  # type: ignore
 
         # text
-        content += f'\n<text>    Answer: {self.selection}</text>'
+        content += f'\n<text>    Answer: {self.selection} ({self.options.get_option(self.selection).name})</text>'  # type: ignore
 
         self.prompt_content.text = HTML(content)
 
