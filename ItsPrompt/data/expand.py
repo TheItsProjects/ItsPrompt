@@ -12,9 +12,27 @@ class ExpandOption(Option):
     name: str
     id: str
     is_disabled: bool
+    
+class ExpandOptionsWithSeparator(OptionsWithSeparator[ExpandOption | Separator]):
+    
+    def __init__(self, *args: ExpandOption | Separator):
+        super().__init__(*args)
+        
+    def get_option(self, key: str) -> ExpandOption | None:
+        """
+        Get the option with the given key.
 
+        :param key: The key of the option to get
+        :type key: str
+        :return: The option with the given key or None if not found
+        :rtype: ExpandOption | None
+        """
+        for option in self.with_separators:
+            if isinstance(option, ExpandOption) and option.key == key:
+                return option
+        return None
 
-def process_data(options: OptionsList) -> OptionsWithSeparator[ExpandOption | Separator]:
+def process_data(options: OptionsList) -> ExpandOptionsWithSeparator:
     """
     Processes the given `options` and returns the processed list
 
@@ -70,5 +88,5 @@ def process_data(options: OptionsList) -> OptionsWithSeparator[ExpandOption | Se
     processed_options.append(
         ExpandOption(key='h', name='Help Menu, list or hide all options', id='', is_disabled=False)
     )
-
-    return OptionsWithSeparator(*processed_options)
+    
+    return ExpandOptionsWithSeparator(*processed_options)

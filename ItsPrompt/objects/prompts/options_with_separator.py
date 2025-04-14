@@ -1,8 +1,9 @@
 from typing import Iterator, TypeVar, Generic
 
+from ItsPrompt.objects.prompts.option import Option
 from ItsPrompt.objects.prompts.separator import Separator
 
-OptionOrSeparator = TypeVar("OptionOrSeparator")
+OptionOrSeparator = TypeVar("OptionOrSeparator", bound=Option | Separator)
 
 
 class OptionsWithSeparator(Generic[OptionOrSeparator], list):
