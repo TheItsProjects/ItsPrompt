@@ -76,6 +76,16 @@ def test_input_raises_keyboard_interrupt(send_keys):
         ans = Prompt.input("")
 
 
+def test_input_validation(send_keys):
+    # validator requires at least 2 characters
+    # send "v", Enter (blocked), "a", Enter (success)
+    send_keys("v", Keys.Enter, "a", Keys.Enter)
+
+    ans = Prompt.input("", validate=lambda x: len(x) > 1)
+
+    assert ans == "va"
+
+
 # TODO input show_symbol is showing symbol (visual)
 # TODO input completer/completions is working (visual, functional)
 # TODO input validation is showing error (visual)

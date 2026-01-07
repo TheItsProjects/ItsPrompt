@@ -86,3 +86,10 @@ def test_process_data_with_separator():
     ans = process_data(options)
 
     assert ans.with_separators == result
+
+
+def test_expand_options_get_option_returns_none():
+    options = ("first", "second")
+    ans = process_data(options)
+
+    assert ans.get_option("z") is None
