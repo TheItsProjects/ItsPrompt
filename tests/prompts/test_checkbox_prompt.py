@@ -96,4 +96,14 @@ def test_checkbox_raises_invalid_disabled():
         ans = Prompt.checkbox("", options, disabled=("invalid",))
 
 
+def test_checkbox_min_selections(send_keys):
+    options = ("first", "second")
+    # Try to enter without selection (blocked), then select "first", then enter (success)
+    send_keys(Keys.Enter, " ", Keys.Enter)
+
+    ans = Prompt.checkbox("", options, min_selections=1)
+
+    assert ans == ["first"]
+
+
 # TODO check min selections with error box (visual)

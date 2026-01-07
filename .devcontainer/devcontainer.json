@@ -1,0 +1,14 @@
+{
+	"name": "ItsPrompt Dev",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance"
+            ]
+        }
+    }
+}
